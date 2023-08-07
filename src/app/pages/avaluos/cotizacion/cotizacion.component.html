@@ -1,0 +1,200 @@
+<div class="row">
+    <div class="col-lg-6 d-flex align-items-stretch">
+      <div class="card w-100">
+        <form  
+          [formGroup]="ctznForm"
+          (ngSubmit)="guardarCTZN()">
+          <div class="card-body">
+            <h4 class="card-title">Cotización de Avalúos</h4>       
+            <div class="example-flex-container">
+              <div class="mb-3 mb-0 text-start">
+                <button type="submit" class="btn" data-toggle="tooltip" data-placement="right" title="Guardar">
+                    <i class="fa fa-save"></i>
+                </button>
+                <button type="button" class="btn" data-toggle="tooltip" data-placement="right" title="Salir">
+                    <a routerLink="//avaluo/edit/{{id_avaluo}}">
+                      <i class="fa fa-close"></i>
+                    </a>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="row animated fadeIn fast" *ngIf="cargando">
+            <div class="col-12">
+                <div class="alert alert-success text-center">
+                    <h4 class="alert-heading">Cargando</h4>
+                    <i class="fa fa-spin fa-refresh fa-2x"></i>
+                    <p class="mb-0">Por favor espere</p>
+                </div>
+            </div>
+          </div>
+          <div class="card-body" *ngIf="!cargando">
+            <h4 class="card-title">Información de Cotización</h4>
+            <div class="row">
+              <div class="col-sm-12 col-md-5">
+                <div class="mb-3">
+                  <label for="inputname" class="control-label col-form-label">Tipo Profesional</label>
+                  <select (change)="changetipoProfesional($event.target.value)"
+                  class="form-control form-select"
+                  data-placeholder="Seleccionar Tipo de Profesional" formControlName="TIPO_CTZCN"
+                  required>
+                  <option *ngFor="let x of profesion" value={{x.ID_PROFESION}}>
+                    {{x.PROFESION}} 
+                  </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-12">
+                  <div class="mb-3">
+                    <label for="inputname" class="control-label col-form-label" >
+                      Profesional Responsable 
+                    </label>
+                    <select class="form-control form-select" formControlName="PROFESIONAL" required>
+                    <option *ngFor="let x of profesional" value={{x.ID_PROFESIONAL}}>
+                        {{x.NOMBRE}} 
+                    </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label class="control-label col-form-label">Fecha Cotización</label>
+                  <input type="date" class="form-control" formControlName="FECHA_CTZCN">
+                </div>
+              </div>
+              <div class="row" >
+                <div class="col-sm-12 col-md-6">
+                  <div class="mb-3">
+                    <label class="control-label col-form-label">Monto Cotización</label>
+                    <input type="number" class="form-control" formControlName="MONTO">
+                  </div>
+                </div>
+                <div *ngIf="existe" class="col-sm-12 col-md-6">
+                  <div class="mb-3">
+                    <label class="control-label col-form-label">Asignado</label>
+                    <div class="col-md-8 col-sm-9">
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input success" type="radio" name="ASIGNADO" id="success-radio" 
+                            formControlName="ASIGNADO" [value]="true">
+                          <label class="form-check-label" for="success-radio">SI</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input success" type="radio" name="ASIGNADO" id="success2-radio"
+                            formControlName="ASIGNADO" [value]="false">
+                          <label class="form-check-label" for="success2-radio">NO</label>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12" >
+                  <div class="mb-3">
+                    <label for="inputname" class="control-label col-form-label">Observaciones</label>
+                    <input type="text" class="form-control" placeholder="Observaciones Cotización" 
+                    formControlName="OBSERVACIONES">
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="existe" class="row border-top">
+                <div class="col-sm-12">
+                  <div class="md-3">
+                    <h4 class="card-title m-3">Archivo de Cotización</h4>
+                    <div *ngIf="archivoLength > 0" class="mb-3 mb-0 text-start">
+                    <button type="button" (click)="uploadCotizacion()"  class="btn" data-toggle="tooltip" data-placement="right" title="Guardar">
+                      <i class="fa fa-save"></i>
+                  </button>
+                    </div>
+                    <div class="col-sm-12">
+                        <input class="form-control" type="file" (change)="checkFileInput($event)" 
+                          #fileInput  formControlName="DOC_CTZCN">
+                        <div *ngIf="document" class="m-2">
+                          <a (click)="downloadfile()"><p>{{document}}</p></a>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="col-lg-6 d-flex align-items-stretch">
+      <div class="card w-100">
+        <h4 class="card-title m-3">Información de Cotizaciones</h4> 
+        <div class="card-body border-top">
+          <h4 class="card-title mb-3">Cotización de Peritos</h4>
+          <div class="row justify-content-center">
+            <div class="col-sm-12">
+                <div class="table-responsive">
+                    <table class="table table-borderless justify-content-center">
+                      <thead>
+                        <tr>
+                          <th scope="col">Nombre</th>
+                          <th scope="col">Monto</th>
+                          <th scope="col">Asignado</th>
+                          <th scope="col">Ver</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let x of perito">
+                          <td>{{x.NOMBRE}}</td>
+                          <td>{{x.MONTO | number: '3.2-2'}}</td>
+                          <td *ngIf="x.ASIGNADO == false; else AsignadoYes"> <p class="text-danger text-center">NO</p></td>
+                          <ng-template #AsignadoYes>
+                            <p class="text-success text-center">SI</p>
+                          </ng-template>
+                          <td *ngIf="x.ESTADO == 'A'" >
+                            <div>
+                              <button type="button" class="btn btn-success" (click)="cargarCotizacion(x.ID_COTIZACION)" >
+                                <i class="fas fa-eye"></i>
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>    
+            </div>
+          </div>
+        </div>
+        <div class="card-body border-top">
+        <h4 class="card-title mb-3">Cotización de Notarios</h4>
+        <div class="row justify-content-center">
+            <div class="col-sm-12">
+                <div class="table-responsive">
+                    <table class="table table-borderless mb-0">
+                      <thead>
+                        <tr>
+                          <th scope="col">Nombre</th>
+                          <th scope="col">Monto</th>
+                          <th scope="col">Asignado</th>
+                          <th scope="col">Ver</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let x of notario">
+                          <td>{{x.NOMBRE}}</td>
+                          <td>{{x.MONTO | number: '3.2-2'}}</td>
+                          <td *ngIf="x.ASIGNADO == false; else AsignadoYes"> <p class="text-danger text-center">NO</p></td>
+                          <ng-template #AsignadoYes>
+                            <p class="text-success text-center">SI</p>
+                          </ng-template>
+                          <td *ngIf="x.ESTADO == 'A'" >
+                            <div>
+                              <button type="button" class="btn btn-success" (click)="cargarCotizacion(x.ID_COTIZACION)" >
+                                <i class="fas fa-eye"></i>
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>    
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,161 @@
+<div class="row animated fadeIn fast" *ngIf="cargando">
+  <div class="col-12">
+      <div class="alert alert-success text-center">
+          <h4 class="alert-heading">Cargando</h4>
+          <i class="fa fa-spin fa-refresh fa-2x"></i>
+          <p class="mb-0">Por favor espere</p>
+      </div>
+  </div>
+</div>
+
+<div class="row" *ngIf="!cargando">
+    <div class="col-12">
+      <div class="card">
+        <form class="form-horizontal"
+        (submit)="updateAvaluo()"
+        [formGroup]="avaluoForm"
+        >
+          <div class="card-body">
+            <div class="card-body border-top">
+              <button type="submit" class="btn" data-toggle="tooltip" data-placement="right" title="Guardar">
+                  <i class="fa fa-save"></i>
+              </button>
+              <button type="button" class="btn" data-toggle="tooltip" data-placement="right" title="Salir" routerLink="//avaluo/">
+                  <a>
+                    <i class="fa fa-close"></i>
+                  </a>
+              </button>
+              <button type="button" class="btn" style="float: right;" data-toggle="tooltip" data-placement="right" 
+                    title="Cotizacion" routerLink="//avaluo/cotizacion/{{idAvaluo}}">
+                <a>
+                  Cotizaciones
+                </a>
+            </button>
+            <button type="button" class="btn ml-3" style="float: right;" data-toggle="tooltip" data-placement="right" 
+                    title="Facturas" routerLink="//avaluo/factura/{{idAvaluo}}">
+                <a>
+                  Facturas
+                </a>
+            </button>
+          </div>
+            <h4 class="card-title">Información Personal</h4>
+            <div class="bm-3 row mb-2">
+              <label for="fname" class="col-sm-3 text-end control-label col-form-label">Identificación</label>
+              <div class="col-sm-5 mb-2">
+                <input type="text" class="form-control" id="fname" 
+                  formControlName="CEDULA" [attr.disabled]="true">
+              </div>
+            </div>
+            <div class="mb-3 row">
+              <label for="cono1" class="col-sm-3 text-end control-label col-form-label">Cliente</label>
+              <div class="col-sm-5">
+                <input type="text" class="form-control" id="cono1" formControlName="NOMBRE" [attr.disabled]="true">
+              </div>
+            </div>
+          </div>
+          <div class="card-body border-top">
+            <h4 class="card-title">Datos del Avalúo</h4>
+            <div class="row">
+              <div class="col-sm-12 col-md-4">
+                <div class="mb-3">
+                  <label for="inputname" class="control-label col-form-label">Provincia</label>
+                  <select (change)="obtenerValorProvincia($event.target.value)" class="form-control form-select" formControlName="PROVINCIA">
+                    <option *ngFor="let x of Provincia" value={{x.ID_PROVINCIA}}>{{x.PROVINCIA}}</option>
+                    </select>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-4">
+                <div class="mb-3">
+                  <label for="inputlname" class="control-label col-form-label">Cantón</label>
+                  <select (change)="obtenerValorCanton($event.target.value)" class="form-control form-select" 
+                        formControlName="CANTON">
+                      <option *ngFor="let x of Canton" value={{x.ID_CANTON}}>{{x.CANTON}}</option>
+                      </select>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-4">
+                <div class="mb-3">
+                  <label for="inputlname" class="control-label col-form-label">Distrito</label>
+                  <select  class="form-control form-select" formControlName="DISTRITO">
+                    <option *ngFor="let x of Distrito" value={{x.ID_DISTRITO}}>{{x.DISTRITO}}</option>
+                    </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 col-md-4">
+                <div class="mb-3">
+                  <label for="inputname" class="control-label col-form-label">N° Finca</label>
+                  <input type="text" class="form-control" placeholder="" 
+                  formControlName="NUM_FINCA" min = 1>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-4">
+                <div class="mb-3">
+                  <label for="inputlname" class="control-label col-form-label">Area Terreno</label>
+                  <input type="number" class="form-control" 
+                  formControlName="AREA_TERRENO" currency min = 1 >
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-4">
+                <div class="mb-3">
+                  <label for="inputlname" class="control-label col-form-label">Area Construcción</label>
+                  <input type="number" class="form-control" formControlName="AREA_CONSTRUC" mask="separator.2" currency min = 0>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 col-md-4">
+                <div class="mb-3">
+                  <label for="inputname" class="control-label col-form-label">Monto Edificio</label>
+                  <input type="number" class="form-control" placeholder="Monto del Avalúo ₡"
+                   formControlName="MONTO_EDIFICIO" (change)="updateAvaluoTotal()"
+                  currency min = 0>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-4">
+                <div class="mb-3">
+                  <label for="inputname" class="control-label col-form-label">Monto Terreno</label>
+                  <input type="number" class="form-control" id="email2" placeholder="Monto del Avalúo ₡"
+                   formControlName="MONTO_TERRENO"  (change)="updateAvaluoTotal()" 
+                  currency min = 0>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-4">
+                <div class="mb-3">
+                  <label for="inputname" class="control-label col-form-label">Avalúo Total</label>
+                  <input type="number" class="form-control"  placeholder="Monto del Avalúo ₡"
+                   formControlName="MONTO_AVALUO" currency min = 0 [attr.disabled]="true" >
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 col-md-4">
+                <div class="mb-3">
+                  <label for="inputlname" class="control-label col-form-label">Garantía</label>
+                  <input type="number" class="form-control" placeholder="Monto de Garantía en ₡" 
+                        formControlName="MONTO_GARANTIA" mask="separator.2">
+                </div>
+              </div>
+            </div>
+          </div>
+            <div class="card-body border-top">
+                <h4 class="card-title">Archivo del Avalúo</h4>
+                <div class="input-group ml-3">
+                    <div class="custom-file">
+                      <input class="form-control" type="file" id="formFile" formControlName="DOCUMENTO" (change)="checkFileInput($event)">
+                    </div>
+                    <button *ngIf="archivoLength > 0" class="btn btn-light-info text-info font-weight-medium" 
+                      type="button" title="Subir Archivo"
+                    (click)="uploadAvaluo()">
+                        <i class="fa fa-upload"></i>
+                    </button>
+                  </div>
+                  <div *ngIf="document" class="m-2">
+                    <a (click)="downloadfile()"><p>{{document}}</p></a>
+                  </div>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>

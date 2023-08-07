@@ -1,0 +1,68 @@
+<div class="container">
+  <div class="border-bottom title-part-padding">
+    <h4 class="card-title mb-0">Lista de Personas</h4>
+  </div>
+  <div class="card-body mt-4">
+    <div class="row">
+      <div class="col-md-5">
+        <div>
+          <input type="text" class="form-control" 
+                placeholder="Buscar Persona" 
+                name="filtro"
+                (keyup.enter)="filtrar()" 
+                [(ngModel)]="filtro" >
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div>
+          <button class="
+                        btn btn-light-info
+                        text-info
+                        font-weight-medium
+                        d-flex
+                        align-items-center
+                      " type="button"
+                      (click)="filtrar()">
+                      Buscar
+                    </button>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex justify-content-end mb-2">
+    </div>
+    <div class="table-responsive">
+      <table id="demo-foo-addrow" class="table table-bordered m-t-30 table-hover contact-list footable footable-5 footable-paging footable-paging-center breakpoint-xs" data-paging="true" data-paging-size="7">
+        <thead>
+          <tr class="footable-header">
+              <th>Identificación</th>
+              <th>Nombre</th>
+              <th>Nuevo</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let x of personas | slice: (pagina-1)*pagesize : (pagina-1) * pagesize + pagesize">
+
+          <td style="display: table-cell;"><a>{{x.IDENTIFICACION}}</a></td>
+            <td style="display: table-cell;">{{x.NOMBRE}}</td>
+            <td style="text-align: center;" routerLink="//credito/new/{{x.ID}}">
+              <div>
+                <button 
+                  class="like btn-rounded" title="Nuevo" data-toggle="modal"
+                  >
+                  <i class="fas fa-plus" style="color:#016745;" routerLink="//credito/new/{{x.ID}}"></i>
+                </button>  
+              </div>
+            </td>
+          </tr>
+      </tbody>
+      </table>
+    </div>
+  </div>
+  <ngb-pagination [collectionSize]="personas.length" 
+                  [(page)]="pagina" 
+                  [pageSize]="pagesize"
+                  [maxSize]="5" 
+                  [rotate]="true"
+                  [boundaryLinks]="true">
+  </ngb-pagination>
+</div>

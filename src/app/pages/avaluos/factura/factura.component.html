@@ -1,0 +1,173 @@
+<div class="row">
+    <div class="col-lg-6 d-flex align-items-stretch">
+      <div class="card w-100">
+        <form
+        [formGroup]="factAvaluoForm"
+        (ngSubmit)="guardarFactura()">
+          <div class="card-body">
+            <h4 class="card-title">Facturas de Avalúo</h4>       
+            <div class="example-flex-container">
+              <div class="mb-3 mb-0 text-start">
+                <button type="submit" class="btn" data-toggle="tooltip" data-placement="right" title="Guardar">
+                    <i class="fa fa-save"></i>
+                </button>
+                <button type="button" class="btn" data-toggle="tooltip" data-placement="right" title="Salir">
+                    <a routerLink="//avaluo/edit/{{id_avaluo}}">
+                      <i class="fa fa-close"></i>
+                    </a>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <h4 class="card-title">Información de Factura</h4>
+            <div class="row">
+              <div class="col-sm-12 col-md-7">
+                <div class="mb-3">
+                  <label class="control-label col-form-label">Tipo Profesional</label>
+                  <select (change)="changetipoProfesional($event.target.value)"
+                  class="form-control form-select"
+                  data-placeholder="Seleccionar Tipo de Profesional" formControlName="TIPO_CTZCN"
+                  required>
+                  <option *ngFor="let x of profesion" value={{x.ID_PROFESION}}>
+                    {{x.PROFESION}} 
+                  </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-12">
+                  <div class="mb-3">
+                    <label class="control-label col-form-label" >
+                      Profesional Responsable 
+                    </label>
+                    <select class="form-control form-select" formControlName="PROFESIONAL_ID" required>
+                    <option *ngFor="let x of profesional" value={{x.ID_PROFESIONAL}}>
+                        {{x.NOMBRE}} 
+                    </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row" >
+                <div class="col-sm-12 col-md-6">
+                  <div class="mb-3">
+                    <label class="control-label col-form-label">Número Factura</label>
+                    <input type="text" class="form-control" formControlName="NUM_FACTURA" maxlength="50">
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <div class="mb-3">
+                        <label class="control-label col-form-label">Fecha de Pago</label>
+                        <input type="date" class="form-control" id="fecha" formControlName="FECHA_PAGO">
+                      </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 col-md-6">
+                  <div class="mb-3">
+                    <label  class="control-label col-form-label">Monto Factura</label>
+                    <input type="number" class="form-control" formControlName="MONTO">
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <div class="mb-3">
+                        <label  class="control-label col-form-label">Método Pago</label>
+                        <select (change)="changeMetodoPago($event.target.value)" class="form-control form-select" formControlName="METODO_PAGO" required>
+                            <option *ngFor="let x of mtdoPago" value={{x.ID_METODO_PAG}}>
+                                {{x.METODO}} 
+                            </option>
+                            </select>
+                      </div>
+                </div>                
+              </div>
+              <div *ngIf="metodo == 1" class="row">
+                <div class="col-sm-12 col-md-6">
+                  <div class="mb-3">
+                    <label  class="control-label col-form-label">Entidad Financiera</label>
+                    <select class="form-control form-select" formControlName="BANCO" required>
+                      <option *ngFor="let x of entidades" value={{x.ID_ENTIDAD_FIN}}>
+                          {{x.ENTIDAD}} 
+                      </option>
+                      </select>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                  <div class="mb-3">
+                    <label  class="control-label col-form-label">Número Depósito</label>
+                    <input type="text" class="form-control" formControlName="NUM_DEPOSITO" maxlength="30">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12" >
+                  <div class="mb-3">
+                    <label  class="control-label col-form-label">Observaciones</label>
+                    <input type="text" class="form-control" placeholder="Observaciones Factura" 
+                    formControlName="OBSERVACIONES" maxlength="100">
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="existe" class="row border-top">
+                <div class="col-sm-12">
+                  <div class="md-3">
+                    <h4 class="card-title m-3">Archivo de Factura</h4>
+                    <div *ngIf="archivoLength == true"  class="mb-3 mb-0 text-start">
+                    <button type="button" (click)="uploadFactura()"   class="btn" data-toggle="tooltip" data-placement="right" title="Guardar">
+                      <i class="fa fa-save"></i>
+                  </button>
+                    </div>
+                    <div class="col-sm-12">
+                        <input class="form-control" type="file" (change)="checkFileInput($event)" 
+                          #fileInput  formControlName="DOC">
+                        <div class="m-2">
+                          <a ><p></p></a>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="col-lg-6 d-flex align-items-stretch">
+      <div class="card w-100">
+        <h4 class="card-title m-3">Lista de Facturas</h4> 
+        <div class="card-body border-top">
+          <div class="row justify-content-center">
+            <div class="col-sm-12">
+                <div class="table-responsive">
+                    <table class="table table-borderless justify-content-center">
+                      <thead>
+                        <tr>
+                          <th scope="col">Nombre</th>
+                          <th scope="col">Monto</th>
+                          <th scope="col">Profesional</th>
+                          <th scope="col">Ver</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let x of facturas">
+                          <td>{{x.NOMBRE}}</td>
+                          <td>{{x.MONTO | number: '3.2-2'}}</td>
+                          <td>{{x.PROFESION}}</td>
+                          <td *ngIf="x.ESTADO == 'A'" >
+                            <div>
+                              <button id= "buttonIcon" type="button" class="btn btn-success" 
+                              (click)="cargarFacturaID(x.REFERENCIA_FACT,x.ID_FACTURA)">
+                                <i class="fas fa-eye"></i>
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>    
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

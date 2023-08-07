@@ -1,0 +1,156 @@
+<div class="row">
+    <div class="col-12">
+      <div class="card">
+        <form class="form-horizontal"
+        [formGroup]="creditForm"
+        (submit)="guardarOperacion()">
+          <div class="card-body">
+            <div class="card-body border-bottom">
+              <button type="submit" class="btn" data-toggle="tooltip" data-placement="right" title="Guardar">
+                  <i class="fa fa-save"></i>
+              </button>
+              <button type="button" class="btn" data-toggle="tooltip" data-placement="right" title="Salir" routerLink="//credito/">
+                  <a>
+                    <i class="fa fa-close"></i>
+                  </a>
+              </button>
+          </div>
+          <div class="row animated fadeIn fast" *ngIf="cargando">
+            <div class="col-12">
+                <div class="alert alert-success text-center">
+                    <h4 class="alert-heading">Cargando</h4>
+                    <i class="fa fa-spin fa-refresh fa-2x"></i>
+                    <p class="mb-0">Por favor espere</p>
+                </div>
+            </div>
+          </div>
+          <div *ngIf="!cargando">
+            <h4 class="card-title">Información Personal</h4>
+            <div class="bm-3 row">
+              <label for="fname" class="col-sm-3 text-end control-label col-form-label">Identificación</label>
+              <div class="col-sm-5">
+                <input type="text" class="form-control" id="fname" placeholder="Identificación del Deudor" 
+                  formControlName="CEDULA" [attr.disabled]="true">
+              </div>
+            </div>
+            <div class="mb-3 row">
+              <label for="cono1" class="col-sm-3 text-end control-label col-form-label">Deudor</label>
+              <div class="col-sm-5">
+                <input type="text" class="form-control" id="cono1" formControlName="NOMBRE" [attr.disabled]="true">
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="card-body">
+            <h4 class="card-title">Información de Crédito</h4>
+            <div class="row">
+              <div class="col-sm-12 col-lg-6">
+                <div class="mb-3 row">
+                  <label for="email2" class="col-sm-3 text-end control-label col-form-label">Id Operación</label>
+                  <div class="col-sm-9">
+                    <input type="email" class="form-control" id="email2" placeholder="Número de Operación" 
+                    formControlName="IDOPERACION">
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12 col-lg-6">
+                <div class="mb-3 row">
+                  <label for="web1" class=" col-sm-3 text-end control-label col-form-label">Línea de Crédito</label>
+                  <div class="col-sm-9">
+                    <select class="form-control form-select" formControlName="LINEA_CRED">
+                      <option *ngFor="let x of lineaCred" value={{x.COD_CRED}}>{{x.COD_CRED}}-{{x.LINEA_CREDITO}}</option>
+                      </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 col-lg-6">
+                <div class="mb-3 row">
+                  <label for="cono12" class="col-sm-3 text-end control-label col-form-label">Monto</label>
+                  <div class="col-sm-9">
+                    <input type="number" class="form-control" id="cono12" placeholder="Monto de Crédito"
+                    formControlName="MONTO" currency>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12 col-lg-6">
+                <div class="mb-3 row">
+                  <label for="bio1" class="col-sm-3 text-end control-label col-form-label">Formalizado</label>
+                  <div class="col-sm-9">
+                    <input type="date" class="form-control" formControlName="FECHA_FORMALIZACION">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-lg-6">
+                  <div class="mb-3 row">
+                    <label class="col-sm-3 text-end control-label col-form-label">Garantía</label>
+                    <div class="col-sm-9">
+                        <select class="form-control form-select" formControlName="GARANTIA">
+                            <option *ngFor="let x of garantia" value={{x.ID_GARANTIA}}>{{x.GARANTIA}}</option>
+                          </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-lg-6">
+                  <div class="mb-3 row">
+                    <label class=" col-sm-3 text-end control-label col-form-label">Plan de Inversión</label>
+                    <div class="col-sm-9">
+                      <select class="form-control form-select" formControlName="PLAN_INVERSION">
+                        <option *ngFor="let x of inversion" value={{x.COD_INV}}>{{x.TIPO_INVERSION}}</option>
+                        </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <div class="row">
+                <div class="col-sm-12 col-lg-6">
+                  <div class="mb-3 row">
+                    <label class="col-sm-3 text-end control-label col-form-label">Tasa Interes</label>
+                    <div class="col-sm-9">
+                      <input type="number" class="form-control" id="email2" placeholder="Tasa de Interes"
+                      formControlName="TASA" currency min = 1>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-lg-6">
+                  <div class="mb-3 row">
+                    <label for="web1" class=" col-sm-3 text-end control-label col-form-label">Analista Crédito</label>
+                    <div class="col-sm-9">
+                      <select class="form-control form-select" formControlName="ANALISTA">
+                        <option *ngFor="let x of usuarios" value={{x.EMAIL}}>
+                            {{x.NOMBRE}} {{x.APELLIDO1}} {{x.APELLIDO2}}
+                        </option>
+                        </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <div class="row">
+                <div class="col-sm-12 col-lg-6">
+                  <div class="mb-3 row">
+                    <label for="email2" class="col-sm-3 text-end control-label col-form-label">Comisión</label>
+                    <div class="col-sm-9">
+                      <input type="number" class="form-control" id="email2" placeholder="Comisión en ₡" 
+                      formControlName="COMISION" currency>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-lg-6">
+                  <div class="mb-3 row">
+                    <label for="web1" class=" col-sm-3 text-end control-label col-form-label">Intereses</label>
+                    <div class="col-sm-9">
+                        <input type="number" class="form-control" id="email2" placeholder="Intereses Anticipados en ₡" 
+                        formControlName="INTERESES_ANT" currency>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>

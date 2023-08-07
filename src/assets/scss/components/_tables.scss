@@ -1,0 +1,26 @@
+// 
+// Table Common
+// 
+
+.table thead th,
+.table th {
+  font-weight: 500;
+}
+
+// 
+// Data-tables
+// 
+table.dataTable {
+  thead {
+    th,
+    td {
+      border-bottom-color: $border-color;
+      text-align: center;
+    }
+  }
+  tbody {
+    td {
+      text-align: center;
+    }
+  }
+}

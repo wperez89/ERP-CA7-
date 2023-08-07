@@ -1,0 +1,126 @@
+<div class="col-lg-12">
+    <div class="card">
+      <div class="card-header bg-success">
+        <h4 class="mb-0 text-white">Registro de Usuarios</h4>
+      </div>
+      <form autocomplete="off"
+      [formGroup]="userUpdateForm"
+      (submit)="updateUsuarios()"
+      >
+        <div>
+          <div class="card-body">
+            <div class="row pt-3">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label class="control-label">Nombre</label>
+                  <input type="text" 
+                  style="text-transform:uppercase;"
+                  id="firstName" 
+                  class="form-control" 
+                  formControlName="NOMBRE"
+                  required>
+                  <small class="form-control-feedback">
+                    This is inline help
+                  </small>
+                </div>
+              </div>
+              <!--/span-->
+              <div class="col-md-6">
+                <div class="mb-3 has-danger">
+                  <label class="control-label">Primer Apellido</label>
+                  <input type="text" 
+                  style="text-transform:uppercase;"
+                  id="lastName1" 
+                  class="form-control form-control-danger"
+                  required
+                  formControlName="APELLIDO1">
+                  <small class="form-control-feedback">
+                    This field has error.
+                  </small>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="mb-3 has-danger">
+                  <label class="control-label">Segundo Apellido</label>
+                  <input type="text" 
+                  style="text-transform:uppercase;"
+                  name="APELLIDO2"
+                  id="lastName2" 
+                  class="form-control form-control-danger"
+                  formControlName="APELLIDO2"
+                  >
+                  <small class="form-control-feedback">
+                    This field has error.
+                  </small>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="mb-3 has-danger">
+                  <label class="control-label">Correo Electrónico</label>
+                  <input type="text" id="email" 
+                  style="text-transform:lowercase;"
+                  class="form-control form-control-danger" 
+                  formControlName="EMAIL" required>
+                  <small class="form-control-feedback">
+                    This field has error.
+                  </small>
+                </div>
+              </div>
+              <div *ngIf="rolAsignado === '89296D84-A0C6-4D26-8415-181AED733F30'" class="row">
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label class="control-label">Rol</label>
+                    <select 
+                    class="form-control form-select" 
+                    data-placeholder="Seleccionar Rol de Usuario" 
+                    id="rol" 
+                    formControlName="ROL"
+                    required>
+                    <option *ngFor="let x of rol" value={{x.ID_ROL}}>{{x.ROL}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                      <label class="control-label">Estado</label>
+                      <select 
+                      class="form-control form-select" 
+                      data-placeholder="Seleccionar Rol de Usuario" 
+                      id="rol" 
+                      formControlName="ESTADO"
+                      required>
+                      <option *ngFor="let x of estado" value={{x.ID_ESTADO}}>{{x.ESTADO}}</option>
+                      </select>
+                    </div>
+                  </div>
+                <!--/span-->
+              </div>
+              <!--/span-->
+            </div>
+            <!--/row-->
+      
+          </div>
+          <div class="form-actions">
+            <div class="card-body border-top">
+              <button type="submit" class="btn btn-success rounded-pill px-4">
+                <div class="d-flex align-items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-save feather-sm me-1 fill-icon"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                  Actualizar
+                </div>
+              </button>
+              <button type="button" class="
+                  btn btn-danger
+                  rounded-pill
+                  px-4
+                  ms-2
+                  text-white">
+                  <a routerLink="//usuario/">
+                    Cancelar
+                  </a>
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>

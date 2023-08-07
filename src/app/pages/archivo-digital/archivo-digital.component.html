@@ -1,0 +1,98 @@
+
+<section class="intro">
+    <div class="bg-image h-100">
+      <div class="mask d-flex align-items-center h-100">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-12 col-lg-5">
+              <div class="mb-3 row">
+                <label class="col-sm-2 text-end control-label col-form-label">Buscar</label>
+                <div class="col-sm-5">
+                  <input type="text" class="form-control" placeholder="Buscar"  name="filtro"
+                  (keyup.enter)="filtrar()" 
+                  [(ngModel)]="filtro">
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-5" style="float: right;">
+              <div class="mb-3 row">
+                <label for="web1" class=" col-sm-3 text-end control-label col-form-label">Area</label>
+                <div class="col-sm-9">
+                  <select [(ngModel)]="areaSelected" (ngModelChange)="changeArea()" class="form-control form-select" >
+                    <option *ngFor="let x of AreaDoc" value={{x.ID_AREADOC}}>{{x.NOMBRE}}</option>
+                    <option value=0>Todos</option>
+                    </select>
+                </div>
+              </div> 
+            </div>
+            <div class="col-sm-12 col-lg-6 mb-4" style="float: right;">
+              <button type="button" class="btn btn-success" data-toggle="tooltip" data-placement="right" 
+                title="Agregar Documentos" routerLink="/archivo-digital/addDocument">
+            <a>
+              <i class="fa fa-plus"></i>
+            </a>
+        </button>
+            </div> 
+          </div>
+          <div class="row animated fadeIn fast" *ngIf="cargando">
+            <div class="col-12">
+                <div class="alert alert-success text-center">
+                    <h4 class="alert-heading">Cargando</h4>
+                    <i class="fa fa-spin fa-refresh fa-2x"></i>
+                    <p class="mb-0">Por favor espere</p>
+                </div>
+            </div>
+          </div>
+          <div class="row justify-content-center" *ngIf="!cargando">
+            <div class="col-12">
+              <div class="card shadow-2-strong">
+                <div class="card-body">
+                  <H4 *ngIf="variable == 'A'">Lista de Profesionales Activos</H4>
+                  <H4 *ngIf="variable == 'I'">Lista de Profesionales Inactivos</H4>
+                  
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col">Tipo Documento</th>
+                          <th scope="col">Área</th>
+                          <th scope="col">N° Sesión</th>
+                          <th scope="col">Fecha</th>
+                          <th scope="col">Acción</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let x of documentos | slice: (pagina-1)*pagesize : (pagina-1) * pagesize + pagesize">
+                          <td>{{x.DOCUMENTO}}</td>
+                          <td>{{x.TIPO_AREA}}</td>
+                          <td>{{x.NUM_SESION}}</td>
+                          <td>{{x.FECHA | date:'dd/MM/YYYY'}}</td>
+                          <td>
+                            <button type="button" class="btn btn-success btn-sm px-3" title="Descargar" 
+                                    (click)="verPDF(x.ARCHIVO)">
+                              <i class="fas fa-eye"></i>
+                            </button>
+                            <button type="button" class="btn btn-danger btn-sm px-3" title="Borrar" 
+                                    (click)="EliminarDocumento(x.ID_ARCHIVO,x.ARCHIVO)">
+                              <i class="fas fa-close"></i>
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <ngb-pagination [collectionSize]="documentos.length" 
+                  [(page)]="pagina" 
+                  [pageSize]="pagesize"
+                  [maxSize]="5" 
+                  [rotate]="true"
+                  [boundaryLinks]="true">
+          </ngb-pagination>
+        </div>
+      </div>
+    </div>
+  </section>

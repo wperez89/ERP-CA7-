@@ -1,0 +1,73 @@
+<div class="container">
+  <div class="border-bottom title-part-padding">
+    <h4 class="card-title mb-0">Lista de Personas</h4>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-5">
+        <div>
+          <input type="text" class="form-control" 
+                placeholder="Buscar Usuario" 
+                name="filtro"
+                (keyup.enter)="filtrar()" 
+                [(ngModel)]="filtro" >
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div>
+          <button class="
+                        btn btn-light-info
+                        text-info
+                        font-weight-medium
+                        d-flex
+                        align-items-center
+                      " type="button"
+                      (click)="filtrar()">
+                      Buscar
+                    </button>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex justify-content-end">
+      <button type="button" class="btn btn-success btn-rounded m-t-10 mb-2" data-bs-toggle="modal" data-bs-target="#add-user">
+        <a routerLink="//persona/newperson">
+          Nueva Persona
+        </a>
+      </button>
+    </div>
+    <div class="table-responsive">
+      <table id="demo-foo-addrow" class="table table-bordered m-t-30 table-hover contact-list footable footable-5 footable-paging footable-paging-center breakpoint-xs" data-paging="true" data-paging-size="7">
+        <thead>
+          <tr class="footable-header">
+              <th>Identificación</th>
+              <th>Nombre</th>
+              <th>Editar</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let x of personas | slice: (pagina-1)*pagesize : (pagina-1) * pagesize + pagesize">
+
+          <td style="display: table-cell;"><a>{{x.IDENTIFICACION}}</a></td>
+            <td style="display: table-cell;">{{x.NOMBRE}}</td>
+            <td style="text-align: center; ">
+              <div>
+                <button 
+                  class="like btn-rounded" title="Editar" data-toggle="modal"
+                  >
+                  <i class="fas fa-edit" style="color:#016745;" routerLink="//persona/editperson/{{x.TIPO_PERSONA}}/{{x.ID}}"></i>
+                </button>  
+              </div>
+            </td>
+          </tr>
+      </tbody>
+      </table>
+    </div>
+  </div>
+  <ngb-pagination [collectionSize]="personas.length" 
+                  [(page)]="pagina" 
+                  [pageSize]="pagesize"
+                  [maxSize]="5" 
+                  [rotate]="true"
+                  [boundaryLinks]="true">
+  </ngb-pagination>
+</div>

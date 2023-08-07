@@ -1,0 +1,27 @@
+.tabs {
+    display: flex;
+  }
+  
+  .tab {
+    cursor: pointer;
+    padding: 10px;
+    margin-right: 10px;
+    background-color: lightgray;
+    border: 1px solid gray;
+    border-radius: 5px;
+  }
+  
+  .tab:hover {
+    background-color: gray;
+    color: white;
+  }
+  
+  .tab.active {
+    background-color: darkgray;
+    color: white;
+  }
+  
+  .tab-content {
+    margin-top: 10px;
+  }
+  

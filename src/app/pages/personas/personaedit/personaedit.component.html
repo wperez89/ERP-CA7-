@@ -1,0 +1,203 @@
+<div class="row">
+    <div class="col-lg-6 d-flex align-items-stretch">
+      <div class="card w-100">
+        <form autocomplete="off"
+        [formGroup]="personEditForm"
+        (submit)="ActualizarPersonas()">
+          <div class="card-body">
+            <h4 class="card-title">Editar Personas</h4>       
+            <div class="example-flex-container">
+              <div class="mb-3 mb-0 text-start">
+                <button type="submit" class="btn" data-toggle="tooltip" data-placement="right" title="Guardar">
+                    <i class="fa fa-save"></i>
+                </button>
+                <button type="button" class="btn" data-toggle="tooltip" data-placement="right" title="Salir"
+                    routerLink="//persona/">
+                  <a>
+                      <i class="fa fa-close"></i>
+                    </a>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <h4 class="card-title">Información Personal</h4>
+            <div class="row">
+              <div class="col-sm-12 col-md-7">
+                <div class="mb-3">
+                  <label for="inputname" class="control-label col-form-label">Tipo Persona</label>
+                  <select 
+                  class="form-control form-select" 
+                  data-placeholder="Seleccionar Tipo de Género" 
+                  id="Rol" 
+                  formControlName="TIPO_PERSONA"
+                  required [attr.disabled]="true">
+                  <option *ngFor="let x of tipoPersona" value={{x.COD_PERSONA}}>
+                    {{x.DESCRIPCION}} 
+                  </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-5">
+                <div class="mb-3">
+                  <label for="inputlname" class="control-label col-form-label">Identificación</label>
+                  <input type="text" class="form-control" id="Identificación" formControlName="IDENTIFICACION" 
+                    [attr.disabled]="true">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-12">
+                  <div class="mb-3">
+                    <label for="inputname" class="control-label col-form-label" *ngIf="TipoSeleccionado != 2">
+                      Nombre 
+                    </label>
+                    <label for="inputname" class="control-label col-form-label" *ngIf="TipoSeleccionado == 2">
+                      Razón Social
+                    </label>
+                    <input type="text" class="form-control" id="Nombre" formControlName="NOMBRE" style="font-size:14px">
+                  </div>
+                </div>
+              </div>
+              <div class="row" *ngIf="TipoSeleccionado != 2">
+                <div class="col-sm-12 col-md-6">
+                  <div class="mb-3">
+                    <label for="inputname" class="control-label col-form-label">Primer Apellido</label>
+                    <input type="text" class="form-control" id="inputname" formControlName="APELLIDO1">
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                  <div class="mb-3">
+                    <label for="inputlname" class="control-label col-form-label">Segundo Apellido</label>
+                    <input type="text" class="form-control" id="Identificación" formControlName="APELLIDO2">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 col-md-6" *ngIf="TipoSeleccionado != 2">
+                  <div class="mb-3">
+                    <label for="inputname" class="control-label col-form-label">Genero</label>
+                    <select 
+                  class="form-control form-select" 
+                  data-placeholder="Seleccionar Tipo de Género" 
+                  id="Rol" 
+                  formControlName="GENERO"
+                  required>
+                    <option *ngFor="let x of tipoGenero" value={{x.ID_GENERO}}>{{x.GENERO}}</option>
+                  </select>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                  <div class="mb-3">
+                    <label for="inputlname" class="control-label col-form-label" *ngIf="TipoSeleccionado != 2">
+                      Fecha Nacimiento
+                    </label>
+                    <label for="inputlname" class="control-label col-form-label" *ngIf="TipoSeleccionado == 2">
+                      Fecha Constitución
+                    </label>
+                    <input type="date" class="form-control" id="fecha" formControlName="FECHA">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 col-md-6">
+                  <div class="mb-3">
+                    <label for="inputname" class="control-label col-form-label" *ngIf="TipoSeleccionado != 2">
+                      Pais Nacimiento
+                    </label>
+                    <label for="inputname" class="control-label col-form-label" *ngIf="TipoSeleccionado == 2">
+                      Pais Constitución
+                    </label>
+                    <select 
+                  class="form-control form-select" 
+                  data-placeholder="Seleccionar Tipo de Género" 
+                  id="Rol" 
+                  formControlName="PAIS"
+                  required>
+                    <option *ngFor="let x of tipoPais" value={{x.COD_PAIS}} [selected]="x === paisDefault">{{x.PAIS}}</option>
+                  </select>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                  <div class="md-3">
+                    <label for="inputlname" class="control-label col-form-label">APNFDS</label>
+                    <div class="col-md-8 col-sm-9">
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input success" type="radio" name="APNFDS" id="success-radio" 
+                          formControlName="APNFDS" [value]="true">
+                        <label class="form-check-label" for="success-radio">SI</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input success" type="radio" name="APNFDS" id="success2-radio"
+                          formControlName="APNFDS" [value]="false">
+                        <label class="form-check-label" for="success2-radio">NO</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="col-lg-6 d-flex align-items-stretch">
+      <div class="card w-100">
+        <form autocomplete="off"
+        [formGroup]="datosForm"
+        >
+        <div class="card-body pb-0">
+          <h4 class="card-title">Datos Personales</h4>         
+        </div>
+        <div class="card-body border-top">
+          <h4 class="card-title mb-3">Imagen Perfil</h4>
+          <div class="row justify-content-center">
+            <div class="col-sm-12 col-md-6">
+              <div class="text-center">
+                <img src="../../../../assets/images/users/user4.jpg" alt="image" class="rounded-circle" width="200">
+              </div>
+            </div>
+            <div class="p-3">
+              <input class="form-control" type="file" id="formFile">
+            </div>
+          </div>
+        </div>
+        <div class="card-body border-top">
+          <div class="row">
+            <div class="col-12">
+              <div class="mb-3">
+                <label for="email1" class="control-label col-form-label">Email Personal</label>
+                <input type="email" class="form-control" id="EMAIL" placeholder="Correo Personal" formControlName="EMAIL">
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="mb-3">
+                <label for="email1" class="control-label col-form-label">Email Laboral</label>
+                <input type="email" class="form-control" id="EMAIL" placeholder="Correo Trabajo" formControlName="EMAIL_LAB">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-4">
+              <div class="mb-3">
+                <label class="control-label col-form-label">Celular</label>
+                <input type="text" mask="0000-0000" class="form-control" id="TEL_CEL" formControlName="TEL_CEL">
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-4">
+              <div class="mb-3">
+                <label class="control-label col-form-label">Telefono Casa</label>
+                <input type="text" class="form-control" id="TEL_CASA" formControlName="TEL_CASA">
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-4">
+              <div class="mb-3">
+                <label class="control-label col-form-label">Teléfono Trabajo</label>
+                <input type="text" class="form-control" id="TEL_TRABAJO"  formControlName="TEL_TRABAJO">
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>

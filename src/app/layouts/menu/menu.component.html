@@ -1,0 +1,179 @@
+<!-- ============================================================== -->
+<!-- Main wrapper - style you can find in pages.scss -->
+<!-- ============================================================== -->
+<div id="main-wrapper" [ngClass]="{'show-sidebar': showMobileMenu}" [dir]="options.dir"
+    [attr.data-theme]="options.theme" [attr.data-layout]="options.layout" [attr.data-sidebartype]="options.sidebartype"
+    [attr.data-sidebar-position]="options.sidebarpos" [attr.data-header-position]="options.headerpos"
+    [attr.data-boxed-layout]="options.boxed">
+    <!-- ============================================================== -->
+    <!-- Topbar header - style you can find in topbar.scss -->
+    <!-- ============================================================== -->
+    <header class="topbar" [attr.data-navbarbg]="options.navbarbg">
+        <nav class="d-flex top-navbar navbar-expand-lg"
+            [ngClass]="(options.navbarbg=='skin6')?'navbar-light':'navbar-dark'">
+            <div class="navbar-header" [ngClass]="(expandLogo)?'expand-logo':''" [attr.data-logobg]="options.logobg">
+                <!-- This is for the sidebar toggle which is visible on mobile only -->
+                <a (click)="showMobileMenu = !showMobileMenu"
+                    class="nav-toggler waves-effect waves-light d-block d-lg-none" href="javascript:void(0)">
+                    <i [ngClass]="(showMobileMenu)?'ti-close':'ti-menu'"></i>
+                </a>
+                <!-- ============================================================== -->
+                <!-- Logo -->
+                <!-- ============================================================== -->
+                <a class="navbar-brand" href="/">
+                    <!-- Logo icon -->
+                    <b class="logo-icon">
+                        <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
+                        <!-- Dark Logo icon -->
+                        <img src="../../../assets/logo/logoCA7 icon.png" alt="homepage" class="dark-logo" />
+                        <!-- Light Logo icon -->
+                        <img src="../../../assets/logo/logoCA7 icon.png" alt="homepage" class="light-logo" />
+                    </b>
+                    <!--End Logo icon -->
+                    <!-- Logo text -->
+                    <span class="logo-text">
+                        <!-- dark Logo text -->
+                        <img src="../../../assets/logo/logoCA7_text1.png" alt="homepage" class="dark-logo" />
+                        <!-- Light Logo text -->
+                        <img src="../../../assets/logo/logoCA7_text1.png" class="light-logo" alt="homepage" />
+                    </span>
+                </a>
+                <!-- ============================================================== -->
+                <!-- End Logo -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Toggle which is visible on mobile only -->
+                <!-- ============================================================== -->
+                <a class="topbartoggler d-block d-lg-none waves-effect waves-light" href="javascript:void(0)"
+                    (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent">
+                    <i class="ti-more"></i>
+                </a>
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Logo -->
+            <!-- ============================================================== -->
+            <div class="navbar-collapse collapse" id="navbarSupportedContent" [ngbCollapse]="!isCollapsed"
+                [attr.data-navbarbg]="options.navbarbg">
+                <!-- Horizontal Header -->
+                <div *ngIf="options.layout==='horizontal' else vheader" class="w-100">
+                    <app-horizontal-navigation class="w-100 d-flex align-items-center">
+                    </app-horizontal-navigation>
+                </div>
+
+                <!-- Vertical Header -->
+                <ng-template #vheader>
+                    <div class="w-100">
+                        <app-vertical-navigation (toggleSidebar)="toggleSidebarType()">
+                        </app-vertical-navigation>
+                    </div>
+                </ng-template>
+            </div>
+        </nav>
+    </header>
+    <!-- ============================================================== -->
+    <!-- Left Sidebar - style you can find in sidebar.scss  -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Page wrapper  -->
+    <!-- ============================================================== -->
+    <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">
+            <!-- ============================================================== -->
+            <!-- Start Page Content -->
+            <!-- ============================================================== -->
+            <!-- Row -->
+<div class="row">
+    <!-- column -->
+    <div class="col-lg-3 col-md-6">
+        <!-- Card -->
+        <a routerLink="/persona/">
+            <div class="text-center">
+                <img src="../../../assets/images/tooltip/shape1.svg" alt="image" class="
+                rounded" width="200">
+            </div>
+            <h3 class="text-center">Personas</h3>
+        </a>
+        <!-- Card -->
+    </div>
+    <!-- column -->
+    <!-- column -->
+    <div class="col-lg-3 col-md-6">
+        <!-- Card -->
+        <a routerLink="/usuario/">
+            <div class="text-center">
+                <img src="../../../assets/images/tooltip/shape1.svg" alt="image" class="
+                rounded" width="200">
+            </div>
+            <h3 class="text-center">Usuarios</h3>
+        </a>
+        <!-- Card -->
+    </div>
+    <!-- column -->
+    <!-- column -->
+    <div class="col-lg-3 col-md-6">
+        <!-- Card -->
+        <a routerLink="/avaluo/">
+        <div class="text-center">
+            <img src="../../../assets/images/tooltip/shape1.svg" alt="image" class="
+            rounded" width="200">
+        </div>
+        <h3 class="text-center">Avaluos</h3>
+        <!-- Card -->
+        </a>
+    </div>
+    <!-- column -->
+     <!-- column -->
+     <div class="col-lg-3 col-md-6">
+        <!-- Card -->
+        <div class="text-center">
+            <img src="../../../assets/images/tooltip/shape1.svg" alt="image" class="
+            rounded" width="200">
+        </div>
+        <h3 class="text-center">Credito</h3>
+        <!-- Card -->
+    </div>
+    <!-- column -->
+    <!-- column -->
+    <div class="col-lg-3 col-md-6">
+        <!-- Card -->
+        <a routerLink="/credito/">
+        <div class="text-center">
+            <img src="../../../assets/images/tooltip/shape1.svg" alt="image" class="
+            rounded" width="200">
+        </div>
+        <h3 class="text-center">Credito</h3>
+        <!-- Card -->
+        </a>
+    </div>
+    <!-- column -->
+</div>
+<!-- Row -->
+            <!-- ============================================================== -->
+            <!-- End Start Page Content -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Container fluid  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- footer -->
+        <!-- ============================================================== -->
+        <footer class="footer text-center">
+            Tecnología de Información - CA7 2023
+        </footer>
+        <!-- ============================================================== -->
+        <!-- End footer -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Page wrapper  -->
+    <!-- ============================================================== -->
+
+</div>

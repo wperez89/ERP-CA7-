@@ -1,0 +1,165 @@
+
+<section class="intro">
+    <div class="bg-image h-100">
+      <div class="mask d-flex align-items-center h-100">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-12 col-lg-5">
+              <div class="mb-3 row">
+                <label class="col-sm-2 text-end control-label col-form-label">Buscar</label>
+                <div class="col-sm-5">
+                  <input type="text" class="form-control" placeholder="Buscar"  name="filtro"
+                  (keyup.enter)="filtrar()" 
+                  [(ngModel)]="filtro">
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-3" style="float: right;">
+              <div class="mb-3 row">
+                <label for="web1" class=" col-sm-3 text-end control-label col-form-label">Estado</label>
+                <div class="col-sm-9">
+                  <select (change)="obtenerValorEstado($event.target.value)" class="form-control form-select" 
+                          [(ngModel)]="variable" >
+                    <option *ngFor="let x of estados" value={{x.ID_ESTADO}}>{{x.ESTADO}}</option>
+                    </select>
+                </div>
+              </div> 
+            </div>
+            <div class="col-sm-12 col-lg-6 mb-4" style="float: right;">
+              <button type="button" class="btn btn-success" data-toggle="tooltip" data-placement="right" 
+                title="Agregar Avalúo" (click)="modalOpenBackdrop(modalAvaluoNew)">
+            <a>
+              <i class="fa fa-plus"></i>
+            </a>
+        </button>
+            </div> 
+          </div>
+          <div class="row animated fadeIn fast" *ngIf="cargando">
+            <div class="col-12">
+                <div class="alert alert-success text-center">
+                    <h4 class="alert-heading">Cargando</h4>
+                    <i class="fa fa-spin fa-refresh fa-2x"></i>
+                    <p class="mb-0">Por favor espere</p>
+                </div>
+            </div>
+          </div>
+          <div class="row justify-content-center" *ngIf="!cargando">
+            <div class="col-12">
+              <div class="card shadow-2-strong">
+                <div class="card-body">
+                  <H4 *ngIf="variable == 'A'">Lista de Profesionales Activos</H4>
+                  <H4 *ngIf="variable == 'I'">Lista de Profesionales Inactivos</H4>
+                  
+                  <div class="table-responsive">
+                    <table class="table table-borderless mb-0">
+                      <thead>
+                        <tr>
+                          <th scope="col">Identificación</th>
+                          <th scope="col">Nombre</th>
+                          <th scope="col">Profesión</th>
+                          <th scope="col">Acción</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let x of profesionales">
+                          <td>{{x.IDENTIFICACION}}</td>
+                          <td>{{x.NOMBRE}}</td>
+                          <td>{{x.PROFESION}}</td>
+                          <td *ngIf="variable == 'A'">
+                            <button type="button" class="btn btn-danger btn-sm px-3"  title="Desactivar" 
+                                    (click)="desactivarProfesional(x.ID_PROFESIONAL)">
+                              <i class="fas fa-close" ></i>
+                            </button>
+                          </td>
+                          <td *ngIf="variable == 'I'">
+                            <button type="button" class="btn btn-success btn-sm px-3" title="Activar" 
+                                    (click)="activarProfesional(x.ID_PROFESIONAL)">
+                              <i class="fas fa-check"></i>
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <ngb-pagination [collectionSize]="profesionales.length" 
+                  [(page)]="pagina" 
+                  [pageSize]="pagesize"
+                  [maxSize]="5" 
+                  [rotate]="true"
+                  [boundaryLinks]="true">
+          </ngb-pagination>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--Modal-->
+  <ng-template #modalAvaluoNew let-modal>
+    <form autocomplete="off" [formGroup]="professionalForm"
+    >
+      <div class="modal-header justify-content-center mt-2">
+        <a href="index.html">
+          <span>
+        <h2>Agregar Profesional</h2>    
+        </span>
+        </a>
+      </div>
+      <div class="modal-body px-4">
+        <div class="mb-3" *ngIf="!idPersona">
+          <label >Identificación</label>
+          <input
+            class="form-control"
+            type="text"
+            id="rolDescription"
+            formControlName="ID_PERSONA"
+            required
+            placeholder="Identificación de Profesional"/>
+        </div>
+        <div *ngIf="idPersona" class="mb-3">
+          <label >Nombre</label>
+          <input
+            class="form-control"
+            type="text"
+            id="rolDescription"
+            formControlName="NOMBRE"
+            required/>
+        </div>
+        <div *ngIf="idPersona" class="mb-3">
+            <label >Tipo Profesional</label>
+            <select class="form-control form-select" formControlName="TIPO_PROFESION">
+                <option *ngFor="let x of profesiones" value={{x.ID_PROFESION}}>{{x.PROFESION}}</option>
+                </select>
+          </div>
+        <div *ngIf="idPersona" class="mb-3">
+            <label >Obervaciones</label>
+            <input
+              class="form-control"
+              type="text"
+              formControlName="OBSERVACIONES"/>
+        </div>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button *ngIf="!idPersona"
+          class="btn btn-light-info text-info font-medium"
+          (click)="getpersonabyCedula()">
+          Mostrar
+        </button>
+        <button *ngIf="idPersona"
+          class="btn btn-light-info text-info font-medium"
+          (click)="GuardarProfesional()">
+          Guardar
+        </button>
+        <button type="button" class="
+                                  btn btn-light-danger
+                                  text-danger
+                                  font-weight-medium
+                                  waves-effect
+                                " (click)="closeModal()">
+                                Cerrar
+                              </button>
+      </div>
+    </form>
+  </ng-template>

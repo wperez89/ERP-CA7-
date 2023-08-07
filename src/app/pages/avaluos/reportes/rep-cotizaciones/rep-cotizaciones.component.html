@@ -1,0 +1,124 @@
+<h2 class="text-center">Reporte de Cotizaciones de Profesionales</h2> 
+<section class="intro">
+    <div class="bg-image h-100">
+      <div class="mask d-flex align-items-center h-100">
+        <div class="container">
+          <form [formGroup]="repProfesional"
+          (ngSubmit)="generarConsulta()">
+          <div class="row">
+            <div class="col-sm-3">
+                <div class="mb-3 row">
+                    <label for="web1" class=" col-sm-3 text-end control-label col-form-label">Estado</label>
+                    <div class="col-sm-9">
+                      <select  (change)="cambioEstado()"class="form-control form-select" 
+                            formControlName="ESTADO">
+                        <option></option>
+                        <option *ngFor="let x of estados" value={{x.ID_ESTADO}}>{{x.ESTADO}}</option>
+                        </select>
+                    </div>
+                  </div>   
+            </div>
+            <div class="col-sm-3">
+                    <div class="mb-3 row">
+                        <label class=" col-sm-4 text-end control-label col-form-label">Asignado</label>
+                        <div class="col-sm-8">
+                          <select class="form-control form-select" (change)="cambioEstado()" formControlName="ASIGNADO">
+                            <option></option>
+                            <option value=SI>SI</option>
+                            <option value=NO>NO</option>
+                            </select>
+                        </div>
+                    </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="mb-3 row">
+                  <label class=" col-sm-5 text-end control-label col-form-label">Tipo</label>
+                  <div class="col-sm-7">
+                    <select class="form-control form-select" (change)="cambioEstado()" formControlName="TIPO">
+                      <option></option>
+                      <option *ngFor="let x of profesiones" value={{x.PROFESION}}>{{x.PROFESION}}</option>
+                      </select>
+                  </div>
+              </div>
+      </div>
+            <div class="row">
+              <div class="col-sm-5">
+                <div class="mb-3 row">
+                    <label for="web1" class=" col-sm-3 text-end control-label col-form-label">Desde</label>
+                    <div class="col-sm-7">
+                        <input  (change)="cambioEstado()" class="form-control" type="date" formControlName="FECHA_INICIO">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-5">
+                <div class="mb-3 row">
+                    <label class=" col-sm-3 text-end control-label col-form-label">Hasta</label>
+                    <div class="col-sm-7">
+                        <input  (change)="cambioEstado()" class="form-control" type="date" formControlName="FECHA_FINAL">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-9 col-lg-6 mb-4" style="float: right;">
+              <button type="submit" class="btn" data-toggle="tooltip" data-placement="right" 
+                title="Consultar Reporte" >
+            <a>
+              Consultar
+            </a>
+        </button>
+
+            </div>
+          </div> 
+          </div>
+          <div class="row animated fadeIn fast" *ngIf="cargando">
+            <div class="col-12">
+                <div class="alert alert-success text-center">
+                    <h4 class="alert-heading">Cargando</h4>
+                    <i class="fa fa-spin fa-refresh fa-2x"></i>
+                    <p class="mb-0">Por favor espere</p>
+                </div>
+            </div>
+          </div>
+        </form>
+          <div class="row justify-content-center" *ngIf="!cargando">
+            <div class="col-12" *ngIf="informe.length !== 0">
+              <div class="card shadow-2-strong">
+                <div class="card-body">
+                    <table class="table table-borderless justify-content-center" >
+                      <thead>
+                        <tr>
+                          <th>N° Avaluo</th>
+                          <th>Cliente</th>
+                          <th>Profesional</th>
+                          <th>Tipo Ctzcn</th>
+                          <th>Monto</th>
+                          <th>Fecha</th>
+                          <th>Asignado</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let subItem of informe | slice: (pagina-1)*pagesize : (pagina-1) * pagesize + pagesize">
+                          <td>{{ subItem.ID_AVALUO }}</td>
+                          <td>{{ subItem.CLIENTE }}</td>
+                          <td>{{ subItem.PROFESIONAL }}</td>
+                          <td>{{ subItem.PROFESION }}</td>
+                          <td>{{ subItem.MONTO | number: '3.2-2' }}</td>
+                          <td>{{ subItem.FECHA_CTZCN | date: 'dd/MM/yyyy' }}</td>
+                          <td>{{ subItem.ASIGNADO }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <ngb-pagination *ngIf="informe.length > 0" [collectionSize]="informe.length" 
+                  [(page)]="pagina" 
+                  [pageSize]="pagesize"
+                  [maxSize]="5" 
+                  [rotate]="true"
+                  [boundaryLinks]="true">
+          </ngb-pagination>
+        </div>
+      </div>
+    </div>
+  </section>

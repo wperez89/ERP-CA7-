@@ -1,0 +1,46 @@
+
+    <div class="main-wrapper">
+      <!-- Login box.scss -->
+      <!-- ============================================================== -->
+      <div
+        class="auth-wrapper d-flex no-block justify-content-center align-items-center">
+        <div>
+          <div>
+            <div class="logo text-center">
+              <span 
+                ><img src="../../../assets/images/logo/logoCA7-login.png" alt="logo"
+              /></span>
+              <br>
+              <h2>Código OTP</h2>
+            </div>
+            <!-- Form -->
+            <div class="row">
+              <div class="col-12">
+                <form class="form-horizontal mt-3"
+                [formGroup]="otpForm" 
+                (ngSubmit)="validarOTP()">
+                  <div class="mb-3 row">
+                    <div class="col-12">
+                      <input
+                        class="form-control"
+                        type="text"
+                        required=""
+                        formControlName="OTP"
+                        placeholder="OTP"
+                      />
+                    </div>
+                  </div>
+                  <div class="text-center">
+                    <div class="col-xs-12">
+                      <button class="btn d-block w-100 btn-info" type="submit">
+                        Ingresar
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>

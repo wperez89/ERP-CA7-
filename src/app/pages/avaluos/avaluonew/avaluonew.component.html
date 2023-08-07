@@ -1,0 +1,11 @@
+<div class="tabs">
+    <div class="tab" [class.active]="activeTab === 'home'" (click)="cambiarTab('home')">Home</div>
+    <div class="tab" [class.active]="activeTab === 'info'" (click)="cambiarTab('info')">Info</div>
+    <div class="tab" [class.active]="activeTab === 'contacto'" (click)="cambiarTab('contacto')">Contacto</div>
+  </div>
+  
+  <div class="tab-content">
+    <div *ngIf="activeTab === 'home'">Prueba de Home</div>
+    <div *ngIf="activeTab === 'info'">Prueba de Info</div>
+    <div *ngIf="activeTab === 'contacto'">Prueba de Contacto</div>
+  </div>

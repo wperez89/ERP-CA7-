@@ -1,0 +1,113 @@
+<div class="main-wrapper">
+    <!-- -------------------------------------------------------------- -->
+    <!-- Login box.scss -->
+    <!-- -------------------------------------------------------------- -->
+    <div class="row auth-wrapper gx-0">
+      <div class="col-lg-4 col-xl-3 bg-dark-primary auth-box-2 on-sidebar">
+        <div class="h-100 d-flex align-items-center justify-content-center">
+          <div class="row justify-content-center text-center">
+            <div class="col-md-7 col-lg-12 col-xl-9">
+              <div>
+                <span class="db"
+                  ><img src="../../../assets/logo/logoCA7-login.png" alt="logo"
+                /></span>
+              </div>
+              <h2 class="text-white mt-4 fw-light">
+                Extranet
+                <br>COOPEANDE N°7 R.L
+              </h2>
+              <p class="text-white mt-4 fw-bold">
+                Aplicación Web para funcionarios y órganos sociales que deban incluir o extraer alguna información
+                en específico.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="
+          col-lg-8 col-xl-9
+          d-flex
+          align-items-center
+          justify-content-center
+        "
+      >
+        <div class="row justify-content-center w-100 mt-4 mt-lg-0">
+          <div class="col-lg-6 col-xl-3 col-md-7">
+            <div class="card" id="loginform">
+              <div class="card-body text-center">
+                <h2 >Bienvenido a la Extranet de CA7</h2>
+                <div *ngIf="msg" class="alert alert-danger">{{ msg }}</div>
+                <form
+                  class="form-horizontal mt-4 pt-4 needs-validation"
+                  id="loginForm"
+                  autocomplete="off"
+                  [formGroup]="loginForm"
+                  (ngSubmit)="login1()"
+                >
+                  <div class="form-floating mb-3">
+                    <input
+                      type="email"
+                      class="form-control form-input-bg"
+                      id="tb-email"
+                      placeholder="name@example.com"
+                      formControlName="email"
+                    />
+                    <label for="tb-email">Email</label>
+                    <div class="invalid-feedback">Email is required</div>
+                  </div>
+
+                  <div class="form-floating mb-3">
+                    <input
+                      type="password"
+                      class="form-control form-input-bg"
+                      id="text-password"
+                      placeholder="*****"
+                      formControlName="password"
+                    />
+                    <label for="text-password">Password</label>
+                    <div class="invalid-feedback">Password is required</div>
+                  </div>
+
+                  <div class="d-flex align-items-center mb-3">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="r-me1"
+                        formControlName="remember"
+                      />
+                      <label class="form-check-label" for="r-me1">
+                        Recordarme
+                      </label>
+                      <div class="invalid-feedback">
+                        You must agree before submitting.
+                      </div>
+                    </div>
+                    <div class="ms-auto">
+                      <a
+                        routerLink="//change-password"
+                        id="to-recover"
+                        class="fw-bold"
+                        style="cursor: pointer"
+                        >Olvidó Contraseña?</a
+                      >
+                    </div>
+                  </div>
+                  <div
+                    class="d-flex align-items-stretch button-group mt-4 pt-2"
+                  >
+                    <button type="submit" class="btn btn-dark-success btn-lg px-4">
+                      Ingresar
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+      </div>
+    </div>
+    <!-- -------------------------------------------------------------- -->
+    <!-- Login box.scss -->
+    <!-- -------------------------------------------------------------- -->
+  </div>
+  

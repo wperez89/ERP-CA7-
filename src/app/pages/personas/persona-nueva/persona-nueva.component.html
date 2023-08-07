@@ -1,0 +1,147 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body border-bottom">
+        <h4 class="card-title">Información Personal</h4>
+      </div>
+      <form class="form-horizontal" 
+        [formGroup]="personForm"
+        (submit)="createPerson()"
+        >
+        <div class="card-body">
+          <div class="mb-3 row">
+            <label for="fullname" class="col-sm-3 text-end control-label col-form-label">Tipo Persona</label>
+            <div class="col-sm-9">
+              <select 
+                  class="form-control form-select" 
+                  data-placeholder="Seleccionar Tipo de Persona" 
+                  id="Rol" 
+                  formControlName="TIPO_PERSONA"
+                  (change)="capturar()"
+                  required>
+                    <option *ngFor="let x of tipoPersona" 
+                      value={{x.COD_PERSONA}} [selected]="x === TipoSeleccionado">
+                        {{x.DESCRIPCION}}
+                    </option>
+                  </select>
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label for="fullname" class="col-sm-3 text-end control-label col-form-label">Identificación</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="Identificacion" placeholder="Identificación" formControlName="IDENTIFICACION">
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label for="com12" class="col-sm-3 text-end control-label col-form-label" *ngIf="TipoSeleccionado != 2">
+              Nombre
+            </label>
+            <label for="com12" class="col-sm-3 text-end control-label col-form-label" *ngIf="TipoSeleccionado == 2">
+              Razón Social
+            </label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="fullname" placeholder="Nombre" formControlName="NOMBRE" 
+                  style="text-transform:uppercase;">
+            </div>
+          </div>
+          <div class="mb-3 row" *ngIf="TipoSeleccionado != 2">
+            <label for="fullname" class="col-sm-3 text-end control-label col-form-label">Primer Apellido</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="fullname" placeholder="Primer Apellido" formControlName="APELLIDO1"
+                  style="text-transform:uppercase;">
+            </div>
+          </div>
+          <div class="mb-3 row" *ngIf="TipoSeleccionado != 2">
+            <label for="fullname" class="col-sm-3 text-end control-label col-form-label">Segundo Apellido</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="fullname" placeholder="Segundo Apellido" formControlName="APELLIDO2"
+                style="text-transform:uppercase;">
+            </div>
+          </div>
+          <div class="mb-3 row" *ngIf="TipoSeleccionado != 2">
+            <label for="fullname" class="col-sm-3 text-end control-label col-form-label">Género</label>
+            <div class="col-sm-9">
+              <select 
+                  class="form-control form-select" 
+                  data-placeholder="Seleccionar Tipo de Género" 
+                  id="Rol" 
+                  formControlName="GENERO"
+                  required>
+                    <option *ngFor="let x of tipoGenero" value={{x.ID_GENERO}}>{{x.GENERO}}</option>
+                  </select>
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label for="com12" class="col-sm-3 text-end control-label col-form-label" *ngIf="TipoSeleccionado != 2">
+              Fecha Nacimiento
+            </label>
+            <label for="com12" class="col-sm-3 text-end control-label col-form-label" *ngIf="TipoSeleccionado == 2">
+              Fecha Constitución
+            </label>
+            <div class="col-sm-9">
+              <input type="date" class="form-control" id="fecha" formControlName="FECHA">
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label for="com12" class="col-sm-3 text-end control-label col-form-label" *ngIf="TipoSeleccionado != 2">
+              Pais Nacimiento
+            </label>
+            <label for="com12" class="col-sm-3 text-end control-label col-form-label" *ngIf="TipoSeleccionado == 2">
+              Pais Constitución
+            </label>
+            <div class="col-sm-9">
+              <select 
+                  class="form-control form-select" 
+                  data-placeholder="Seleccionar Tipo de Género" 
+                  id="Rol" 
+                  formControlName="PAIS"
+                  required>
+                    <option *ngFor="let x of tipoPais" value={{x.COD_PAIS}} [selected]="x === paisDefault">{{x.PAIS}}</option>
+                  </select>
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label class="col-sm-3 text-end control-label col-form-label">APNFDS</label>
+            <div class="col-sm-9">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" formControlName="APNFDS" id="APNFDS" value=1>
+                <label class="form-check-label" for="exampleRadios1">
+                    SI
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" formControlName="APNFDS" id="APNFDS" value=0 checked="checked">
+                <label>
+                    NO
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="p-3 border-top">
+          <div class="text-end">
+            <button type="submit"
+                class="
+                btn btn-success
+                rounded-pill
+                px-4
+                waves-effect waves-light
+              ">
+              Guardar
+            </button>
+            <button type="submit" class="
+                btn btn-danger
+                rounded-pill
+                px-4
+                waves-effect waves-light
+              ">
+              <a routerLink="//persona/">
+                Cancelar
+              </a>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
