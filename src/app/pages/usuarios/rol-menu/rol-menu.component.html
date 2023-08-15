@@ -1,0 +1,100 @@
+
+<section class="intro">
+    <div class="bg-image h-100">
+      <div class="mask d-flex align-items-center h-100">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-12 col-lg-6">
+              <div class="mb-3 row">
+                <label class="col-sm-3 text-end control-label col-form-label">Buscar</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" placeholder="Buscar Opciones"  name="filtro"
+                  (keyup.enter)="filtrar()" 
+                  [(ngModel)]="filtro">
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4" style="float: right;">
+              <div class="mb-3 row">
+                <label for="web1" class=" col-sm-3 text-end control-label col-form-label">Rol</label>
+                <div class="col-sm-9">
+                  <select (change)="obtenerValorEstado($event.target.value)" class="form-control form-select" 
+                          [(ngModel)]="variable" >
+                    <option *ngFor="let x of rol" value={{x.ID_ROL}}>{{x.ROL}}</option>
+                    </select>
+                </div>
+              </div> 
+            </div>
+            <div class="col-sm-12 col-lg-6 mb-4" style="float: right;">
+              <button type="button" class="btn btn-success" data-toggle="tooltip" data-placement="right" 
+                routerLink="/usuario/adduserrolemenu" title="Agregar Rol Menú">
+            <a>
+              <i class="fa fa-plus"></i>
+            </a>
+        </button>
+            </div> 
+          </div>
+          <div class="row animated fadeIn fast" *ngIf="cargando">
+            <div class="col-12">
+                <div class="alert alert-success text-center">
+                    <h4 class="alert-heading">Cargando</h4>
+                    <i class="fa fa-spin fa-refresh fa-2x"></i>
+                    <p class="mb-0">Por favor espere</p>
+                </div>
+            </div>
+          </div>
+          <div class="row justify-content-center" *ngIf="!cargando"> 
+            <div class="col-12">
+              <div class="card shadow-2-strong">
+                <div class="card-body">
+                  <H4>Lista de Opciones por Rol</H4>                 
+                  <div class="table-responsive">
+                    <table class="table table-borderless mb-0">
+                      <thead>
+                        <tr>
+                          <th scope="col">ID</th>
+                          <th scope="col">PADRE</th>
+                          <th scope="col">NOMBRE</th>
+                          <th scope="col">ESTADO</th>
+                          <th scope="col">ACCIÓN</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let x of opcionesMenu | slice: (pagina-1)*pagesize : (pagina-1) * pagesize + pagesize">
+                          <td>{{x.ID}}</td>
+                          <td>{{x.PARENT_TITLE}}</td>
+                          <td>{{x.TITLE}}</td>
+                          <td>
+                            <span *ngIf="x.ESTADO == 'I' " class="badge bg-danger">INACTIVO</span>
+                            <span *ngIf="x.ESTADO == 'A' " class="badge bg-success">ACTIVO</span>
+                          </td>
+                          <td>
+                            <button (click)="desactivarOpcion(x.ID_ROLMENU)" *ngIf="x.ESTADO == 'A'" type="button" class="btn btn-danger btn-sm px-3 m-1" 
+                            title="Desactivar opción">
+                              <i class="fas fa-close"></i>
+                            </button>
+                            <button (click)="activarOpcion(x.ID_ROLMENU)" *ngIf="x.ESTADO == 'I'" type="button" 
+                                 class="btn btn-success btn-sm px-3 m-1" (click)="anularAvaluo(x.ID_AVALUO)" 
+                                    title="Activar opción">
+                              <i class="fas fa-check"></i>
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <ngb-pagination [collectionSize]="opcionesMenu.length" 
+                  [(page)]="pagina" 
+                  [pageSize]="pagesize"
+                  [maxSize]="5" 
+                  [rotate]="true"
+                  [boundaryLinks]="true">
+          </ngb-pagination>
+        </div>
+      </div>
+    </div>
+  </section>

@@ -10,6 +10,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppModule } from 'src/app/app.module';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { PasswordComponent } from './password/password.component';
+import { MenuUsuarioComponent } from './menu-usuario/menu-usuario.component';
+import { MenuAgregarComponent } from './menu-agregar/menu-agregar.component';
+import { SubmenuUsuarioComponent } from './submenu-usuario/submenu-usuario.component';
+import { SubMenuAgregarComponent } from './sub-menu-agregar/sub-menu-agregar.component';
+import { RolMenuComponent } from './rol-menu/rol-menu.component';
+import { EditRolMenuComponent } from './edit-rol-menu/edit-rol-menu.component';
 
 
 
@@ -19,6 +25,12 @@ import { PasswordComponent } from './password/password.component';
     NuevoComponent,
     EditComponent,
     PasswordComponent,
+    MenuUsuarioComponent,
+    MenuAgregarComponent,
+    SubmenuUsuarioComponent,
+    SubMenuAgregarComponent,
+    RolMenuComponent,
+    EditRolMenuComponent,
   ],
   imports: [
     CommonModule,

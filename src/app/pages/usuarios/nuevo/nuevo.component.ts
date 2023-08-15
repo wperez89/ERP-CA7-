@@ -41,7 +41,9 @@ export class NuevoComponent implements OnInit {
     {
       return
     }
-    this.usuarioService.crearPersonas(this.userForm.value)
+    else
+    {
+      this.usuarioService.crearPersonas(this.userForm.value)
     .subscribe(resp=>{
     //console.log(resp);
     SuccessDialog.fire(
@@ -58,6 +60,7 @@ export class NuevoComponent implements OnInit {
         title:err.error.msg
       })
     })
+    }
   }
     //cargar Rol de Usuario
     cargarRolUsuario()

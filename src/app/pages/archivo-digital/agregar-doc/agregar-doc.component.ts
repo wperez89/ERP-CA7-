@@ -42,11 +42,15 @@ export class AgregarDocComponent implements OnInit {
 
   guardarDocumento()
   {
+    if(this.documentDigitalForm.invalid)
+    { 
+      return
+    }
     //console.log(this.documentDigitalForm.value)
     this.archivoService.crearRegistroDoc(this.documentDigitalForm.value,this.archivoSelected)
     .subscribe((resp:any)=>
       {
-        console.log(resp)
+        //console.log(resp)
         if(!resp.ok)
         {
           Toast.fire(
@@ -122,6 +126,6 @@ export class AgregarDocComponent implements OnInit {
         CONVOCATORIA:0
       })
     }
-    console.log(this.documentDigitalForm.value)
+    //console.log(this.documentDigitalForm.value)
   }
 }

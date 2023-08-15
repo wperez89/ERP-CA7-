@@ -89,7 +89,7 @@ export class RepCotizacionesComponent implements OnInit {
     this.avaluoService.cargarInformeProfesionales(this.tipo,this.fechaIni,this.FechaFin, this.asignado)
     .subscribe((resp:any)=>
        {
-        console.log(resp)
+        //console.log(resp)
         this.informe = resp;
        })
     this.repProfesional.patchValue(

@@ -52,7 +52,7 @@ export class UsuariosComponent implements OnInit {
     
     createRol()
     {
-      //console.log(this.userForm.value);
+      //console.log(this.rolForm.value);
       
       if(this.rolForm.invalid)
       {
@@ -66,6 +66,7 @@ export class UsuariosComponent implements OnInit {
           title:("Rol Creado Correctamente")
         }
       );
+      this.rolForm.reset();
       this.router.navigate(['/usuario']);
       },
       (err) => { // Si sucede un error

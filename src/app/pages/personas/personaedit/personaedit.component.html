@@ -1,4 +1,13 @@
-<div class="row">
+<div class="row animated fadeIn fast" *ngIf="cargando">
+  <div class="col-12">
+      <div class="alert alert-success text-center">
+          <h4 class="alert-heading">Cargando</h4>
+          <i class="fa fa-spin fa-refresh fa-2x"></i>
+          <p class="mb-0">Por favor espere</p>
+      </div>
+  </div>
+</div>
+<div *ngIf="!cargando" class="row">
     <div class="col-lg-6 d-flex align-items-stretch">
       <div class="card w-100">
         <form autocomplete="off"

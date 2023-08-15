@@ -9,6 +9,15 @@
         <div>
           <div class="card-body">
             <div class="row pt-3">
+              <div class="mb-3">
+                <label class="control-label">Identificación</label>
+                <input type="text" 
+                style="text-transform:uppercase;"
+                id="firstName" 
+                class="form-control"
+                formControlName="IDENTIFICACION"
+                required>
+              </div>
               <div class="col-md-6">
                 <div class="mb-3">
                   <label class="control-label">Nombre</label>
@@ -18,9 +27,6 @@
                   class="form-control" 
                   formControlName="NOMBRE"
                   required>
-                  <small class="form-control-feedback">
-                    This is inline help
-                  </small>
                 </div>
               </div>
               <!--/span-->
@@ -33,9 +39,6 @@
                   class="form-control form-control-danger"
                   required
                   formControlName="APELLIDO1">
-                  <small class="form-control-feedback">
-                    This field has error.
-                  </small>
                 </div>
               </div>
               <div class="col-md-6">
@@ -46,9 +49,6 @@
                   id="lastName2" 
                   class="form-control form-control-danger"
                   formControlName="APELLIDO2">
-                  <small class="form-control-feedback">
-                    This field has error.
-                  </small>
                 </div>
               </div>
               <div class="col-md-6">
@@ -58,9 +58,6 @@
                   style="text-transform:lowercase;"
                   class="form-control form-control-danger" 
                   formControlName="EMAIL" required>
-                  <small class="form-control-feedback">
-                    This field has error.
-                  </small>
                 </div>
               </div>
               <!--/span-->

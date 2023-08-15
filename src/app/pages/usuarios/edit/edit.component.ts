@@ -23,7 +23,7 @@ export class EditComponent implements OnInit {
   public estado: Estados[] = [];
   public userUpdateForm: FormGroup;
   public idUser: string = '';
-  public rolAsignado: string = ''
+  public rolAsignado: string = "1"
   
   constructor(private usuarioService: UsuarioService,private activatedRoute: ActivatedRoute, private fb:FormBuilder,
     private globalService:GlobalService, private router: Router) { }
@@ -35,7 +35,7 @@ export class EditComponent implements OnInit {
 
     this.cargarRolUsuario();
     this.cargarEstado();
-    
+    this.rolAsignado = this.usuarioService.role;
       this.userUpdateForm= this.fb.group(
         {
           NOMBRE:['',Validators.required],
@@ -53,8 +53,7 @@ export class EditComponent implements OnInit {
       .subscribe((user:any)=>
         {
           this.usuarios = user;
-          this.rolAsignado = user.ROL
-          console.log(this.usuarios)
+          //this.rolAsignado = user.ROL
           this.idUser = user.ID_USUARIO;
           this.userUpdateForm.patchValue({
             NOMBRE:user.NOMBRE,

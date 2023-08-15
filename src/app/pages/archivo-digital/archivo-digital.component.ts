@@ -104,7 +104,7 @@ export class ArchivoDigitalComponent implements OnInit {
     this.archivoService.obtenerURLArchivo('archivo-digital', nombreArchivo)
       .subscribe(
         (resp:any) => {
-          console.log(resp)
+          //console.log(resp)
           window.open(resp.urlPDF, '_blank'); // Abre el PDF en una nueva ventana
         },
         (error) => {

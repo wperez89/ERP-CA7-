@@ -18,7 +18,7 @@ export class ArchivoDigitalService {
   cargarListaDoc(area:number)
   {
     const url = `${base_url}/archivo/${area}`;
-    console.log(url)
+    //console.log(url)
     return this.http.get(url)
     .pipe(
      map((resp:{

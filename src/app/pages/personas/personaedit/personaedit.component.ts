@@ -24,7 +24,8 @@ export class PersonaeditComponent implements OnInit  {
   public datosForm : FormGroup;
   public TipoSeleccionado: number = 1;
   public paisDefault: string = 'CR';
-  public existe:number
+  public existe:number;
+  public cargando: boolean = true;
   
   constructor(private personaService:PersonasService, private activatedRoute: ActivatedRoute, private fb:FormBuilder,
     private router: Router)
@@ -79,6 +80,7 @@ export class PersonaeditComponent implements OnInit  {
 
   cargarPersonas(id:string, tipo:number)
     {
+      this.cargando = true;
       this.TipoSeleccionado = tipo;
       this.personaService.getPersonaID(id, tipo)
       .subscribe((persona:any)=>
@@ -122,10 +124,12 @@ export class PersonaeditComponent implements OnInit  {
             ESTADO: user.ESTADO
           })*/
         })
+        this.cargando = false;
     }
   
     cargarDatosPersonas(id:string)
     {
+      this.cargando = true;
       this.personaService.getDatosPersonaID(id)
       .subscribe((datos:any)=>
         {
@@ -142,6 +146,7 @@ export class PersonaeditComponent implements OnInit  {
             IMG: datos.IMG
           })
         })
+        this.cargando = false;
     }
   
   cargarTipoGenero()

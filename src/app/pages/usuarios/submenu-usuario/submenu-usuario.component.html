@@ -1,0 +1,84 @@
+<div class="container">
+    <div class="border-bottom title-part-padding">
+      <h4 class="card-title mb-0">Opciones de SubMenú</h4>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-5">
+          <div>
+            <input type="text" class="form-control" 
+                  placeholder="Buscar Opción " 
+                  name="filtro"
+                  (keyup.enter)="filtrar()" 
+                  [(ngModel)]="filtro" >
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div>
+            <button class="
+                          btn btn-light-info
+                          text-info
+                          font-weight-medium
+                          d-flex
+                          align-items-center
+                        " type="button"
+                        (click)="filtrar()">
+                        Buscar
+                      </button>
+          </div>
+        </div>
+        <div class="d-flex justify-content-end">
+        <button type="button" class="btn btn-success btn-rounded m-t-10 mb-2">
+            <a routerLink="//usuario/adduserSubmenu">
+              Nueva Opción
+            </a>
+          </button>
+      </div>
+      <div class="row animated fadeIn fast" *ngIf="cargando">
+        <div class="col-12">
+            <div class="alert alert-success text-center">
+                <h4 class="alert-heading">Cargando</h4>
+                <i class="fa fa-spin fa-refresh fa-2x"></i>
+                <p class="mb-0">Por favor espere</p>
+            </div>
+        </div>
+      </div>
+      <div *ngIf="!cargando" class="table-responsive">
+        <table id="demo-foo-addrow" class="table table-bordered m-t-30 table-hover contact-list footable footable-5 footable-paging footable-paging-center breakpoint-xs" data-paging="true" data-paging-size="7">
+          <thead>
+            <tr class="footable-header">
+                <th>Padre</th>
+                <th>Titulo</th>
+                <th>Link</th>
+                <th>Editar</th>
+            </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let x of submenu | slice: (pagina-1)*pagesize : (pagina-1) * pagesize + pagesize">
+            <td style="display: table-cell;">{{x.PARENT_TITLE}}</td>
+            <td style="display: table-cell;">{{x.TITLE}}</td>
+            <td style="display: table-cell;">{{x.LINK}}</td>
+            <td style="text-align: center; ">
+                <div>
+                  <button 
+                    class="like btn-rounded" title="Editar" data-toggle="modal"
+                    >
+                    <i class="fas fa-edit" style="color:#016745;" 
+                    routerLink="//usuario/usermenu/sub/false/{{x.parent_id}}/{{x.CLASS}}/{{x.ICON}}/{{x.PARENT_TITLE}}/{{x.EXTRALINK}}/{{x.TITLE}}/{{x.ID}}"></i>
+                  </button>  
+                </div>
+              </td>
+            </tr>
+        </tbody>
+        </table>
+      </div>
+    </div>
+    <ngb-pagination [collectionSize]="submenu.length" 
+                    [(page)]="pagina" 
+                    [pageSize]="pagesize"
+                    [maxSize]="5" 
+                    [rotate]="true"
+                    [boundaryLinks]="true">
+
+    </ngb-pagination>
+  </div>

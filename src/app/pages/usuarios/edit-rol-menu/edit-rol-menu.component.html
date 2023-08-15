@@ -1,0 +1,66 @@
+<div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body border-bottom">
+          <h4 class="card-title">Menú Secundario</h4>
+        </div>
+        <div class="row animated fadeIn fast" *ngIf="cargando">
+          <div class="col-12">
+              <div class="alert alert-success text-center">
+                  <h4 class="alert-heading">Cargando</h4>
+                  <i class="fa fa-spin fa-refresh fa-2x"></i>
+                  <p class="mb-0">Por favor espere</p>
+              </div>
+          </div>
+        </div>
+        <form *ngIf="!cargando" class="form-horizontal" 
+          [formGroup]="rolmenuForm"
+          (submit)="createopcionMenu()"
+          >
+          <div class="card-body">
+            <div class="mb-3 row">
+              <label for="fullname" class="col-sm-3 text-end control-label col-form-label">Rol</label>
+              <div class="col-sm-9">
+                <select (change)="obtenerValorRol($event.target.value)" 
+                    class="form-control form-select" formControlName = "ID_ROLUSER">
+                    <option *ngFor="let x of rol" value={{x.ID_ROL}}>{{x.ROL}}</option>
+                  </select>
+              </div>
+            </div>
+            <div class="mb-3 row">
+                <label class="col-sm-3 text-end control-label col-form-label">Opciones Menú</label>
+                <div class="col-sm-9">
+                  <div *ngFor="let object of opciones">
+                    <input type="checkbox" (click)="verificar(object.ID)" 
+                        > {{object.TITLE}}
+                  </div>
+                </div>
+              </div>
+          </div>
+          <div class="p-3 border-top">
+            <div class="text-end">
+              <button type="submit"
+                  class="
+                  btn btn-success
+                  rounded-pill
+                  px-4
+                  waves-effect waves-light
+                ">
+                Guardar
+              </button>
+              <button type="submit" routerLink="/usuario/userrolemenu" class="
+                  btn btn-danger
+                  rounded-pill
+                  px-4
+                  waves-effect waves-light
+                ">
+                <a >
+                  Cancelar
+                </a>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>

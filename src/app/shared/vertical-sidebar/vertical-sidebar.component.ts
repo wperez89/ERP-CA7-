@@ -71,6 +71,7 @@ export class VerticalSidebarComponent {
    this.menuServise.cargarMenuRol(this.role)
    .subscribe((resp:any)=>
        {
+        //console.log(resp)
         this.sidebarnavItems = resp.menu;
        })
   }
