@@ -197,7 +197,7 @@ export class PersonaeditComponent implements OnInit  {
         },
         (err) => { // Si sucede un error
             
-          console.log(err);
+          //console.log(err);
           errorDialog.fire({
             title:err.error.msg
           })
@@ -235,17 +235,17 @@ export class PersonaeditComponent implements OnInit  {
 
     ModificardatosPersona()
     {
-      console.log(this.idPerson);
+      //console.log(this.idPerson);
       this.datosForm.patchValue({
         ID_USUARIO:this.idPerson,
       })
-      console.log(this.datosForm.value)
-      console.log(this.existe)
+      //console.log(this.datosForm.value)
+      //console.log(this.existe)
       if(this.existe!=0)
       {
         this.personaService.updateDatosPersonaID(this.idPerson,this.datosForm.value)
         .subscribe((resp:any)=>{
-          console.log(resp)
+          //console.log(resp)
           if(!resp.ok)
           {
             if(this.datosForm.invalid)
@@ -276,7 +276,7 @@ export class PersonaeditComponent implements OnInit  {
           }
           },
           (error) => { // Si sucede un error
-            console.error(error);
+            //console.error(error);
             errorDialog.fire({
               title:error.error.msg
             })  
@@ -317,7 +317,7 @@ export class PersonaeditComponent implements OnInit  {
           }
           },
           (error) => { // Si sucede un error
-            console.error(error);
+            //console.error(error);
             errorDialog.fire({
               title:error.error.msg
             })  

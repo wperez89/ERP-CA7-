@@ -90,7 +90,8 @@ export class ArchivoDigitalService {
 
       //console.log(formData)
 
-      const url = `${base_url}/archivo/`;
+      const url = `${base_url}/archivo`;
+      //console.log(url)
       return this.http.post(url,formData)
       .pipe(
         map((resp:{
@@ -102,7 +103,8 @@ export class ArchivoDigitalService {
 
   crearAreaDoc(datos:any)
   {
-      const url = `${base_url}/archivo/mantenimiento/tipoarea/`;
+      const url = `${base_url}/archivo/mantenimiento/tipoarea`;
+      //console.log(url)
       return this.http.post(url,datos)
       .pipe(
         map((resp:{
@@ -114,7 +116,7 @@ export class ArchivoDigitalService {
 
   crearTipoDoc(datos:any)
   {
-      const url = `${base_url}/archivo/mantenimiento/tipodoc/`;
+      const url = `${base_url}/archivo/mantenimiento/tipodoc`;
       return this.http.post(url,datos)
       .pipe(
         map((resp:{

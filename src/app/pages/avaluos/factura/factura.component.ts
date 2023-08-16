@@ -29,6 +29,7 @@ export class FacturaComponent implements OnInit {
   public existe:boolean = false;
   public archivoLength: boolean = false;
   public archivoSelected : File;
+  public document: string = '';
   
   constructor(private fb: FormBuilder,private globalService: GlobalService, private personaService:PersonasService,
     private activatedRoute:ActivatedRoute, private avaluoService:AvaluoService) {
@@ -41,8 +42,8 @@ export class FacturaComponent implements OnInit {
         FECHA_PAGO:['',Validators.required],
         MONTO:['',Validators.required],
         METODO_PAGO:['',Validators.required],
-        BANCO:[''],
-        NUM_DEPOSITO:[''],
+        BANCO:[null],
+        NUM_DEPOSITO:[null],
         REFERENCIA_FACT:[''],
         OBSERVACIONES:[''],
         DOC:[null]
@@ -81,7 +82,7 @@ export class FacturaComponent implements OnInit {
   
   changetipoProfesional(value:number)
   {
-    console.log(value)
+    //console.log(value)
     this.variable_prof = value;
     this.cargarProfesionales(this.variable_prof)
   }
@@ -138,6 +139,7 @@ export class FacturaComponent implements OnInit {
       this.existe = true;
       this.id_fact = resp.ID_FACTURA;
       this.tipo_fact = resp.PROFESION
+      this.document = resp.DOCUMENTO
     })
   }
 
@@ -147,12 +149,12 @@ export class FacturaComponent implements OnInit {
     this.factAvaluoForm.patchValue({
       REFERENCIA_FACT:this.id_avaluo
     });
-    console.log(this.factAvaluoForm.value);
+    //console.log(this.factAvaluoForm.value);
     if(!this.existe)
     {
       this.avaluoService.crearFactAvaluo(this.factAvaluoForm.value).subscribe(
         (resp)=>{
-          console.log(resp)
+          //console.log(resp)
           if(!resp.ok)
           {
             if(this.factAvaluoForm.invalid)
@@ -184,7 +186,7 @@ export class FacturaComponent implements OnInit {
             }
         },
         (err) => { // Si sucede un error
-          console.log(err)
+          //console.log(err)
           errorDialog.fire({
             title:err.error.msg
           })
@@ -194,7 +196,7 @@ export class FacturaComponent implements OnInit {
     {
       this.avaluoService.updateFactAvaluo(this.factAvaluoForm.value).subscribe(
         (resp)=>{
-          console.log(resp)
+          //console.log(resp)
           if(!resp.ok)
           {
             if(this.factAvaluoForm.invalid)
@@ -220,14 +222,14 @@ export class FacturaComponent implements OnInit {
               {
                 title:(resp.msg)
               });
-              console.log(this.factAvaluoForm.value);
+              //console.log(this.factAvaluoForm.value);
               this.factAvaluoForm.reset();
               this.CargarListaFacturas(this.id_avaluo);
               this.existe = false;
             }
         },
         (err) => { // Si sucede un error
-          console.log(err)
+          //console.log(err)
           errorDialog.fire({
             title:err.error.msg
           })

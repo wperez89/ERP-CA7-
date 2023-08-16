@@ -139,7 +139,7 @@ export class AvaluoService {
 
   anularAvaluo( id:string)
   {
-    const url = `${base_url}/avaluoinactive/`;
+    const url = `${base_url}/avaluoinactive`;
     return this.http.put(url,{ id })
     .pipe(
      map((resp:{
@@ -151,7 +151,7 @@ export class AvaluoService {
 
   crearCtzcnAvaluo(datos:cotizacionnNew)
   {
-      const url = `${base_url}/avaluo/cotizacion/`;
+      const url = `${base_url}/avaluo/cotizacion`;
       return this.http.post(url,datos)
       .pipe(
         map((resp:{
@@ -164,7 +164,7 @@ export class AvaluoService {
 
   updateCtzcnAvaluo(datos:cotizacion)
   {
-      const url = `${base_url}/avaluo/cotizacion/`;
+      const url = `${base_url}/avaluo/cotizacion`;
       return this.http.put(url,datos)
       .pipe(
         map((resp:{
@@ -182,7 +182,7 @@ export class AvaluoService {
     formData.append('ctzcn', ctzcn);
     formData.append('DOC_CTZCN', DOC_CTZCN);
 
-    const url = `${base_url}/avaluoctznfile/`;
+    const url = `${base_url}/avaluoctznfile`;
     return this.http.put(url,formData)
     .pipe(     
       map((resp:{
@@ -200,7 +200,7 @@ export class AvaluoService {
 
   crearFactAvaluo(datos:facturaProf)
   {
-      const url = `${base_url}/facturaAvl/`;
+      const url = `${base_url}/facturaAvl`;
       return this.http.post(url,datos)
       .pipe(
         map((resp:{
@@ -213,7 +213,7 @@ export class AvaluoService {
 
   updateFactAvaluo(datos:facturaProf)
   {
-      const url = `${base_url}/facturaAvl/`;
+      const url = `${base_url}/facturaAvl`;
       return this.http.put(url,datos)
       .pipe(
         map((resp:{
@@ -258,7 +258,7 @@ export class AvaluoService {
     formData.append('DOC', DOC);
     formData.append('tipo', tipo);
 
-    const url = `${base_url}/facturafile/`;
+    const url = `${base_url}/facturafile`;
     return this.http.put(url,formData)
     .pipe(     
       map((resp:{
@@ -291,7 +291,7 @@ export class AvaluoService {
     formData.append('avlo', avlo);
     formData.append('DOC_AVLO', DOCUMENTO);
 
-    const url = `${base_url}/avaluofile/`;
+    const url = `${base_url}/avaluofile`;
     return this.http.put(url,formData)
     .pipe(     
       map((resp:{

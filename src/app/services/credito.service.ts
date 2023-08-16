@@ -72,7 +72,7 @@ export class CreditoService {
 
    crearOperacion(credito:Operacion)
    {
-      const url = `${base_url}/credito/`;
+      const url = `${base_url}/credito`;
       return this.http.post(url,credito)
       .pipe(
         map((resp:{

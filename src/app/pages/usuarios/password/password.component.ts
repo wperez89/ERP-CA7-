@@ -62,7 +62,7 @@ export class PasswordComponent implements OnInit {
     },
     (err) => { // Si sucede un error
         
-      console.log(err);
+      //console.log(err);
       errorDialog.fire({
         title:err
       })

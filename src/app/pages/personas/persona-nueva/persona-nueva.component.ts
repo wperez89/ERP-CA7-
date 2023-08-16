@@ -138,10 +138,10 @@ export class PersonaNuevaComponent implements OnInit {
     },
     (error) => { // Si sucede un error
         
-      console.error(error);
-      /*errorDialog.fire({
-        title:err.error.msg
-      })*/
+      //console.error(error);
+      errorDialog.fire({
+        title:error.msg
+      })
     })
   }
 }

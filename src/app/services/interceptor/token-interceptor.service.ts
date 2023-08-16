@@ -23,6 +23,6 @@ export class TokenInterceptorServices implements HttpInterceptor {
 
   manejaError(error: HttpErrorResponse)
   {
-    return throwError("Error Personalizado")
+    return throwError("Error Personalizado: "+ error)
   }
 }

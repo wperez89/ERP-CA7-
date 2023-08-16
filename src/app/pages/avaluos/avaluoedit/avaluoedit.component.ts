@@ -175,7 +175,7 @@ export class AvaluoeditComponent implements OnInit {
         },
         (err) => { // Si sucede un error
             
-          console.log(err);
+          //console.log(err);
           errorDialog.fire({
             title:err.error.msg
           })
@@ -186,7 +186,7 @@ export class AvaluoeditComponent implements OnInit {
     {
       let edificio = this.avaluoForm.get('MONTO_EDIFICIO').value
       let terreno = this.avaluoForm.get('MONTO_TERRENO').value
-      console.log(edificio + terreno)
+      //console.log(edificio + terreno)
       this.avaluoForm.patchValue({
         MONTO_AVALUO: edificio + terreno
       })
@@ -207,7 +207,7 @@ export class AvaluoeditComponent implements OnInit {
     this.avaluoService.uploadArchivoAvaluo(this.idAvaluo,this.archivoSelected).subscribe(
       (resp)=>
       {
-        console.log(resp)
+        //console.log(resp)
         if(!resp.ok)
         {
           Toast.fire(
@@ -226,7 +226,12 @@ export class AvaluoeditComponent implements OnInit {
       },
       (err) =>
       {
-        console.log(err)
+        //console.log(err)
+        SuccessDialog.fire(
+          {
+            text:(err.msg)
+          }
+        );
       }
     )
   }

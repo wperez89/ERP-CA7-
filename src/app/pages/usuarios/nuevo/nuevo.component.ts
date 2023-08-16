@@ -35,7 +35,7 @@ export class NuevoComponent implements OnInit {
 
   createUser()
   {
-    console.log(this.userForm.value);
+    //console.log(this.userForm.value);
     
     if(this.userForm.invalid)
     {
@@ -55,7 +55,7 @@ export class NuevoComponent implements OnInit {
     },
     (err) => { // Si sucede un error
         
-      console.log(err);
+      //console.log(err);
       errorDialog.fire({
         title:err.error.msg
       })

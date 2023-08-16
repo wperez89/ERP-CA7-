@@ -135,7 +135,7 @@ export class ProfesionalComponent implements OnInit {
   
   GuardarProfesional()
     {    
-      console.log((this.professionalForm.value)) 
+      //console.log((this.professionalForm.value)) 
     
     this.personaService.crearProfesional(this.professionalForm.value)
     .subscribe((resp:any)=>

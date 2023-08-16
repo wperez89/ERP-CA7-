@@ -105,7 +105,7 @@ export class UsuariosComponent implements OnInit {
   }
   editarUsuario(modalEditUser: any)
   {
-    console.log(this.usuarios)
+    //console.log(this.usuarios)
   }
   
 }

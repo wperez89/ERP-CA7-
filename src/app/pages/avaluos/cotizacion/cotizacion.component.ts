@@ -260,7 +260,7 @@ export class CotizacionComponent implements OnInit {
     this.avaluoService.uploadCotizacion(this.id_ctzcn,this.archivoSelected).subscribe(
       (resp)=>
       {
-        console.log(resp)
+        //console.log(resp)
         if(!resp.ok)
         {
           Toast.fire(
@@ -281,7 +281,9 @@ export class CotizacionComponent implements OnInit {
       },
       (err) =>
       {
-        console.log(err)
+        errorDialog.fire({
+          title:err.error.msg
+        })
       }
     )
   }
@@ -289,7 +291,7 @@ export class CotizacionComponent implements OnInit {
   downloadfile()
   {
     const nombreArchivo = this.document;
-    console.log(nombreArchivo);
+    //console.log(nombreArchivo);
     this.avaluoService.downloadFile(nombreArchivo,'avaluos')
       .subscribe((archivo: Blob)=>
       {

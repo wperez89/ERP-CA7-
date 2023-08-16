@@ -246,5 +246,4 @@ forgotPassword(change: any)
       })=>resp)
    );
 }
-
 }

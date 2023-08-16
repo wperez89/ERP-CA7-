@@ -54,7 +54,7 @@ export class AreaDocumentoComponent implements OnInit {
       },
       (err) => { // Si sucede un error
           
-        //console.log(err.error.error.password.msg);
+        //console.log(err);
         errorDialog.fire({
           title:err.msg
         })

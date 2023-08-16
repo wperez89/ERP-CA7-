@@ -137,12 +137,16 @@ export class CreditNewComponent implements OnInit {
         title:(resp.msg)
       });
 
-      this.router.navigate(['/credito']);
+      //this.router.navigate(['/credito']);
     }
     },
     (error) => { // Si sucede un error
-        
-      console.error(error);
+      errorDialog.fire(
+        {
+          text:(error.msg)
+        }
+      )
+      //console.error(error);
     })
     }
 }

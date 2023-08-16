@@ -44,7 +44,7 @@ export class TipoDocumentoComponent implements OnInit {
       }
       this.archivoServices.crearTipoDoc(this.docForm.value)
       .subscribe(resp=>{
-      //console.log(resp);
+      console.log(resp);
       SuccessDialog.fire(
         {
           title:resp.msg
@@ -54,8 +54,7 @@ export class TipoDocumentoComponent implements OnInit {
       this.router.navigate(['/archivo-digital/mantenimiento/TipoDocumentos']);
       },
       (err) => { // Si sucede un error
-          
-        //console.log(err.error.error.password.msg);
+        console.log(err)
         errorDialog.fire({
           title:err.msg
         })

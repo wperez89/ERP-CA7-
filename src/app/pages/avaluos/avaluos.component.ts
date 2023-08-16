@@ -167,7 +167,7 @@ export class AvaluosComponent implements OnInit {
       const text = id
       showConfirmationAlert(title,text,"Anular").then((result) => 
       {
-        console.log(result)
+        //console.log(result)
         if (!result.isConfirmed) 
         {
           this.getAvaluos();
