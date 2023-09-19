@@ -154,7 +154,7 @@ export class ProfesionalComponent implements OnInit {
           {
             title:(resp.msg)
           });
-
+          this.idPersona = '';
           this.modalService.dismissAll();
           this.professionalForm.reset();
           this.getProfesionales();

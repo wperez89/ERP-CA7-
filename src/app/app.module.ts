@@ -14,7 +14,7 @@ import { FeatherModule } from 'angular-feather';
 import { allIcons } from 'angular-feather/icons';
 import { NgbModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 
-
+import { NgxMaskModule }  from  'ngx-mask';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
@@ -80,6 +80,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     HttpClientModule,
     FeatherModule.pick(allIcons),
     FeatherModule,
+    NgxMaskModule.forRoot(),
     InterceptorModule,
     NgxDatatableModule,
     TranslateModule.forRoot({

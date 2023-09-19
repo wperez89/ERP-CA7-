@@ -173,7 +173,7 @@ get headers()
 //Crear Usuario
 crearPersonas(user:Usuario)
 {
-  const url = `${base_url}/mantenimiento/user/`;
+  const url = `${base_url}/mantenimiento/user`;
   return this.http.post(url,user)
         .pipe(
           map((resp:{
@@ -194,7 +194,7 @@ updatePersonas(user:Usuario, _id:string)
 //Crear Usuario
 crearROL(rol:Roles)
 {
-  const url = `${base_url}/mantenimiento/rol/`;
+  const url = `${base_url}/mantenimiento/rol`;
   return this.http.post(url,rol)
         .pipe(
           map((resp:{
@@ -238,7 +238,7 @@ changePassword(change: password, id:string)
 
 forgotPassword(change: any)
 {
-  return this.http.put(`${base_url}/login/forgotPassword/`,change)
+  return this.http.put(`${base_url}/login/forgotPassword`,change)
     .pipe(
       map((resp:{
         ok:boolean,

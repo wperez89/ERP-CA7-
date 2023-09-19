@@ -15,7 +15,7 @@ export class gerencialGuard implements CanActivate {
     state: RouterStateSnapshot)
     {
       //console.log(this.usuario.role)
-      if(this.usuario.role === 'ADMIN' || this.usuario.role === 'GERENCIAL') 
+      if(this.usuario.role === 'ADMIN' || this.usuario.role === 'GERENCIA') 
       {
         return true
       }

@@ -1,0 +1,53 @@
+.btn {
+    background-color: #016745 ; /* Blue background */
+    border: none; /* Remove borders */
+    color: white; /* White text */
+    padding: 12px 16px; /* Some padding */
+    font-size: 10px; /* Set a font size */
+    cursor: pointer; /* Mouse pointer on hover */
+    margin-right: 1%;
+  }
+  .editar {
+    background-color: #016745 ; /* Blue background */
+    border: none; /* Remove borders */
+    color: white; /* White text */
+    cursor: pointer; /* Mouse pointer on hover */
+    margin-right: 30%;
+    width: 80%;
+    height: 100%;
+  }
+  
+  /* Darker background on mouse-over */
+  .btn:hover {
+    background-color: #79BC43 ;
+  }
+  input[type="text"]:disabled {
+    background: white
+  }
+  select:disabled {
+    background: white
+  }
+  a{
+    color:white;
+    cursor: pointer;
+  }
+  p{
+    color:#79BC43
+  }
+  td{
+      font-size: 80%;
+  }
+
+  .azul {
+    color: blue;
+    text-align: center;
+  }
+  
+  .rojo {
+    color: red;
+    text-align: center;
+  }
+
+  .presupuesto {
+    text-align: center;
+  }

@@ -129,6 +129,7 @@ export class CreditNewComponent implements OnInit {
             text:(resp.msg)
           }
         )
+        
       }
     else
     {
@@ -136,8 +137,8 @@ export class CreditNewComponent implements OnInit {
       {
         title:(resp.msg)
       });
-
-      //this.router.navigate(['/credito']);
+      this.creditForm.reset;
+        this.router.navigate(['/credito'])
     }
     },
     (error) => { // Si sucede un error

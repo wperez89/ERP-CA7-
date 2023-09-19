@@ -54,23 +54,3 @@
   }
 }
 
-// 
-// 404 page
-// 
-.error-box {
-  height: 100%;
-  position: fixed;
-  background: url(../../images/background/error-bg.jpg) no-repeat center center #fff;
-  width: 100%;
-
-  .error-body {
-    padding-top: 5%;
-  }
-
-  .error-title {
-    font-size: 210px;
-    font-weight: 900;
-    text-shadow: 4px 4px 0 #fff, 6px 6px 0 $dark;
-    line-height: 210px;
-  }
-}

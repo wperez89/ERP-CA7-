@@ -101,6 +101,20 @@ export class ArchivoDigitalService {
       )            
   }
 
+   //Anular Registro Documento Digital
+   anularRegistroDoc(ID_ARCHIVO:number,ARCHIVO:string)
+   { 
+       const url = `${base_url}/archivo`;
+       //console.log(url)
+       return this.http.put(url,{ID_ARCHIVO,ARCHIVO})
+       .pipe(
+         map((resp:{
+           ok:boolean,
+           msg:string
+         })=>resp)
+       )            
+   }  
+
   crearAreaDoc(datos:any)
   {
       const url = `${base_url}/archivo/mantenimiento/tipoarea`;

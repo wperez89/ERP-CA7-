@@ -84,12 +84,12 @@ export class PersonasService {
   {
     if(user.TIPO_PERSONA != 2)
     {
-      const url = `${base_url}/mantenimiento/personaFisico/`;
+      const url = `${base_url}/mantenimiento/personaFisico`;
       return this.http.post(url,user)
     }
     else
     {
-      const url = `${base_url}/mantenimiento/personaJuridico/`;
+      const url = `${base_url}/mantenimiento/personaJuridico`;
       return this.http.post(url,user)
     }
         
@@ -117,6 +117,18 @@ export class PersonasService {
         ok:boolean, 
         existe:{EXISTE}
       })=>resp.existe[0])
+    )    
+  }
+
+  getExistePersona(id:string)
+  {
+    const url = `${base_url}/mantenimiento/existepersona/${id}`;
+    return this.http.get(url)
+    .pipe(
+      map((resp:{
+        ok:boolean, 
+        Asociado:any
+      })=>resp)
     )    
   }
   
@@ -150,7 +162,7 @@ export class PersonasService {
   getNombresPersonabyCedula(cedula:string)
   {
     const params = new HttpParams().set('cedula', cedula);
-    const url = `${base_url}/mantenimiento/cedulapersona/`;
+    const url = `${base_url}/mantenimiento/cedulapersona`;
       return this.http.get(url,{params})
       .pipe(
         map((resp:{
@@ -202,7 +214,7 @@ export class PersonasService {
   getListaProfesionales(estado:string)
   {
     const params = new HttpParams().set('estado', estado);
-    const url = `${base_url}/mantenimiento/profesional/`;
+    const url = `${base_url}/mantenimiento/profesional`;
       return this.http.get(url,{params})
       .pipe(
         map((resp:{
@@ -216,7 +228,7 @@ export class PersonasService {
    getListaProf_Tipo(profesion:number)
    {
      const params = new HttpParams().set('profesion', profesion);
-     const url = `${base_url}/mantenimiento/profesionalTipo/`;
+     const url = `${base_url}/mantenimiento/profesionalTipo`;
        return this.http.get(url,{params})
        .pipe(
          map((resp:{
@@ -230,7 +242,7 @@ export class PersonasService {
    getProfesionalID(id:string)
    {
      const params = new HttpParams().set('id', id);
-     const url = `${base_url}/mantenimiento/profesionalid/`;
+     const url = `${base_url}/mantenimiento/profesionalid`;
        return this.http.get(url,{params})
        .pipe(
          map((resp:{
@@ -244,7 +256,7 @@ export class PersonasService {
   crearProfesional(datos:Profesional)
   {
       const url = `${base_url}/mantenimiento/profesional`;
-      return this.http.put(url,datos)
+      return this.http.post(url,datos)
       .pipe(
         map((resp:{
           ok:boolean, 
@@ -257,7 +269,7 @@ export class PersonasService {
     //Obtener persona por ID
     updateActiveProfesional(body:any)
     {
-      const url = `${base_url}/mantenimiento/profesionalActive/`;
+      const url = `${base_url}/mantenimiento/profesionalActive`;
       return this.http.post(url,body)
         .pipe(
           map((resp:{

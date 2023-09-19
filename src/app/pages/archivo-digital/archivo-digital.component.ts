@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { url } from 'inspector';
-import { Confirmation, Toast, showConfirmationAlert } from 'src/app/helpers/Notificaciones';
+import { Confirmation, SuccessDialog, Toast, showConfirmationAlert } from 'src/app/helpers/Notificaciones';
 import { archivoDig_Lista } from 'src/app/models/archivoDigital/archivoDigital.models';
 import { areaDocumental } from 'src/app/models/archivoDigital/tablasArchivoDig.models';
 import { ArchivoDigitalService } from 'src/app/services/archivo-digital.service';
@@ -85,17 +85,37 @@ export class ArchivoDigitalComponent implements OnInit {
     }
   }
 
-  EliminarDocumento(id_cedula:number, archivo:string)
+  EliminarDocumento(id:number, archivo:string)
   {
     const title = 'Estás Seguro de Eliminar el Documento:'
     const text = archivo
     showConfirmationAlert(title,text,"Eliminar").then((result) => {
         if (result.isConfirmed) {
           // Aquí puedes poner la lógica para eliminar el elemento
-          console.log('Elemento eliminado');
+          this.archivoService.anularRegistroDoc(id,archivo)
+          .subscribe((resp:any)=>
+          {
+            //console.log(resp)
+            if(resp.ok)
+            {
+              SuccessDialog.fire(
+                {
+                  title:(resp.msg)
+                }
+              )
+              this.getDocumentos();
+            }
+            else
+            {
+              Toast.fire(
+                {
+                  title:(resp.msg)
+                }
+              )
+            }
+          })
         } else {
-          // Aquí puedes poner la lógica en caso de que se cancele el confirm
-          console.log('Eliminación cancelada');
+          this.getDocumentos();
         }
       });
   }
@@ -114,5 +134,16 @@ export class ArchivoDigitalComponent implements OnInit {
   }
 
   filtrar()
-  {}
+  {
+    if(this.filtro)
+    {
+      var filter = new RegExp(this.filtro,'i');
+      this.documentos = this.documentosTemp.filter(item=>filter.test(item.NUM_SESION)||filter.test(item.TIPO_DOC)||
+      filter.test(item.AREA));
+    }
+    else
+    {
+      this.documentos = this.documentosTemp;
+    }
+  }
 }

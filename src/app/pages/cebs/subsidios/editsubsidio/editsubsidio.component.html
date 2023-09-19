@@ -1,0 +1,144 @@
+<div class="row">
+    <div class="col-12">
+      <div class="card">
+        <form class="form-horizontal" [formGroup]="editsubsidioForm" (submit)="guardarSubsidio()" (keydown)="evitarSubmit($event)">
+          <div class="card-body">
+            <div class="card-body">
+              <button *ngIf="!aprobado" type="submit" class="btn" data-toggle="tooltip" data-placement="right" title="Guardar">
+                <i class="fa fa-save"></i>
+              </button>
+              <button type="button" class="btn" data-toggle="tooltip" data-placement="right" title="Salir"
+                routerLink="//cebs/subsidios">
+                <a>
+                  <i class="fa fa-close"></i>
+                </a>
+              </button>
+              <button  type="button" class="alinear" data-toggle="tooltip" data-placement="right" 
+                      title="Liquidar Solicitud" [routerLink]="['/cebs/pagado',persona,anio,estado,id,pagado]">
+                <a>
+                  Pagado
+                </a>
+              </button>
+              <button *ngIf="pagado" type="button" class="alinear" data-toggle="tooltip" data-placement="right" title="Aprobaciones"
+                [routerLink]="['/cebs/aprobacion',persona,anio,estado,id,aprobado]">
+                <a>
+                  Sesionado
+                </a>
+              </button>
+            </div>
+            <div class="row animated fadeIn fast" *ngIf="cargando">
+              <div class="col-12">
+                <div class="alert alert-success text-center">
+                  <h4 class="alert-heading">Cargando</h4>
+                  <i class="fa fa-spin fa-refresh fa-2x"></i>
+                  <p class="mb-0">Por favor espere</p>
+                </div>
+              </div>
+            </div>
+            <div>
+              <h4 class="card-title border-top">Información Personal</h4>
+              <div class="bm-3 row">
+                <label class="col-sm-3 text-end control-label col-form-label">Identificación</label>
+                <div class="col-sm-2">
+                  <input type="text" class="form-control" formControlName="IDENTIFICACION"  [attr.disabled]="true"
+                  >
+                </div>
+              </div>
+              <div  class="mb-3 row">
+                <label for="cono1" class="col-sm-3 text-end control-label col-form-label">Asociado</label>
+                <div class="col-sm-5">
+                  <input type="text" class="form-control" formControlName="NOMBRE" [attr.disabled]="true">
+                </div>
+              </div>
+            </div>
+            <div *ngIf="!cargando" class="card-body border-top ">
+              <h4 class="card-title">Datos de Subsidio Médico</h4>
+                <div class="mb-3 row">
+                  <label class="col-md-2 col-form-label">Monto Factura</label>
+                  <div class="col-md-4">
+                    <input class="form-control" type="number" formControlName="MONTO_FACT" (change)="calculoSubsidio()"
+                  >
+                  </div>
+                </div>
+                <div class="mb-3 row">
+                  <label class="col-md-2 col-form-label">Monto Subsidio</label>
+                  <div class="col-md-4">
+                    <input class="form-control" type="number" formControlName="MONTO_SUBSIDIO" [attr.disabled]="true">
+                  </div>
+                </div>
+                <div class="mb-3 row">
+                  <label  class="col-md-2 col-form-label">Fecha Solicitud</label>
+                  <div class="col-md-4">
+                    <input class="form-control" type="date" formControlName="FECHA"  >
+                  </div>
+                </div>
+                <div class="mb-3 row">
+                  <label  class="col-md-2 col-form-label">Tipo Beneficio</label>
+                  <div class="col-md-4">
+                    <select class="form-select col-12" formControlName="TIPO_BENEFICIO">
+                      <option *ngFor="let x of beneficios" value={{x.ID_BENEFICIO}}>{{x.BENEFICIO}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="mb-3 row">
+                  <label  class="col-md-2 col-form-label">Periodo</label>
+                  <div class="col-md-4">
+                    <select class="form-select col-12" formControlName="PERIODO">
+                      <option *ngFor="let x of periodo" value={{x.ID_PERIODO}}>{{x.ID_PERIODO}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="mb-3 row">
+                    <label  class="col-md-2 col-form-label">Aprobado</label>
+                    <div class="col-md-4">
+                      <select class="form-select col-12" formControlName="APROBADO" [attr.disabled]="true">
+                        <option value=true>SI</option>
+                        <option value=false>NO</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="mb-3 row">
+                    <label  class="col-md-2 col-form-label">Pagado</label>
+                    <div class="col-md-4">
+                      <select class="form-select col-12" formControlName="PAGADO" [attr.disabled]="true">
+                        <option value=true>SI</option>
+                        <option value=false>NO</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="mb-3 row">
+                    <label  class="col-md-2 col-form-label">Usuario</label>
+                    <div class="col-md-4">
+                      <input class="form-select col-12" type="text" formControlName="USUARIO_RECIBE" [attr.disabled]="true">
+                    </div>
+                  </div>
+                  <div class="mb-3 row">
+                    <label  class="col-md-2 col-form-label">Estado</label>
+                    <div class="col-md-4">
+                      <select class="form-select col-12" formControlName="ESTADO" [attr.disabled]="true">
+                        <option value='A'>ACTIVO</option>
+                        <option value='I'>ANULADO</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="mb-3 row">
+                    <label class="col-md-2 col-form-label">Observación</label>
+                    <div class="col-md-10">
+                      <input class="form-control" type="text" formControlName="OBSERVACION">
+                    </div>
+                  </div>
+                <div class="mb-3 row">
+                  <label class="col-md-2 col-form-label">Documento</label>
+                  <div class="col-md-10">
+                    <input class="form-control" type="file"  formControlName="DOCUMENTO" (change)="checkFileInput($event)">
+                  </div>
+                  <div *ngIf="document" class="m-2">
+                    <a (click)="downloadfile()"><p>{{document}}</p></a>
+                  </div>
+                </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>

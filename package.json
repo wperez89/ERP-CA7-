@@ -32,7 +32,7 @@
     "angular-notifier": "^11.0.0",
     "bootstrap": "^5.3.1",
     "crypto-js": "^4.1.1",
-    "ngx-mask": "^16.2.5",
+    "ngx-mask": "^14.2.4",
     "ngx-perfect-scrollbar": "^10.1.1",
     "rxjs": "^7.5.5",
     "rxjs-compat": "^6.6.7",

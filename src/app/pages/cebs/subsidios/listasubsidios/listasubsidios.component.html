@@ -1,0 +1,139 @@
+<section class="intro">
+    <div class="bg-image h-100">
+        <div class="mask d-flex align-items-center h-100">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-4 col-lg-3 mb-4" style="float: right;">
+                        <button type="button" class="btn" data-toggle="tooltip" data-placement="right"
+                            title="Agregar Subsidio" routerLink="//cebs/subsidios/new">
+                            <a>
+                                <i class="fa fa-plus"></i>
+                            </a>
+                        </button>
+                    </div>
+                    <div class="col-sm-4 col-lg-5 mb-4">
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 text-end control-label col-form-label">Buscar</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" placeholder="Buscar Subsidio" name="filtro"
+                                    (keyup.enter)="filtrar()" [(ngModel)]="filtro">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 col-lg-3 mb-4">
+                        <div class="mb-3 row">
+                            <label class="mb-1 presupuesto">Presupuesto</label>
+                            <label [ngClass]="{'azul': presupuesto > 15000, 'rojo': presupuesto <= 15000}">
+                                {{presupuesto | number:'1.2-2'}}</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-12  mb-7" style="float: right;">
+                        <div class="col-sm-4" style="float: right;">
+                            <div class="mb-4 row">
+                                <label class=" col-sm-3 text-end control-label col-form-label">Estado</label>
+                                <div class="col-sm-6">
+                                    <select (change)="obtenerValorEstado($event.target.value)"
+                                        class="form-control form-select" [(ngModel)]="stateOpcion">
+                                        <option *ngFor="let x of estados" value={{x.ID_ESTADO}}>{{x.ESTADO}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4" style="float: right;">
+                            <div class="mb-4 row">
+                                <label class=" col-sm-3 text-end control-label col-form-label">Sesionado</label>
+                                <div class="col-sm-6">
+                                    <select (change)="obtenerValorAprobado($event.target.value)"
+                                        class="form-control form-select" [(ngModel)]="aprobado">
+                                        <option value=true>SI</option>
+                                        <option value=false>NO</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4" style="float: right;">
+                            <div class="mb-4 row">
+                                <label class=" col-sm-3 text-end control-label col-form-label">Pagado</label>
+                                <div class="col-sm-6">
+                                    <select (change)="obtenerValorPagado($event.target.value)"
+                                        class="form-control form-select" [(ngModel)]="pagado">
+                                        <option value=true>SI</option>
+                                        <option value=false>NO</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row animated fadeIn fast" *ngIf="cargando">
+                    <div class="col-12">
+                        <div class="alert alert-success text-center">
+                            <h4 class="alert-heading">Cargando</h4>
+                            <i class="fa fa-spin fa-refresh fa-2x"></i>
+                            <p class="mb-0">Por favor espere</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center" *ngIf="!cargando">
+                    <div class="col-12">
+                        <div class="card shadow-2-strong">
+                            <div class="card-body">
+                                <H4 *ngIf="pagado && aprobado && stateOpcion === 'A'">Lista de Subsidios Médicos Pagados
+                                </H4>
+                                <H4 *ngIf="!aprobado && pagado && stateOpcion === 'A'">Lista de Subsidios Médicos Pendientes
+                                    de Sesionar</H4>
+                                <H4 *ngIf="stateOpcion === 'A' && !aprobado && !pagado">Lista de Subsidios Médicos
+                                    Pendiente</H4>
+                                <H4 *ngIf="stateOpcion === 'I'">Lista de Subsidios Médicos Anulados</H4>
+                                <div class="table-responsive">
+                                    <table class="table table-borderless mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Id</th>
+                                                <th scope="col">Nombre</th>
+                                                <th scope="col">Fecha</th>
+                                                <th scope="col">Beneficio</th>
+                                                <th scope="col">Periodo</th>
+                                                <th scope="col">Sesionado</th>
+                                                <th scope="col">Pagado</th>
+                                                <th scope="col">Editar</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr
+                                                *ngFor="let x of subsidios | slice: (pagina-1)*pagesize : (pagina-1) * pagesize + pagesize">
+                                                <td>{{x.ID_SUBSIDIO}}</td>
+                                                <td>{{x.NOMBRE}}</td>
+                                                <td>{{x.FECHA | date:'dd/MM/yyyy' }}</td>
+                                                <td>{{x.BENEFICIO}}</td>
+                                                <td>{{x.PERIODO}}</td>
+                                                <td>
+                                                    <span *ngIf="x.APROBADO == true " class="badge bg-success">SI</span>
+                                                    <span *ngIf="x.APROBADO == false " class="badge bg-danger">NO</span>
+                                                </td>
+                                                <td>
+                                                    <span *ngIf="x.PAGADO == true " class="badge bg-success">SI</span>
+                                                    <span *ngIf="x.PAGADO == false " class="badge bg-danger">NO</span>
+                                                </td>
+                                                <td *ngIf="x.ESTADO == 'A'">
+                                                    <button class="editar" type="button"
+                                                        routerLink="//cebs/subsidios/edit/{{x.ID_FISICO}}/{{x.PERIODO}}/{{x.ESTADO}}/{{x.ID_SUBSIDIO}}"
+                                                        title="Visualizar">
+                                                        <i class="fas fa-eye"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <ngb-pagination [collectionSize]="subsidios.length" [(page)]="pagina" [pageSize]="pagesize"
+                    [maxSize]="5" [rotate]="true" [boundaryLinks]="true">
+                </ngb-pagination>
+            </div>
+        </div>
+    </div>
+</section>

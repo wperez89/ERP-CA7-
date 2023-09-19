@@ -126,6 +126,7 @@ export class SubMenuAgregarComponent implements OnInit {
           });
           this.submenuForm.reset();
           this.router.navigate(['/usuario/usersubmenu']);
+          window.location.reload();
       }
     },
     (error) => { // Si sucede un error
@@ -156,6 +157,7 @@ export class SubMenuAgregarComponent implements OnInit {
           });
           this.submenuForm.reset();
           this.router.navigate(['/usuario/usersubmenu']);
+          window.location.reload();
       }
     },
     (error) => { // Si sucede un error

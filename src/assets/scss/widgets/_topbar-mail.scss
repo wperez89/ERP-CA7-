@@ -11,23 +11,6 @@ $mailbox-height: 317px;
 /*User mail widgets*/
 /*******************/
 .mailbox {
-  .drop-title {
-    font-weight: $font-weight-medium;
-    padding: 11px 20px 15px;
-    border-radius: $border-radius $border-radius 0 0;
-    position: relative;
-    &:after {
-      content: "";
-      position: absolute;
-      background: url(~src/assets/images/background/img5.png) no-repeat;
-      opacity: 0.2;
-      top: 0px;
-      left: 0px;
-      height: 100%;
-      width: 100%;
-      background-size: cover;
-    }
-  }
   .nav-link {
     border-top: 1px solid $border-color;
     padding-top: 15px;

@@ -14,7 +14,6 @@ const base_url = environment.base_urlSql;
 })
 export class GlobalService {
   Estados: Estados;
-  private claveSecreta = 'mi-clave-secreta';
 
   constructor(private http: HttpClient, private router: Router,) { }
 

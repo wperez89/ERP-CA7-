@@ -69,6 +69,11 @@ export const routes: Routes = [
         path: 'archivo-digital',
         canActivate:[gerencialGuard],
         loadChildren: () => import('./pages/archivo-digital/archivo-digital.module').then(m => m.ArchivoDigitalModule)
+      },
+      {
+        path: 'cebs',
+        canActivate:[AdminGuard],
+        loadChildren: () => import('./pages/cebs/cebs.module').then(m => m.CebsModule)
       }
     ]
   },
