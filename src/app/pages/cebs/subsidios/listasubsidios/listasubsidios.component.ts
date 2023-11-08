@@ -35,7 +35,7 @@ export class ListasubsidiosComponent implements OnInit {
     const pagadoSub= this.pagado;
     const estadoSub= this.stateOpcion;
     //console.log(aprobado, pagado, estado);
-    console.log(typeof this.stateOpcion)
+    //console.log(typeof this.stateOpcion)
     this.cebsServices.cargarListaSubsidios(aprobadoSub, pagadoSub, estadoSub)
     .subscribe((resp:any)=>
     {

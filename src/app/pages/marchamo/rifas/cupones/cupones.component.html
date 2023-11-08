@@ -1,0 +1,125 @@
+
+<section class="intro">
+    <div class="bg-image h-100">
+      <div class="mask d-flex align-items-center h-100">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-12 col-lg-6">
+              <div class="mb-3 row">
+                <label class="col-sm-3 text-end control-label col-form-label">Buscar</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" placeholder="Buscar Cupón"  name="filtro"
+                  (keyup.enter)="filtrar()" 
+                  [(ngModel)]="filtro">
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="row animated fadeIn fast" *ngIf="cargando">
+            <div class="col-12">
+                <div class="alert alert-success text-center">
+                    <h4 class="alert-heading">Cargando</h4>
+                    <i class="fa fa-spin fa-refresh fa-2x"></i>
+                    <p class="mb-0">Por favor espere</p>
+                </div>
+            </div>
+          </div>
+          <div class="row justify-content-center" *ngIf="!cargando"> 
+            <div class="col-12">
+              <div class="card shadow-2-strong">
+                <div class="card-body">                  
+                  <div class="table-responsive">
+                    <table class="table table-borderless mb-0">
+                      <thead>
+                        <tr>
+                          <th scope="col">Id Cupón</th>
+                          <th scope="col">Placa</th>
+                          <th scope="col">Detalle</th>
+                          <th scope="col">Seleccionar</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let x of cupones | slice: (pagina-1)*pagesize : (pagina-1) * pagesize + pagesize">
+                          <td>{{x.ID_CUPON}}</td>
+                          <td>{{x.PLACA}}</td>
+                          <td>{{x.OBSERVACION}}</td>
+                          <td>
+                            <button type="button" class="btn btn-success btn-sm px-3 m-1" 
+                            routerLink="//marchamo/datosCupon/{{x.ESTADO}}/{{x.ID_CUPON}}/{{x.PLACA}}" title="Visualizar">
+                              <i class="fas fa-eye"></i>
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <ngb-pagination [collectionSize]="cupones.length" 
+                  [(page)]="pagina" 
+                  [pageSize]="pagesize"
+                  [maxSize]="5" 
+                  [rotate]="true"
+                  [boundaryLinks]="true">
+          </ngb-pagination>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--Modal-->
+  <ng-template #modalAvaluoNew let-modal>
+    <form autocomplete="off" [formGroup]="AddAvaluoForm"
+    >
+      <div class="modal-header justify-content-center mt-2">
+        <a href="index.html">
+          <span>
+        <h2>Agregar Avalúo</h2>    
+        </span>
+        </a>
+      </div>
+      <div class="modal-body px-4">
+        <div class="mb-3" *ngIf="!idPersona">
+          <label >Identificación</label>
+          <input
+            class="form-control"
+            type="text"
+            id="rolDescription"
+            formControlName="ID_CLIENTE"
+            required
+            placeholder="Identificación de Cliente"/>
+        </div>
+        <div *ngIf="idPersona" class="mb-3">
+          <label >Nombre</label>
+          <input
+            class="form-control"
+            type="text"
+            id="rolDescription"
+            formControlName="NOMBRE"
+            required/>
+        </div>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button *ngIf="!idPersona"
+          class="btn btn-light-info text-info font-medium"
+          (click)="getpersonabyCedula()">
+          Mostrar
+        </button>
+        <button *ngIf="idPersona"
+          class="btn btn-light-info text-info font-medium"
+          (click)="GuardarAvaluo()">
+          Guardar
+        </button>
+        <button type="button" class="
+                                  btn btn-light-danger
+                                  text-danger
+                                  font-weight-medium
+                                  waves-effect
+                                " (click)="closeModal()">
+                                Close
+                              </button>
+      </div>
+    </form>
+  </ng-template>

@@ -72,7 +72,7 @@ export class PagadoComponent implements OnInit {
     this.liquidarForm.patchValue({
       USUARIO: this.usuario.EMAIL,
     });
-    console.log(this.liquidarForm.value)
+    //console.log(this.liquidarForm.value)
     this.cebsServices.crearLiquidación(this.liquidarForm.value,this.archivoSelected)
     .subscribe((resp:any)=>
     {
@@ -101,7 +101,7 @@ export class PagadoComponent implements OnInit {
 
   anularPago()
   {
-    console.log(this.liquidarForm.value)
+    //console.log(this.liquidarForm.value)
     const title = 'Estás Seguro de Anular el Pago del Subsidio:';
     const registro = this.id;
     showConfirmationAlert(title,registro,"Anular").then((result) => {
@@ -187,7 +187,7 @@ export class PagadoComponent implements OnInit {
       .subscribe((resp:any)=>
       {
         const reg = resp.registro[0];
-        console.log(reg);
+        //console.log(reg);
         this.liquidarForm.patchValue({
           NUM_COMPROBANTE:reg.NUM_COMPROBANTE,
           FECHA_PAGO:reg.FECHA_PAGO,

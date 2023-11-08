@@ -108,6 +108,20 @@ export class PersonasService {
       )    
   }
 
+//Obtener Usuario por ID
+getPersonaEmail_ID(cedula:string)
+{
+  const params = new HttpParams().set('cedula', cedula);
+    const url = `${base_url}/mantenimiento/cedulapersonaEmail`;
+      return this.http.get(url,{params})
+      .pipe(
+        map((resp:{
+          ok:boolean, 
+          persona:nombresPersona[],
+        })=>resp)
+      )    
+}
+
   getExisteDatos(id:string)
   {
     const url = `${base_url}/mantenimiento/existepersonadatos/${id}`;
@@ -200,7 +214,8 @@ export class PersonasService {
   //Actualizar Usuario por ID
   updateDatosPersonaID(id:string,datos:datosPersonas)
   {
-    const url = `${base_url}/mantenimiento/personadatos/${id}`;
+    //console.log(datos);
+    const url = `${base_url}/mantenimiento/updpersonadatos/${id}`;
       return this.http.put(url,datos)
       .pipe(
         map((resp:{
@@ -252,6 +267,20 @@ export class PersonasService {
        )    
    }
 
+   //Obtener persona por ID
+  getPersonaAPI(id:string)
+  {
+    const url = `${base_url}/mantenimiento/cedulaapi/${id}`;
+    //console.log(url);
+      return this.http.get(url)
+      .pipe(
+        map((resp:{
+          ok:boolean, 
+          persona:[],
+          msg:string
+        })=>resp)
+      )    
+  }
 
   crearProfesional(datos:Profesional)
   {

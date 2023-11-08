@@ -6,10 +6,10 @@
       </div>
       <form class="form-horizontal" 
         [formGroup]="personForm"
-        (submit)="createPerson()"
+        (submit)="createPerson()" (keydown)="evitarSubmit($event)"
         >
         <div class="card-body">
-          <div class="mb-3 row">
+          <div class="mb-3 row" *ngIf="mostrar">
             <label for="fullname" class="col-sm-3 text-end control-label col-form-label">Tipo Persona</label>
             <div class="col-sm-9">
               <select 
@@ -17,7 +17,7 @@
                   data-placeholder="Seleccionar Tipo de Persona" 
                   id="Rol" 
                   formControlName="TIPO_PERSONA"
-                  (change)="capturar()"
+                  (blur)="capturar()"
                   required>
                     <option *ngFor="let x of tipoPersona" 
                       value={{x.COD_PERSONA}} [selected]="x === TipoSeleccionado">
@@ -29,10 +29,11 @@
           <div class="mb-3 row">
             <label for="fullname" class="col-sm-3 text-end control-label col-form-label">Identificación</label>
             <div class="col-sm-9">
-              <input type="text" class="form-control" id="Identificacion" placeholder="Identificación" formControlName="IDENTIFICACION">
+              <input type="text" class="form-control"  id="Identificacion" (blur)="cargarAPICedula()"
+              placeholder="Identificación" formControlName="IDENTIFICACION">
             </div>
           </div>
-          <div class="mb-3 row">
+          <div class="mb-3 row" *ngIf="mostrar">
             <label for="com12" class="col-sm-3 text-end control-label col-form-label" *ngIf="TipoSeleccionado != 2">
               Nombre
             </label>
@@ -44,21 +45,21 @@
                   style="text-transform:uppercase;">
             </div>
           </div>
-          <div class="mb-3 row" *ngIf="TipoSeleccionado != 2">
+          <div class="mb-3 row" *ngIf="TipoSeleccionado != 2 && mostrar">
             <label for="fullname" class="col-sm-3 text-end control-label col-form-label">Primer Apellido</label>
             <div class="col-sm-9">
               <input type="text" class="form-control" id="fullname" placeholder="Primer Apellido" formControlName="APELLIDO1"
                   style="text-transform:uppercase;">
             </div>
           </div>
-          <div class="mb-3 row" *ngIf="TipoSeleccionado != 2">
+          <div class="mb-3 row" *ngIf="TipoSeleccionado != 2 && mostrar">
             <label for="fullname" class="col-sm-3 text-end control-label col-form-label">Segundo Apellido</label>
             <div class="col-sm-9">
               <input type="text" class="form-control" id="fullname" placeholder="Segundo Apellido" formControlName="APELLIDO2"
                 style="text-transform:uppercase;">
             </div>
           </div>
-          <div class="mb-3 row" *ngIf="TipoSeleccionado != 2">
+          <div class="mb-3 row" *ngIf="TipoSeleccionado != 2 && mostrar">
             <label for="fullname" class="col-sm-3 text-end control-label col-form-label">Género</label>
             <div class="col-sm-9">
               <select 
@@ -71,7 +72,7 @@
                   </select>
             </div>
           </div>
-          <div class="mb-3 row">
+          <div class="mb-3 row" *ngIf="mostrar">
             <label for="com12" class="col-sm-3 text-end control-label col-form-label" *ngIf="TipoSeleccionado != 2">
               Fecha Nacimiento
             </label>
@@ -82,7 +83,7 @@
               <input type="date" class="form-control" id="fecha" formControlName="FECHA">
             </div>
           </div>
-          <div class="mb-3 row">
+          <div class="mb-3 row" *ngIf="mostrar">
             <label for="com12" class="col-sm-3 text-end control-label col-form-label" *ngIf="TipoSeleccionado != 2">
               Pais Nacimiento
             </label>
@@ -100,7 +101,7 @@
                   </select>
             </div>
           </div>
-          <div class="mb-3 row">
+          <div class="mb-3 row" *ngIf="mostrar">
             <label class="col-sm-3 text-end control-label col-form-label">APNFDS</label>
             <div class="col-sm-9">
               <div class="form-check">

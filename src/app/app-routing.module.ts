@@ -55,6 +55,10 @@ export const routes: Routes = [
         loadChildren: () => import('./pages/personas/personas.module').then(m => m.PersonasModule)
       },
       {
+        path: 'marchamo',
+        loadChildren: () => import('./pages/marchamo/marchamo.module').then(m => m.MarchamoModule)
+      },
+      {
         path: 'avaluo',
         canActivate:[crediticioGuard],
         loadChildren: () => import('./pages/avaluos/avaluos.module').then(m => m.AvaluosModule)

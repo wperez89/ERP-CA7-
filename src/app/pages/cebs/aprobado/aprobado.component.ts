@@ -163,7 +163,7 @@ export class AprobadoComponent implements OnInit {
       this.cebsServices.cargarAprobacionSubId(this.id,this.anio)
       .subscribe((resp:any)=>
       {
-        console.log(resp)
+        //console.log(resp)
         if(resp.ok)
         {
           this.aprobacionForm.patchValue({

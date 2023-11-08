@@ -351,7 +351,7 @@ export class CebsService {
   //Obtener Liquidacion Solicitud
   cargarLiquidacionID(id:string)
   {
-    const url = `${base_url}/cebs/liquidacion/${id}/`;
+    const url = `${base_url}/cebs/liquidacion/${id}`;
     return this.http.get(url)
     .pipe(
       map((resp:{

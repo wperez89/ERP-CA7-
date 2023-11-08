@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { SrvRecord } from 'dns';
 import { SuccessDialog, Toast, errorDialog } from 'src/app/helpers/Notificaciones';
 import { Paises, cargarGenero } from 'src/app/interfaces/cargar-personas.interface';
 import { PersonasService } from 'src/app/services/personas.service';
@@ -17,6 +18,10 @@ export class PersonaNuevaComponent implements OnInit {
   public personForm : FormGroup
   public TipoSeleccionado: number = 1
   public paisDefault: string = 'CR'
+  public cedula:string = '';
+  public mostrar = false;
+  public tipocedFisico = false; 
+
   constructor(private personaService:PersonasService,private fb:FormBuilder,private router: Router) { 
     if(this.TipoSeleccionado !=2)
     {
@@ -71,7 +76,6 @@ export class PersonaNuevaComponent implements OnInit {
    cargarTipoGenero()
     {
       this.personaService.cargarTipoGenero()
-      
       .subscribe((tipoGenero)=>
       {
         this.tipoGenero = tipoGenero;
@@ -143,5 +147,65 @@ export class PersonaNuevaComponent implements OnInit {
         title:error.msg
       })
     })
+  }
+  
+  cargarAPICedula()
+  {
+    this.cedula = this.personForm.get('IDENTIFICACION').value;
+    this.mostrar = true;
+    this.personaService.getPersonaAPI(this.cedula)
+    .subscribe((resp:any)=>
+    {
+      //console.log(resp);
+     if(resp.ok)
+     {
+      if(resp.persona)
+      {
+        const persona = resp.persona[0]
+        if(persona.guess_type === "FISICA")
+        {
+          this.TipoSeleccionado = 1;
+          this.personForm.patchValue({
+            TIPO_PERSONA: parseInt(persona.guess_type_num,10),
+            APELLIDO1: resp.persona[0].lastname1,
+            APELLIDO2:resp.persona[0].lastname2,
+            NOMBRE:resp.persona[0].firstname,
+          });
+        }
+        else
+        {
+          this.TipoSeleccionado = 2;
+          this.personForm.patchValue({
+            TIPO_PERSONA: parseInt(persona.guess_type_num,10),
+            APELLIDO1:'',
+            APELLIDO2:'',
+            NOMBRE:resp.persona[0].fullname,
+          });
+        }
+      }
+      else
+      {
+        Toast.fire(
+          {
+            text:("Persona No Existe. Favor Incluirlo Manualmente")
+          }
+        )
+      }
+     }
+     else
+     {
+      errorDialog.fire(
+        {
+          text:("Consulte al Administrador")
+        }
+      )
+     }
+    })
+  }
+
+  evitarSubmit(event: KeyboardEvent) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+    }
   }
 }
