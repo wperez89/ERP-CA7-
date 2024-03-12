@@ -1,0 +1,91 @@
+<section class="intro">
+    <div class="bg-image h-100">
+      <div class="mask d-flex align-items-center h-100">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-12 col-lg-5">
+              <div class="mb-3 row">
+                <label class="col-sm-2 text-end control-label col-form-label">Buscar</label>
+                <div class="col-sm-5">
+                  <input type="text" class="form-control" placeholder="Buscar"  name="filtro"
+                  (keyup.enter)="filtrar()" 
+                  [(ngModel)]="filtro">
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-5" style="float: right;">
+              <div class="mb-3 row">
+                <label for="web1" class=" col-sm-3 text-end control-label col-form-label">Estado</label>
+                <div class="col-sm-6">
+                  <select [(ngModel)]="estadoSelected" (change)="changeEstado($event.target.value)" 
+                  class="form-control form-select" >
+                    <option *ngFor="let x of estados" value={{x.ID}}>{{x.ESTADO_ACT_NOM}}</option>
+                    </select>
+                </div>
+              </div> 
+            </div>
+            <div class="col-sm-12 col-lg-6 mb-4" style="float: right;">
+              <button type="button" class="btn btn-success" data-toggle="tooltip" data-placement="right" 
+                title="Agregar Solicitud" routerLink="/credito/solicitud/new">
+            <a>
+              <i class="fa fa-plus"></i>
+            </a>
+        </button>
+            </div> 
+          </div>
+          <div class="row animated fadeIn fast" *ngIf="cargando">
+            <div class="col-12">
+                <div class="alert alert-success text-center">
+                    <h4 class="alert-heading">Cargando</h4>
+                    <i class="fa fa-spin fa-refresh fa-2x"></i>
+                    <p class="mb-0">Por favor espere</p>
+                </div>
+            </div>
+          </div>
+          <div class="row justify-content-center" *ngIf="!cargando">
+            <div class="col-12">
+              <div class="card shadow-2-strong">
+                <div class="card-body">                  
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col">N° Solicitud</th>
+                          <th scope="col">Cliente</th>
+                          <th scope="col">Fecha</th>
+                          <th scope="col">Estado</th>
+                          <th scope="col">Acción</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let x of solicitud | slice: (pagina-1)*pagesize : (pagina-1) * pagesize + pagesize">
+                          <td>{{x.ID_SOLICITUD}}</td>
+                          <td>{{x.NOMBRE}}</td>
+                          <td>{{x.FECHA | date:'dd/MM/YYYY'}}</td>
+                          <td>{{x.ESTADO_ACT_NOM}}</td>
+                          <td>
+                            <button 
+                  class="like btn-rounded" title="Editar" data-toggle="modal"
+                  >
+                  <i class="fas fa-edit" style="color:#016745;" routerLink="//credito/solicitud/edit/{{x.ID_SOLICITUD}}/{{x.ESTADO_ACTUAL}}/{{x.ID_CLIENTE}}"></i>
+                </button> 
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <ngb-pagination [collectionSize]="solicitud.length" 
+                  [(page)]="pagina" 
+                  [pageSize]="pagesize"
+                  [maxSize]="5" 
+                  [rotate]="true"
+                  [boundaryLinks]="true">
+          </ngb-pagination>
+        </div>
+      </div>
+    </div>
+  </section>

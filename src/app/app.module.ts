@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule} from '@angular/common';
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
@@ -34,9 +34,10 @@ import { LoginComponent } from './auth/login/login.component';
 import { MenuComponent } from './layouts/menu/menu.component';
 import { InterceptorModule } from './services/interceptor/interceptor.module';
 import { NoPageFoundComponent } from './pages/no-page-found/no-page-found.component';
-import { ValidarCuentaComponent } from './auth/validar-cuenta/validar-cuenta.component';
 import { AuthModule } from './auth/auth.module';
-import { environment } from 'src/environments/environment';
+
+import { FormatoMonedaPipe } from './helpers/moneda.pipe';
+
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -64,6 +65,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     HorizontalSidebarComponent,
     MenuComponent,
     NoPageFoundComponent,
+    FormatoMonedaPipe,
   ],
   imports: [
     CommonModule,
@@ -95,8 +97,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     {
       provide: PERFECT_SCROLLBAR_CONFIG,
       useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG,
-    },
+    }
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule { 
+}

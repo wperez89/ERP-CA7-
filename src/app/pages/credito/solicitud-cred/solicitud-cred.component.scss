@@ -1,0 +1,15 @@
+.help-block{
+  color: red;
+  font-size: small;
+}
+
+select:disabled {
+  background: white
+}
+
+input[type="number"]:disabled,
+input[type="text"]:disabled,
+input[type="date"]:disabled
+{
+  background: white;
+}

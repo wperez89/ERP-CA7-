@@ -28,3 +28,24 @@ export interface Paises
     COD_PAIS: string,
     PAIS: string
 }
+
+export interface RangoSalario
+{
+    ID_RANGO: Number,
+    RANGO_SALARIAL: string,
+    ESTADO:string
+}
+
+export interface sectorLaboral
+{
+    ID_SECTORLAB: Number,
+    SECTOR: string,
+    ESTADO:string
+}
+
+export interface condicionLaboral
+{
+    ID_CONDIC_LAB: Number,
+    CONDICION: string,
+    ESTADO:string
+}

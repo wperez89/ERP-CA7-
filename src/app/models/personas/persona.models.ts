@@ -43,7 +43,9 @@ export class datosPersonas{
         public TEL_CASA?:string,
         public TEL_CEL?:string,
         public TEL_TRABAJO?:string,
-        public IMG?:string,
+        public RANGO_SALARIO?:number,
+        public SECTOR_LAB?:number,
+        public CONDICION_LAB?:number,
         public ID_USUARIO?:string,
 )
 {}

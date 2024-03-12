@@ -1,0 +1,18 @@
+select:disabled {
+  background: transparent;
+}
+
+select {
+  background: #fafafa;
+}
+
+input[type="text"]:disabled,
+input[type="date"]:disabled {
+  background: transparent;
+}
+
+
+
+::placeholder {
+  color: black;
+}

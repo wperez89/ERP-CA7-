@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { replaceAll } from 'chartist';
 import { SrvRecord } from 'dns';
 import { SuccessDialog, Toast, errorDialog } from 'src/app/helpers/Notificaciones';
 import { Paises, cargarGenero } from 'src/app/interfaces/cargar-personas.interface';
@@ -20,7 +21,7 @@ export class PersonaNuevaComponent implements OnInit {
   public paisDefault: string = 'CR'
   public cedula:string = '';
   public mostrar = false;
-  public tipocedFisico = false; 
+  public tipocedFisico = false;
 
   constructor(private personaService:PersonasService,private fb:FormBuilder,private router: Router) { 
     if(this.TipoSeleccionado !=2)
@@ -35,7 +36,7 @@ export class PersonaNuevaComponent implements OnInit {
           GENERO:['',Validators.required],
           FECHA:['',Validators.required],
           PAIS:['',Validators.required],
-          APNFDS:['',Validators.required],
+          APNFDS:[false,Validators.required],
         });
     }
     else
@@ -47,7 +48,7 @@ export class PersonaNuevaComponent implements OnInit {
               NOMBRE:['', Validators.required],
               FECHA:['',Validators.required],
               PAIS:['',Validators.required],
-              APNFDS:['',Validators.required],
+              APNFDS:[false,Validators.required],
             });
         }
   }
@@ -58,7 +59,8 @@ export class PersonaNuevaComponent implements OnInit {
     this.cargarTipoPais();
     this.personForm.patchValue({
       TIPO_PERSONA: this.TipoSeleccionado,
-      PAIS: this.paisDefault
+      PAIS: this.paisDefault,
+      APNFDS: false
     });
   }
 
@@ -110,7 +112,11 @@ export class PersonaNuevaComponent implements OnInit {
 
   createPerson()
   {
-    //console.log(this.personForm);
+    this.cedula = this.personForm.get('IDENTIFICACION').value.trim();
+    this.personForm.patchValue({
+      IDENTIFICACION: this.cedula
+    });
+    //console.log(this.personForm.value);
     this.personaService.crearPersonas(this.personForm.value)
     .subscribe((resp:any)=>{
     if(!resp.ok)
@@ -152,7 +158,9 @@ export class PersonaNuevaComponent implements OnInit {
   cargarAPICedula()
   {
     this.cedula = this.personForm.get('IDENTIFICACION').value;
-    this.mostrar = true;
+    if(this.cedula.length > 0)
+    {
+      this.mostrar = true;
     this.personaService.getPersonaAPI(this.cedula)
     .subscribe((resp:any)=>
     {
@@ -162,7 +170,8 @@ export class PersonaNuevaComponent implements OnInit {
       if(resp.persona)
       {
         const persona = resp.persona[0]
-        if(persona.guess_type === "FISICA")
+        //console.log(persona)
+        if(persona.guess_type === "FISICA" || persona.guess_type === "DIMEX/NITE")
         {
           this.TipoSeleccionado = 1;
           this.personForm.patchValue({
@@ -170,6 +179,7 @@ export class PersonaNuevaComponent implements OnInit {
             APELLIDO1: resp.persona[0].lastname1,
             APELLIDO2:resp.persona[0].lastname2,
             NOMBRE:resp.persona[0].firstname,
+            APNFDS: false
           });
         }
         else
@@ -201,6 +211,16 @@ export class PersonaNuevaComponent implements OnInit {
       )
      }
     })
+    }
+    else{
+      Toast.fire(
+        {
+          text:("Ingresar una Identificación Válida")
+        }
+      )
+    }
+    
+    
   }
 
   evitarSubmit(event: KeyboardEvent) {

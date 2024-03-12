@@ -1,0 +1,138 @@
+<div class="container">
+    <div class="border-bottom title-part-padding">
+        <h3  *ngIf="!editado" class="card-title">Información Solicitud de Crédito</h3>
+        <h3 *ngIf="editado" class="card-title">Información Solicitud de Crédito N° {{idSolicitud}}</h3>
+    </div>
+    <div class="row animated fadeIn fast" *ngIf="cargando">
+        <div class="col-12">
+            <div class="alert alert-success text-center">
+                <h4 class="alert-heading">Cargando</h4>
+                <i class="fa fa-spin fa-refresh fa-2x"></i>
+                <p class="mb-0">Por favor espere</p>
+            </div>
+        </div>
+    </div>
+    <div class="card-body mt-2">
+        <form [formGroup]="solicitudForm"
+                (submit)="guardarSolicitud()">
+            <!--Identificar Cedula Cliente-->
+        <div class="mb-3 row">
+            <label class="col-sm-3 text-end control-label col-form-label">Identificación</label>
+            <div class="col-sm-6">
+              <input type="text" class="form-control"  id="Identificacion" (blur)="cargarAPICedula()"
+              placeholder="Identificación" formControlName="IDENTIFICACION" 
+              [attr.disabled]="editado == true ? true : null">
+            </div>
+          </div>
+          <div class="mb-3 row" *ngIf="existe">
+            <label class="col-sm-3 text-end control-label col-form-label">Cliente</label>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" formControlName="NOMBRE" [attr.disabled]=true>
+            </div>
+          </div>
+        <!--Segunda Parte del Formulario-->
+        <div class="border-top mt-2" *ngIf="existe">
+            <div class="row">
+                <div class="col-sm-12 col-md-6">
+                    <div class="mb-3">
+                        <label class="control-label col-form-label">Producto</label>
+                    <select class="form-control form-select" formControlName="PRODUCTO">
+                        <option *ngFor="let x of producto" value={{x.ID_PRODCRED}}>{{x.PRODUCTO}}</option>
+                        </select>
+                    <div class="help-block" *ngIf="requerido"><ul role="alert"><li>Requerido</li></ul></div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <div class="mb-3">
+                        <label class="control-label col-form-label">Canal Comunicación</label>
+                    <select class="form-control form-select" formControlName="CANAL_COM">
+                        <option *ngFor="let x of canales" value={{x.ID_CANAL}}>{{x.CANAL}}</option>
+                        </select>
+                        <div class="help-block" *ngIf="requerido"><ul role="alert"><li>Requerido</li></ul></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="editado">
+                <div class="col-sm-12 col-md-6">
+                    <div class="mb-3">
+                        <label for="dateopen" class="control-label col-form-label">Fecha Solicitud</label>
+                        <input type="text" class="form-control" formControlName="FECHA" [attr.disabled]=true>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <div class="mb-3">
+                        <label for="datefixe" class="control-label col-form-label">Estado Actual</label>
+                        <input type="text" class="form-control" formControlName="ESTADO_ACTUAL" [attr.disabled]=true>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <div class="mb-3">
+                        <label class="control-label col-form-label">Condición Laboral</label>
+                        <select class="form-control form-select" formControlName="CONDICION_LAB" [attr.disabled]=true>
+                            <option *ngFor="let x of condicionLab" value={{x.ID_CONDIC_LAB}}>{{x.CONDICION}}</option>
+                            </select>
+                            <div class="help-block" *ngIf="requerido"><ul role="alert"><li>Requerido</li></ul></div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="mb-3">
+                        <label class="control-label col-form-label">Sector Laboral</label>
+                        <select class="form-control form-select" formControlName="SECTOR_LAB" [attr.disabled]=true>
+                            <option *ngFor="let x of sectorLab" value={{x.ID_SECTORLAB}}>{{x.SECTOR}}</option>
+                            </select>
+                            <div class="help-block" *ngIf="requerido"><ul role="alert"><li>Requerido</li></ul></div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="mb-3">
+                        <label class="control-label col-form-label">Rango Salarial</label>
+                        <select class="form-control form-select" formControlName="RANGO_SAL" [attr.disabled]=true>
+                            <option *ngFor="let x of rangoSalario" value={{x.ID_RANGO_SAL}}>{{x.RANGO_SALARIAL}}</option>
+                            </select>
+                            <div class="help-block" *ngIf="requerido"><ul role="alert"><li>Requerido</li></ul></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2">
+                    <div class="mb-3">
+                        <label class="control-label col-form-label">Monto Crédito</label>
+                        <input type="number" class="form-control" formControlName="MONTO"
+                        >
+                        <div class="help-block" *ngIf="requerido"><ul role="alert"><li>Requerido</li></ul></div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="mb-3">
+                        <label class="control-label col-form-label">Observaciones</label>
+                        <textarea class="form-control" rows="2"
+                            placeholder="Comentarios" formControlName="OBSERVACIONES"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="p-3 border-top">
+            <div class="text-end">
+              <button type="submit" class="
+                  btn btn-info
+                  rounded-pill
+                  px-4
+                  waves-effect waves-light m-2
+                " *ngIf="existe">
+                Guardar
+              </button>
+              <button type="button" class="
+                  btn btn-dark
+                  rounded-pill
+                  px-4
+                  waves-effect waves-light
+                " routerLink="//credito/solicitudescred/">
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </form>
+    </div>
+</div>

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
@@ -8,6 +8,8 @@ import { CreditoComponent } from './credito.component';
 import { CreditoRoutes } from './credito.routing';
 import { CreditNewComponent } from './credit-new/credit-new.component';
 import { CreditEditComponent } from './credit-edit/credit-edit.component';
+import { SolicitudListComponent } from './solicitud/solicitudList.component';
+import { SolicitudCredComponent } from './solicitud-cred/solicitud-cred.component';
 
 
 
@@ -15,7 +17,9 @@ import { CreditEditComponent } from './credit-edit/credit-edit.component';
   declarations: [
     CreditoComponent,
     CreditNewComponent,
-    CreditEditComponent
+    CreditEditComponent,
+    SolicitudListComponent,
+    SolicitudCredComponent,
   ],
   imports: [
     CommonModule,
@@ -23,6 +27,10 @@ import { CreditEditComponent } from './credit-edit/credit-edit.component';
     FormsModule,
     ReactiveFormsModule,
     NgbPaginationModule,
+  ],
+  providers: [
+    DatePipe, // Añade DatePipe a los providers del módulo
+    // Otros servicios o providers
   ]
 })
 export class CreditoModule { }

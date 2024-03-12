@@ -1,0 +1,133 @@
+<div class="row">
+    <div class="row animated fadeIn low" *ngIf="cargando">
+      <div class="col-12">
+          <div class="alert alert-success text-center">
+              <h4 class="alert-heading">Cargando</h4>
+              <i class="fa fa-spin fa-refresh fa-2x"></i>
+              <p class="mb-0">Por favor espere</p>
+          </div>
+      </div>
+    </div>
+    <div class="container" *ngIf="!cargando">
+      <div class="border-bottom title-part-padding">
+        <h4 class="card-title mb-0">Transacciones de Solicitud de Vehículo</h4>
+      </div>
+      <div class="card-body">
+        <div class="d-flex justify-content-end">
+          <button type="button" class="btn btn-success btn-rounded m-t-10 mb-2 mt-2" data-bs-toggle="modal"
+            data-bs-target="#add-rol" (click)="modalOpenBackdrop(modaltrscnSol)" 
+            [attr.disabled]="idEstado === '3' || !autorizado ? true: null">
+            Agregar
+          </button>
+        </div>
+        <div class="table-responsive" *ngIf="transaccion.length > 0">
+          <table id="demo-foo-addrow"
+            class="table table-bordered m-t-30 table-hover contact-list footable footable-5 footable-paging footable-paging-center breakpoint-xs"
+            data-paging="true" data-paging-size="7">
+            <thead>
+              <tr class="footable-header">
+                <th>Usuario</th>
+                <th>Nuevo Estado</th>
+                <th>Fecha</th>
+                <th>Ver</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let x of transaccion">
+                <td style="display: table-cell;"><a>{{x.NOM_USER}}</a></td>
+                <td style="display: table-cell;">{{x.ESTADO_NUEVO}}</td>
+                <td style="display: table-cell;">{{x.FECHA | date:'dd/MM/yyyy hh:mm:ss a':'UTC'}}</td>
+                <td style="text-align: center; ">
+                  <div>
+                    <button class="like btn-rounded" title="Ver" data-toggle="modal">
+                      <i class="fas fa-eye" style="color:#016745;"
+                        (click)="mostrarTransaccionesID(modaltrscnSol,x.ID_TRAN)"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--Modal-->
+  <ng-template #modaltrscnSol let-modal>
+    <form autocomplete="off" [formGroup]="trscnSolVehForm" (submit)="createtrscnSol(modaltrscnSol)"
+      (keydown)="evitarSubmit($event)">
+      <div class="modal-header justify-content-center mt-2">
+        <span>
+          <h2 *ngIf="!editado">Agregar Transacción de Solicitud</h2>
+          <h2 *ngIf="editado">Transacción de Solicitud N° {{id}}</h2>
+        </span>
+      </div>
+      <div class="card-body" *ngIf="!cargando">
+        <div class="m-3 row">
+          <label for="title1" class="col-sm-3 text-end control-label col-form-label">N° Solicitud</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" formControlName="NUM_SOLICITUD" [attr.disabled]="true">
+          </div>
+        </div>
+        <div class="m-3 row" *ngIf="!cargando">
+          <label class="col-sm-3 text-end control-label col-form-label" *ngIf="!editado">Estado Actual</label>
+          <label class="col-sm-3 text-end control-label col-form-label" *ngIf="editado">Estado Anterior</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" formControlName="ESTADO_ANT" [attr.disabled]="true">
+          </div>
+        </div>
+        <div class="m-3 row">
+          <label  class="col-sm-3 text-end control-label col-form-label">Estado Nuevo</label>
+          <div class="col-sm-9" *ngIf="!editado">
+            <select class="form-select" formControlName="ESTADO_ACT">
+              <option *ngFor="let x of estadosTrscn" value={{x.IDESTADO}}>{{x.NOMBRE}}</option>
+            </select>
+          </div>
+          <div class="col-sm-9" *ngIf="editado">
+            <input type="text" class="form-control" formControlName="ESTADO_ACT" [attr.disabled]="true">
+          </div>
+        </div>
+        <div class="m-3 row" >
+          <label for="cono3" class="col-sm-3 text-end control-label col-form-label">Detalle</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="cono3" placeholder="Detalle" maxlength="100"
+              formControlName="DETALLE" [attr.disabled]="trscnSolVehForm.value.EDITADO? true: null">
+          </div>
+        </div>
+        <div class="m-3 row" *ngIf="editado">
+          <label for="email20" class="col-sm-3 text-end control-label col-form-label">Usuario</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="cono3" maxlength="100" formControlName="NOM_USER" 
+            [attr.disabled]="editado">
+          </div>
+        </div>
+        <div class="m-3 row" *ngIf="editado">
+          <label class="col-sm-3 text-end control-label col-form-label">Fecha</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="cono3" maxlength="100" formControlName="FECHA" 
+            [attr.disabled]="editado">
+          </div>
+        </div>
+      </div>
+      <div class="p-3 border-top">
+        <div class="text-end">
+          <button type="submit" class="
+                    btn btn-info
+                    rounded-pill
+                    px-4
+                    waves-effect waves-light m-2
+                  ">
+            Guardar
+          </button>
+          <button type="button" (click)="cerrarModal(modalEditDriver)" class="
+                    btn btn-dark
+                    rounded-pill
+                    px-4
+                    waves-effect waves-light m-2
+                  ">
+            Cancelar
+          </button>
+        </div>
+      </div>
+    </form>
+  </ng-template>

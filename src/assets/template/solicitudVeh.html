@@ -1,0 +1,25 @@
+<!-- #######  THIS IS A COMMENT - Visible only in the source editor #########-->
+<h2>Welcome To The Best Online HTML Web Editor!</h2>
+<p style="font-size: 1.5em;">You can <strong style="background-color: #317399; padding: 0 5px; color: #fff;">type your text</strong> directly in the editor or paste it from a Word Doc, PDF, Excel etc.</p>
+<p style="font-size: 1.5em;">The <strong>visual editor</strong> on the right and the <strong>source editor</strong> on the left are linked together and the changes are reflected in the other one as you type! <img src="https://html5-editor.net/images/smiley.png" alt="smiley" /></p>
+<table id="demo-foo-addrow"
+          class="table table-bordered m-t-30 table-hover contact-list footable footable-5 footable-paging footable-paging-center breakpoint-xs"
+          data-paging="true" data-paging-size="7">
+          <thead>
+            <tr class="footable-header">
+              <th>Id_Tran</th>
+              <th>NumSolicitud</th>
+              <th>Fecha</th>
+              <th>Detalle</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let x of transaccion">
+              <td style="display: table-cell;"><a>{{x.ID_TRAN}}</a></td>
+              <td style="display: table-cell;">{{x.NUM_SOLICITUD}}</td>
+              <td style="display: table-cell;">{{x.FECHA | date:'dd/MM/yyyy hh:mm:ss a'}}</td>
+              <td style="display: table-cell;">{{x.DETALLE}}</td>
+            </tr>
+          </tbody>
+        </table>
+<p>This is a table you can experiment with.</p>

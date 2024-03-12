@@ -1,0 +1,91 @@
+<div class="container">
+    <div class="border-bottom title-part-padding">
+      <h3 class="card-title mb-0">Solicitudes de Vehículos</h3>
+    </div>
+    <div class="row animated fadeIn low" *ngIf="sharedVeh.cargando">
+      <div class="col-12">
+          <div class="alert alert-success text-center">
+              <h4 class="alert-heading">Cargando</h4>
+              <i class="fa fa-spin fa-refresh fa-2x"></i>
+              <p class="mb-0">Por favor espere</p>
+          </div>
+      </div>
+    </div>
+    <div class="card-body" *ngIf="!sharedVeh.cargando">
+      <div class="row mt-2" *ngIf="sharedVeh.solicitud.length > 0">
+        <div class="col-md-5">
+          <div>
+            <input type="text" class="form-control" placeholder="Buscar Solicitud" name="filtro" (keyup.enter)="filtrar()"
+              [(ngModel)]="filtro">
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div>
+            <button class="
+                            btn btn-light-info
+                            text-info
+                            font-weight-medium
+                            d-flex
+                            align-items-center
+                          " type="button" (click)="filtrar()">
+              Buscar
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex justify-content-end m-2">
+        <button type="button" class="btn btn-success btn-rounded m-t-10 mb-2" data-bs-toggle="modal"
+          data-bs-target="#add-rol" routerLink="//vehiculos/solicitud/new" >
+          Agregar
+        </button>
+      </div>
+      <div class="mb-3 row" *ngIf="sharedVeh.solicitud.length > 0">
+        <label for="lname" class="col-sm-1 text-end control-label col-form-label">Estado</label>
+        <div class="col-sm-3 mb-2">
+          <select class="" (change)="obtenerValorEstado($event.target.value)"
+                                          class="form-control form-select" [(ngModel)]="sharedVeh.estado">
+                                          <option *ngFor="let x of sharedVeh.EstadoMenu" value={{x.ESTADO}}>{{x.ESTADO}}</option>
+                                      </select>
+        </div>
+      </div>
+      <div class="table-responsive" *ngIf="sharedVeh.solicitud.length > 0">
+        <table id="demo-foo-addrow"
+          class="table table-bordered m-t-30 table-hover contact-list footable footable-5 footable-paging footable-paging-center breakpoint-xs"
+          data-paging="true" data-paging-size="7">
+          <thead>
+            <tr class="footable-header">
+              <th>Id</th>
+              <th>Solicitante</th>
+              <th>Fecha Solicitud</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let x of sharedVeh.solicitud | slice: (pagina-1)*pagesize : (pagina-1) * pagesize + pagesize">
+              <td style="display: table-cell;"><a>{{x.NUM_SOLICITUD}}</a></td>
+              <td style="display: table-cell;">{{x.SOLICITANTE}}</td>
+              <td style="display: table-cell;">{{x.FECHA_SOLICITUD | date:'dd/MM/yyyy hh:mm:ss a'}}</td>
+              <td style="display: table-cell;">{{x.ESTADO}}</td>
+              <td style="text-align: center; ">
+                <div>
+                  <button class="btn-rounded m-1" title="Editar">
+                    <i class="fas fa-edit" style="color:#016745;"
+                    routerLink="//vehiculos/solicitud/edit/{{x.NUM_SOLICITUD}}/{{x.ID_ESTADO}}/{{x.ID_SOLIC}}"></i>
+                  </button>
+                  <button class="btn-rounded m-1" title="Generar PDF" (click)="generarPDF(x.NUM_SOLICITUD)">
+                    <i class="fas fa-file-pdf" style="color:#016745;"></i></button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="modal-footer justify-content-center border-top mt-2" *ngIf="sharedVeh.solicitud.length < 1">
+      <h3>No existe Información de Solicitudes</h3>
+    </div>
+    <ngb-pagination [collectionSize]="sharedVeh.solicitud.length" [(page)]="pagina" [pageSize]="pagesize" [maxSize]="5"
+      [rotate]="true" [boundaryLinks]="true" *ngIf="sharedVeh.solicitud.length > 0">
+    </ngb-pagination>
+  </div>

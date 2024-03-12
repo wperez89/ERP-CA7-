@@ -78,6 +78,11 @@ export const routes: Routes = [
         path: 'cebs',
         canActivate:[AdminGuard],
         loadChildren: () => import('./pages/cebs/cebs.module').then(m => m.CebsModule)
+      },
+      {
+        path: 'vehiculos',
+        canActivate:[AdminGuard],
+        loadChildren: () => import('./pages/vehiculo/vehiculo.module').then(m => m.VehiculoModule)
       }
     ]
   },

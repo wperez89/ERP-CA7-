@@ -83,4 +83,16 @@ export class GlobalService {
     );
   }
 
+  cargarCanalesComunic()
+  {
+    const url = `${base_url}/tbl_solicitud/canales`;
+    return this.http.get(url,this.headers)
+    .pipe(
+      map((resp:{
+        ok:boolean,
+        canales:[]
+      })=>resp.canales)
+    );
+  }
+
 }

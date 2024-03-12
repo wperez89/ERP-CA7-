@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { environment } from 'src/environments/environment';
-import { Paises, cargarGenero, cargarNombrePersona, cargarPersonas } from '../interfaces/cargar-personas.interface';
+import { Paises, RangoSalario, cargarGenero, cargarNombrePersona, cargarPersonas, condicionLaboral, sectorLaboral } from '../interfaces/cargar-personas.interface';
 import { Persona, Profesional, ProfesionalesLista, datosPersonas, nombresPersona } from '../models/personas/persona.models';
 import { map } from 'rxjs';
 
@@ -76,6 +76,42 @@ export class PersonasService {
          ok:boolean,
          tipoPais:Paises
        })=>resp.tipoPais)
+     );
+   }
+
+   cargarRangoSalarial()
+   {
+     const url = `${base_url}/mantenimiento/persona/rangosalario`;
+     return this.http.get(url)
+     .pipe(
+       map((resp:{
+         ok:boolean,
+         rango:RangoSalario
+       })=>resp.rango)
+     );
+   }
+
+   cargarCondicionLaboral()
+   {
+     const url = `${base_url}/mantenimiento/persona/condicionlab`;
+     return this.http.get(url)
+     .pipe(
+       map((resp:{
+         ok:boolean,
+         condicion:condicionLaboral
+       })=>resp.condicion)
+     );
+   }
+
+   cargarSectorLaboral()
+   {
+     const url = `${base_url}/mantenimiento/persona/sectorLab`;
+     return this.http.get(url)
+     .pipe(
+       map((resp:{
+         ok:boolean,
+         sector:sectorLaboral
+       })=>resp.sector)
      );
    }
 
@@ -171,7 +207,6 @@ getPersonaEmail_ID(cedula:string)
         })=>resp.persona[0])
       )    
   }
-
   //Obtener persona por ID
   getNombresPersonabyCedula(cedula:string)
   {
@@ -281,6 +316,21 @@ getPersonaEmail_ID(cedula:string)
         })=>resp)
       )    
   }
+
+    //Obtener infoLaboral por ID
+    getInfoLaboral(id:string)
+    {
+      const url = `${base_url}/mantenimiento/persona/infoLab/${id}`;
+      //console.log(url);
+        return this.http.get(url)
+        .pipe(
+          map((resp:{
+            ok:boolean, 
+            laboral:[],
+          })=>resp.laboral)
+        )    
+    }
+  
 
   crearProfesional(datos:Profesional)
   {

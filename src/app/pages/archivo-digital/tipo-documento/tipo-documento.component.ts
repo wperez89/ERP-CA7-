@@ -18,7 +18,6 @@ export class TipoDocumentoComponent implements OnInit {
   public totalUsuarios: number = 0;
   public pagina: number = 1;
   public pagesize: number = 10;
-
   public cargando: boolean = true;
   public filtro = '';
   modal: NgbModalRef;

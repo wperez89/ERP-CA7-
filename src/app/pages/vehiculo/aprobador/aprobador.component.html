@@ -1,0 +1,132 @@
+
+<div class="container">
+    <div class="border-bottom title-part-padding">
+      <h4 class="card-title mb-0">Aprobadores de Solicitudes</h4>
+    </div>
+    <div class="row animated fadeIn low" *ngIf="cargando">
+      <div class="col-12">
+          <div class="alert alert-success text-center">
+              <h4 class="alert-heading">Cargando</h4>
+              <i class="fa fa-spin fa-refresh fa-2x"></i>
+              <p class="mb-0">Por favor espere</p>
+          </div>
+      </div>
+    </div>
+    <div *ngIf="!cargando">
+      <div class="card-body">
+        <div class="row pt-3">
+          <div class="col-md-5">
+            <div>
+              <input type="text" class="form-control" placeholder="Buscar Persona" name="filtro" (keyup.enter)="filtrar()"
+                [(ngModel)]="filtro">
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div>
+              <button class="
+                              btn btn-light-info
+                              text-info
+                              font-weight-medium
+                              d-flex
+                              align-items-center
+                            " type="button" (click)="filtrar()">
+                Buscar
+              </button>
+            </div>
+          </div>
+          <div class="col-sm-4" style="float: right;">
+            <div class="mb-3 row">
+              <label for="web1" class=" col-sm-3 text-end control-label col-form-label">Estado</label>
+              <div class="col-sm-9">
+                <select (change)="obtenerValorEstado($event.target.value)" class="form-control form-select" 
+                        [(ngModel)]="variable" >
+                  <option *ngFor="let x of estados" value={{x.ID_ESTADO}}>{{x.ESTADO}}</option>
+                  </select>
+              </div>
+            </div> 
+          </div>
+        </div>
+        <div class="d-flex justify-content-end">
+          <button type="button" class="btn btn-success btn-rounded m-t-10 mb-2" data-bs-toggle="modal"
+            data-bs-target="#add-rol" (click)="modalOpenBackdrop(modalAprobador)">
+            Agregar
+          </button>
+          <!--Modal-->
+          <ng-template #modalAprobador let-modal >
+            <form autocomplete="off" [formGroup]="aprobadorForm" (submit)="createAprobador()" 
+            (keydown)="evitarSubmit($event)">
+              <div class="modal-header justify-content-center mt-2" >
+                <a href="index.html">
+                  <span>
+                    <h2>Agregar Aprobador</h2>
+                  </span>
+                </a>
+              </div>
+              <div class="m-3 row" *ngIf="id.length === 0 || editado">
+                <label class="col-sm-3 text-end control-label col-form-label">Aprobador</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" formControlName="ID" placeholder="Identificación del Aprobador"
+                    (keyup.enter)="mostrarPersona()" [attr.disabled]="editado == true ? true: null">
+                </div>
+              </div>
+              <div class="m-3 row" *ngIf="editado || id.length > 0">
+                <label for="title1" class="col-sm-3 text-end control-label col-form-label">Aprobador</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" formControlName="NOMBRE" [attr.disabled]="true">
+                </div>
+              </div>
+              <div class="m-3 row" *ngIf="editado">
+                <label for="email20" class="col-sm-3 text-end control-label col-form-label">Estado</label>
+                <div class="col-sm-9">
+                  <select class="form-control form-select" formControlName="ESTADO">
+                    <option value='A'>ACTIVO</option>
+                    <option value='I'>INACTIVO</option>
+                  </select>
+                </div>
+              </div>
+              <div class="modal-footer justify-content-center">
+                <button class="btn btn-light-info text-info font-medium" type="submit">
+                  Guardar
+                </button>
+              </div>
+            </form>
+          </ng-template>
+        </div>
+        <div class="table-responsive">
+          <table id="demo-foo-addrow"
+            class="table table-bordered m-t-30 table-hover contact-list footable footable-5 footable-paging footable-paging-center breakpoint-xs"
+            data-paging="true" data-paging-size="7">
+            <thead>
+              <tr class="footable-header">
+                <th>Identificación</th>
+                <th>Nombre</th>
+                <th>Estado</th>
+                <th>Editar</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let x of aprobador | slice: (pagina-1)*pagesize : (pagina-1) * pagesize + pagesize">
+                <td style="display: table-cell;"><a>{{x.IDENTIFICACION}}</a></td>
+                <td style="display: table-cell;">{{x.NOMBRE}}</td>
+                <td style="display: table-cell;">
+                  <span *ngIf="x.ESTADO== 'A' " class="badge bg-success">ACTIVO</span>
+                  <span *ngIf="x.ESTADO == 'I' " class="badge bg-danger">INACTIVO</span>
+                </td>
+                <td style="text-align: center; ">
+                  <div>
+                    <button class="like btn-rounded" title="Editar" data-toggle="modal">
+                      <i class="fas fa-edit" style="color:#016745;"
+                        (click)="cargarAprobadorID(modalAprobador,x.ID_APROBADOR)"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <ngb-pagination [collectionSize]="aprobador.length" [(page)]="pagina" [pageSize]="pagesize" [maxSize]="5"
+        [rotate]="true" [boundaryLinks]="true">
+      </ngb-pagination>
+    </div>
+  </div>

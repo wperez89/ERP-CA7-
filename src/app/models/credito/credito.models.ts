@@ -53,3 +53,12 @@ export class tipoLineaCredito{
     )
     {}
 }
+
+export class productoCredito{
+    constructor(
+        public ID_PRODCRED: number,
+        public PRODUCTO: string,
+        public ESTADO: string,
+    )
+    {}
+}

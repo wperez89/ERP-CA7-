@@ -6,7 +6,7 @@ import { map } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 import { cargarLineaCreditos, cargarOperaciones, cargarTipoGarantia, cargarTipoPlanInversion } from '../interfaces/cargar-credito.interface';
-import { Operacion, OperacionesVista } from '../models/credito/credito.models';
+import { Operacion, OperacionesVista, productoCredito } from '../models/credito/credito.models';
 
 const base_url = environment.base_urlSql;
 
@@ -70,6 +70,18 @@ export class CreditoService {
     );
    }
 
+   cargarProductoCredito()
+   {
+    const url = `${base_url}/credito/producto`;
+    return this.http.get(url)
+    .pipe(
+      map((resp:{
+        ok:boolean,
+        producto:productoCredito[]
+      })=>resp.producto)
+    );
+   }
+
    crearOperacion(credito:Operacion)
    {
       const url = `${base_url}/credito`;
@@ -81,6 +93,56 @@ export class CreditoService {
           msg:string
         })=>resp)
       );
+    }
+
+    crearsolicitud(solicitud:[])
+   {
+      const url = `${base_url}/solicitud/credito`;
+      return this.http.post(url,solicitud)
+      .pipe(
+        map((resp:{
+          ok:boolean,
+          msg:string
+        })=>resp)
+      );
       
-    } 
+    }
+
+    cargarSolicitudesCredito(id:number)
+    {
+     const url = `${base_url}/solicitud/credito/${id}`;
+     //console.log(url)
+     return this.http.get(url)
+     .pipe(
+       map((resp:{
+         ok:boolean,
+         solicitud:[]
+       })=>resp.solicitud)
+     );
+    }
+
+    cargarSolicitudIDCredito(id:string, estado:number, cliente:string)
+    {
+     const url = `${base_url}/solicitud/creditoid/${id}/${estado}/${cliente}`;
+     //console.log(url)
+     return this.http.get(url)
+     .pipe(
+       map((resp:{
+         ok:boolean,
+         solicitud:[]
+       })=>resp.solicitud)
+     );
+    }
+
+    cargarEstadosSolicitudCredito()
+    {
+     const url = `${base_url}/solicitud/estado`;
+     return this.http.get(url)
+     .pipe(
+       map((resp:{
+         ok:boolean,
+         estado:[]
+       })=>resp.estado)
+     );
+    }
 }

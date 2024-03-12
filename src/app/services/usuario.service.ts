@@ -217,6 +217,19 @@ getUserID(_id:string)
      )    
 }
 
+//Obtener Usuario por ID
+getUserCedula(_id:string)
+{
+  const url = `${base_url}/mantenimiento/userCed/${_id}`;
+     return this.http.get(url)
+     .pipe(
+      map((resp:{
+        ok:boolean, 
+        usuarios:[]
+      })=>resp.usuarios)
+     )    
+}
+
 //Cargar Usuarios de Base de Datos
 verImagen(containerName: string,nombreImagen: string): string {
   //console.log(`${base_url}/imagen/${containerName}/${nombreImagen}`)

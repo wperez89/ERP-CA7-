@@ -35,7 +35,7 @@ export class AreaDocumentoComponent implements OnInit {
     this.obtenerAreasDoc();
   }
 
-  createareaDoc()
+  createareaDoc(modal: any)
   {
     if(this.areasForm.invalid)
       {
@@ -50,7 +50,8 @@ export class AreaDocumentoComponent implements OnInit {
         }
       );
       this.obtenerAreasDoc();
-      this.router.navigate(['/archivo-digital/mantenimiento/AreaDocumental']);
+      this.cerrarModal(modal);
+     
       },
       (err) => { // Si sucede un error
           
@@ -63,12 +64,14 @@ export class AreaDocumentoComponent implements OnInit {
 
   obtenerAreasDoc()
   {
+    this.cargando;
     this.archivoServices.cargarAreaDoc()
     .subscribe((resp:any)=>
     {
       //console.log(resp)
       this.areas = resp
       this.areasTemp =resp
+      this.cargando = false;
     })
   }
 
@@ -90,5 +93,11 @@ export class AreaDocumentoComponent implements OnInit {
       backdrop: false,
       centered: true
     });
+  }
+
+  cerrarModal(modal:any)
+  {
+    this.areasForm.reset();
+    this.modalService.dismissAll(modal);
   }
 }
