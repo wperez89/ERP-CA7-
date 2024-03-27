@@ -69,9 +69,8 @@
               <td style="display: table-cell;">{{x.ESTADO}}</td>
               <td style="text-align: center; ">
                 <div>
-                  <button class="btn-rounded m-1" title="Editar">
-                    <i class="fas fa-edit" style="color:#016745;"
-                    routerLink="//vehiculos/solicitud/edit/{{x.NUM_SOLICITUD}}/{{x.ID_ESTADO}}/{{x.ID_SOLIC}}"></i>
+                  <button class="btn-rounded m-1" title="Editar" (click)="getLink(x.NUM_SOLICITUD,x.ID_ESTADO,x.ID_SOLIC)">
+                    <i class="fas fa-edit" style="color:#016745;"></i>
                   </button>
                   <button class="btn-rounded m-1" title="Generar PDF" (click)="generarPDF(x.NUM_SOLICITUD)">
                     <i class="fas fa-file-pdf" style="color:#016745;"></i></button>

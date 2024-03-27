@@ -1,0 +1,173 @@
+<div class="row">
+    <div class="row animated fadeIn low" *ngIf="cargando">
+      <div class="col-12">
+          <div class="alert alert-success text-center">
+              <h4 class="alert-heading">Cargando</h4>
+              <i class="fa fa-spin fa-refresh fa-2x"></i>
+              <p class="mb-0">Por favor espere</p>
+          </div>
+      </div>
+    </div>
+    <div class="container" *ngIf="!cargando">
+      <div class="border-bottom title-part-padding">
+        <h3 class="card-title mb-0">Transacciones de Solicitud de Crédito N° {{idSolicitud}}</h3>
+      </div>
+      <div class="card-body">
+        <div class="d-flex justify-content-end">
+          <button type="button" class="btn btn-success btn-rounded m-t-10 mb-2 mt-2" data-bs-toggle="modal"
+            data-bs-target="#add-rol" (click)="modalOpenBackdrop(modaltrscnSol)" *ngIf="estadoAnt !== '1'">
+            Agregar
+          </button>
+        </div>
+        <div class="table-responsive" *ngIf="transaccion.length > 0">
+          <table id="demo-foo-addrow"
+            class="table table-bordered m-t-30 table-hover contact-list footable footable-5 footable-paging footable-paging-center breakpoint-xs"
+            data-paging="true" data-paging-size="7">
+            <thead>
+              <tr class="footable-header">
+                <th>Usuario</th>
+                <th>Estado</th>
+                <th>Fecha</th>
+                <th>Ver</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let x of transaccion">
+                <td style="display: table-cell;"><a>{{x.NOM_USUARIO}}</a></td>
+                <td style="display: table-cell;">{{x.NOM_ESTADOACT}}</td>
+                <td style="display: table-cell;">{{x.FECHA | date:'dd/MM/yyyy hh:mm:ss a':'UTC'}}</td>
+                <td style="text-align: center; ">
+                  <div>
+                    <button class="like btn-rounded" title="Ver" data-toggle="modal"
+                    (click)="mostrarTransaccionesID(modaltrscnSol,x.ID_TRANSACCION)">
+                      <i class="fas fa-eye" style="color:#016745;"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--Modal-->
+  <ng-template #modaltrscnSol let-modal>
+    <form autocomplete="off" [formGroup]="trscnSolCredForm" (submit)="createtrscnSol()"
+      (keydown)="evitarSubmit($event)">
+      <div class="modal-header justify-content-center mt-2">
+        <span>
+          <h2 *ngIf="!editado">Agregar Transacción de Solicitud N° {{idSolicitud}}</h2>
+          <h2 *ngIf="editado">Transacción de Solicitud N° {{id}}</h2>
+        </span>
+      </div>
+      <div class="card-body" *ngIf="!cargando">
+        <div *ngIf="!editado && estadoSelected == '6'"> 
+          <label class="textRojo centrado">
+            El Analista de Crédito es el único que puede Reasignar una Solicitud
+          </label>
+        </div>
+        <div class="m-3 row">
+          <label  class="col-sm-3 text-end control-label col-form-label">Transacción</label>
+          <div class="col-sm-9" *ngIf="!editado">
+            <select class="form-select" formControlName="ESTADO_ACT" (change)="changeEstado($event.target.value)">
+              <option *ngFor="let x of estados" value={{x.ESTADO}}>{{x.TRANSACCION}}</option>
+            </select>
+          </div>
+          <div class="col-sm-9" *ngIf="editado">
+            <input type="text" class="form-control" formControlName="ESTADO_ACT" [attr.disabled]=true >
+          </div>
+        </div>
+        <div class="m-3 row" *ngIf="!editado && estadoSelected == '6'">
+          <label  class="col-sm-3 text-end control-label col-form-label">Analista</label>
+          <div class="col-sm-9" *ngIf="!editado">
+            <select class="form-select" formControlName="ANALISTA">
+              <option *ngFor="let x of analista" value={{x.ID_USUARIO}}>{{x.USUARIO}}</option>
+            </select>
+          </div>
+          <div class="col-sm-9" *ngIf="editado">
+            <input type="text" class="form-control" formControlName="ESTADO_ACT" [attr.disabled]=true >
+          </div>
+        </div>
+        <div class="m-3 row" >
+          <label for="cono3" class="col-sm-3 text-end control-label col-form-label">Detalle</label>
+          <div class="col-sm-9">
+            <textarea rows="5" class="form-control" placeholder="Detalle" maxlength="200"
+            formControlName="DETALLE">
+          </textarea>
+          </div>
+        </div>
+        <div class="m-3 row" *ngIf="editado">
+          <label for="email20" class="col-sm-3 text-end control-label col-form-label">Usuario</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" formControlName="USUARIO">
+          </div>
+        </div>
+        <div class="m-3 row" *ngIf="editado">
+          <label class="col-sm-3 text-end control-label col-form-label">Fecha</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" formControlName="FECHA" 
+            [attr.disabled]="editado">
+          </div>
+        </div>
+        <div class="m-3 row" *ngIf="!editado && estadoSelected !== '6'">
+          <label class="centrado">Agregar Archivos</label>
+          <div>
+            <div class="m-3 row">
+              <label  class="col-sm-3 text-end control-label col-form-label">Tipo Documento</label>
+              <div class="col-sm-9">
+                <select class="form-select" formControlName="NOM_DOCUMENT" (change)="cargarNombreArchivos($event.target.value)">
+                  <option *ngFor="let x of categoria" value={{x.ID_CATEGORIA_ARCH}}>{{x.CATEGORIA_ARCH}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="m-3 row">
+              <label  class="col-sm-3 text-end control-label col-form-label">Nombre Documento</label>
+              <div class="col-sm-9" >
+                <select class="form-select" formControlName="NOM_ARCHIVO" id="idArchivo">
+                  <option value=""></option>
+                  <option *ngFor="let x of tipoArch" value={{x.ID_ARCHIVO}}-{{x.NOMBRE_ARCH}}>{{x.NOMBRE_ARCH}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="m-3 row">
+              <div class="input-group">
+                <div class="custom-file col-sm-10">
+                  <label for="documentos">Seleccionar documento:</label>
+                  <input type="file" id="documentos" #fileInput (change)="agregarArchivo($event)">
+                </div>
+  
+              </div>
+            </div>
+            <div *ngFor="let documento of documentos.controls; let i=index">
+              {{ documento.get('NombreArch').value }}
+              <button type="button" (click)="eliminarArchivo(i)">Eliminar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-3 border-top">
+        <div class="text-end">
+          <button type="submit" *ngIf="!editado" class="
+                    btn btn-info
+                    rounded-pill
+                    px-4
+                    waves-effect waves-light m-2
+                  ">
+            Guardar
+          </button>
+          <button type="button" (click)="cerrarModal(modalEditDriver)" class="
+                    btn btn-dark
+                    rounded-pill
+                    px-4
+                    waves-effect waves-light m-2
+                  ">
+            Cancelar
+          </button>
+        </div>
+      </div>
+    </form>
+  </ng-template>
+  

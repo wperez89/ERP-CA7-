@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { Console } from 'console';
+
 import { SuccessDialog, Toast, errorDialog } from 'src/app/helpers/Notificaciones';
 import { VehiculoLista } from 'src/app/models/vehiculos/tablasVehiculo.models';
 import { VehiculoService } from 'src/app/services/vehiculo.service';

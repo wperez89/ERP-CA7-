@@ -28,6 +28,32 @@ export class ArchivoDigitalService {
      );
   }
 
+  cargarCategoriaArchivo()
+  {
+    const url = `${base_url}/archivo/mantenimiento/categoria`;
+    //console.log(url)
+    return this.http.get(url)
+    .pipe(
+     map((resp:{
+       ok:boolean,
+       categoria:[]
+     })=>resp.categoria)
+     );
+  }
+
+  cargarTipoArchivo(id:number)
+  {
+    const url = `${base_url}/archivo/mantenimientos/tipoarchivo/${id}`;
+    //console.log(url)
+    return this.http.get(url)
+    .pipe(
+     map((resp:{
+       ok:boolean,
+       archivos:[]
+     })=>resp.archivos)
+     );
+  }
+
   cargarTipoDoc()
   {
     const url = `${base_url}/archivo/mantenimiento/tipodoc/A`;

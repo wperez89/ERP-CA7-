@@ -5,6 +5,7 @@
 export const environment = {
   base_urlSql: 'http://localhost:3018/api',
   //base_urlSql: 'https://erpca7-9d72222ce77a.herokuapp.com/api',
+  ENCRYPTION_KEY:'7iNR-.></U2swJ5)vm4L!$eujWeC8@.GDhqAMFz5WWY3SEMbQ$',
   siteKey: '6LdBj0InAAAAANJUJltEbXJM0LJ0ZG-_xYYiVXqA',
   production: false
 };

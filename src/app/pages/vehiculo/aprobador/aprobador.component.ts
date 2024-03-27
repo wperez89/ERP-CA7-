@@ -79,7 +79,6 @@ export class AprobadorComponent implements OnInit {
   cargarAprobadorID(modal:any, id:number)
   {
     this.editado = true;
-
     this.vehiculoService.cargarAprobadorID(id)
     .subscribe((resp:any)=>
     {
@@ -119,12 +118,7 @@ export class AprobadorComponent implements OnInit {
   createAprobador(modal: any)
   {
     //console.log(this.aprobadorForm.value);
-    this.vehiculoService.crearAprobador(this.aprobadorForm.value)
-    .subscribe((resp:any)=>
-    {
-      if(!this.editado)
-      {
-        if(this.aprobadorForm.invalid)
+    if(this.aprobadorForm.invalid)
       {
         Toast.fire(
           {
@@ -133,7 +127,11 @@ export class AprobadorComponent implements OnInit {
         );
         return
       }
-      }
+      else
+      {
+        this.vehiculoService.crearAprobador(this.aprobadorForm.value)
+    .subscribe((resp:any)=>
+    {
       if(!resp.ok)
       {
         errorDialog.fire(
@@ -162,7 +160,7 @@ export class AprobadorComponent implements OnInit {
         this.cerrarModal(modal);
       }
       )
-      
+      }      
   }
 
   filtrar()

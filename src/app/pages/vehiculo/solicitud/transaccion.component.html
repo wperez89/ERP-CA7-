@@ -39,9 +39,9 @@
                 <td style="display: table-cell;">{{x.FECHA | date:'dd/MM/yyyy hh:mm:ss a':'UTC'}}</td>
                 <td style="text-align: center; ">
                   <div>
-                    <button class="like btn-rounded" title="Ver" data-toggle="modal">
-                      <i class="fas fa-eye" style="color:#016745;"
-                        (click)="mostrarTransaccionesID(modaltrscnSol,x.ID_TRAN)"></i>
+                    <button class="like btn-rounded" title="Ver" data-toggle="modal" 
+                    (click)="mostrarTransaccionesID(modaltrscnSol,x.ID_TRAN)">
+                      <i class="fas fa-eye" style="color:#016745;"></i>
                     </button>
                   </div>
                 </td>

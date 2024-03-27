@@ -8,6 +8,7 @@ import {
   listaSolicitud,
   pasajerosVeh,
 } from "src/app/models/vehiculos/tablasVehiculo.models";
+import { CryptoService } from "src/app/services/crypto.service";
 import { PersonasService } from "src/app/services/personas.service";
 import { VehiculoService } from "src/app/services/vehiculo.service";
 
@@ -30,7 +31,8 @@ export class PasajeroComponent implements OnInit {
     public modalService: NgbModal,
     private fb: FormBuilder,
     private activatedRoute: ActivatedRoute,
-    private personaService: PersonasService
+    private personaService: PersonasService,
+    private cryptoService: CryptoService
   ) {
     this.pasajeroForm = this.fb.group({
       ID_PASAJERO: [""],
@@ -47,7 +49,7 @@ export class PasajeroComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params) => {
       if (params["num_sol"] && params["estado"]) {
-        this.idSolicitud = params["num_sol"];
+        this.idSolicitud = this.cryptoService.decrypt(params["num_sol"]);
         this.idEstado = params["estado"];
       }
     });

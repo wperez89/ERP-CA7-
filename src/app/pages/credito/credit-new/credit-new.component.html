@@ -69,8 +69,8 @@
                 <div class="mb-3 row">
                   <label for="cono12" class="col-sm-3 text-end control-label col-form-label">Monto</label>
                   <div class="col-sm-9">
-                    <input type="number" class="form-control" id="cono12" placeholder="Monto de Crédito"
-                    formControlName="MONTO" currency>
+                    <input type="text" class="form-control" id="cono12" placeholder="Monto de Crédito"
+                    formControlName="MONTO" currencyMask [options]="{ prefix: '₡ ', thousands: ',', decimal: '.' }">
                   </div>
                 </div>
               </div>
@@ -133,8 +133,8 @@
                   <div class="mb-3 row">
                     <label for="email2" class="col-sm-3 text-end control-label col-form-label">Comisión</label>
                     <div class="col-sm-9">
-                      <input type="number" class="form-control" id="email2" placeholder="Comisión en ₡" 
-                      formControlName="COMISION" currency>
+                      <input type="text" class="form-control" id="email2" placeholder="Comisión en ₡" 
+                      formControlName="COMISION" currencyMask [options]="{ prefix: '₡ ', thousands: ',', decimal: '.' }">
                     </div>
                   </div>
                 </div>
@@ -142,8 +142,8 @@
                   <div class="mb-3 row">
                     <label for="web1" class=" col-sm-3 text-end control-label col-form-label">Intereses</label>
                     <div class="col-sm-9">
-                        <input type="number" class="form-control" id="email2" placeholder="Intereses Anticipados en ₡" 
-                        formControlName="INTERESES_ANT" currency>
+                        <input type="text" class="form-control" id="email2" placeholder="Intereses Anticipados en ₡" 
+                        formControlName="INTERESES_ANT" currencyMask [options]="{ prefix: '₡ ', thousands: ',', decimal: '.' }">
                     </div>
                   </div>
                 </div>

@@ -10,6 +10,9 @@ import { CreditNewComponent } from './credit-new/credit-new.component';
 import { CreditEditComponent } from './credit-edit/credit-edit.component';
 import { SolicitudListComponent } from './solicitud/solicitudList.component';
 import { SolicitudCredComponent } from './solicitud-cred/solicitud-cred.component';
+import { NgxCurrencyDirective } from 'ngx-currency';
+import { TransaccionesSolicComponent } from './transacciones-solic/transacciones-solic.component';
+import { DocumentoSolicitudComponent } from './documento-solicitud/documento-solicitud.component';
 
 
 
@@ -20,6 +23,8 @@ import { SolicitudCredComponent } from './solicitud-cred/solicitud-cred.componen
     CreditEditComponent,
     SolicitudListComponent,
     SolicitudCredComponent,
+    TransaccionesSolicComponent,
+    DocumentoSolicitudComponent,
   ],
   imports: [
     CommonModule,
@@ -27,6 +32,7 @@ import { SolicitudCredComponent } from './solicitud-cred/solicitud-cred.componen
     FormsModule,
     ReactiveFormsModule,
     NgbPaginationModule,
+    NgxCurrencyDirective
   ],
   providers: [
     DatePipe, // Añade DatePipe a los providers del módulo

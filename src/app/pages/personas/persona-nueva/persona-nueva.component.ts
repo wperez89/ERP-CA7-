@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { replaceAll } from 'chartist';
-import { SrvRecord } from 'dns';
 import { SuccessDialog, Toast, errorDialog } from 'src/app/helpers/Notificaciones';
 import { Paises, cargarGenero } from 'src/app/interfaces/cargar-personas.interface';
 import { PersonasService } from 'src/app/services/personas.service';

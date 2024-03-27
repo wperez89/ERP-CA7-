@@ -300,5 +300,10 @@ export class AvaluoService {
       })=>resp)
   );
   }
+
+  verArchivos(url:string)
+  {
+    window.open(url)
+  }
 }
 

@@ -1,0 +1,45 @@
+<div class="row">
+<h3 class="mb-4 centrado">DOCUMENTOS DE SOLICITUD N° {{idSolicitud}}</h3>
+<div class="row animated fadeIn low" *ngIf="cargando">
+    <div class="col-12">
+        <div class="alert alert-success text-center">
+            <h4 class="alert-heading">Cargando</h4>
+            <i class="fa fa-spin fa-refresh fa-2x"></i>
+            <p class="mb-0">Por favor espere</p>
+        </div>
+    </div>
+  </div>
+<h4 class="centrado border-bottom title-part-padding" *ngIf="documento.length == 0">
+    No existen documentos Cargados para esta Solicitud
+</h4>
+   <div *ngIf="documento.length > 0">
+    <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Nombre Archivo</th>
+              <th scope="col">Categoria</th>
+              <th scope="col">Fecha</th>
+              <th scope="col">Usuario</th>
+              <th scope="col">Descargar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let x of documento">
+              <td>{{x.NOMBRE_ARCH}}</td>
+              <td>{{x.CATEGORIA}}</td>
+              <td>{{x.FECHA | date:'dd/MM/YYYY'}}</td>
+              <td>{{x.NOM_USER}}</td>
+              <td>
+                <button type="button" (click)="descargarDocs(x.NOMBRE_ARCHIVO)"
+      class="like btn-rounded" title="Editar" data-toggle="modal"
+      >
+      <i class="fas fa-download" style="color:#016745;" ></i>
+    </button> 
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+   </div> 
+</div>

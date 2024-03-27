@@ -15,7 +15,6 @@ import { allIcons } from 'angular-feather/icons';
 import { NgbModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { NgxMaskModule }  from  'ngx-mask';
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -36,7 +35,6 @@ import { InterceptorModule } from './services/interceptor/interceptor.module';
 import { NoPageFoundComponent } from './pages/no-page-found/no-page-found.component';
 import { AuthModule } from './auth/auth.module';
 
-import { FormatoMonedaPipe } from './helpers/moneda.pipe';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -65,7 +63,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     HorizontalSidebarComponent,
     MenuComponent,
     NoPageFoundComponent,
-    FormatoMonedaPipe,
   ],
   imports: [
     CommonModule,
@@ -78,7 +75,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     NgbPaginationModule,
     NgbModule,
     RouterModule.forRoot(routes),
-    PerfectScrollbarModule,
     HttpClientModule,
     FeatherModule.pick(allIcons),
     FeatherModule,

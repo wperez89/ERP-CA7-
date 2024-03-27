@@ -62,3 +62,24 @@ export class productoCredito{
     )
     {}
 }
+export class SolicitudCred{
+    constructor(
+        public ID_SOLICITUD: string,
+        public  ID_CLIENTE:string,
+        public ESTADO_ACTUAL:number,
+        public NOMBRE:string,
+        public FECHA:Date,
+        public ESTADO_ACT_NOM:string
+    )
+    {}
+}
+
+export class ArchivosSolicitudCred{
+    constructor(
+        public documento: string,
+        public tipoArchivo: string, 
+        public nomDocumento: string, 
+        public archivoName:string
+    )
+    {}
+}

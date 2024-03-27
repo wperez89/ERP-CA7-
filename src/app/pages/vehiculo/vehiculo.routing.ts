@@ -53,7 +53,7 @@ export const VehiculosRoutes: Routes = [
 				}
             },
 			{
-                path: 'solicitud/pasajero/:num_sol/:estado/:id_solic',
+                path: 'solicitud/pasajero/:num_sol/:estado/:cliente',
 				component: PasajeroComponent,
 				data: {
 					title: 'Pasajeros de la Solicitud',

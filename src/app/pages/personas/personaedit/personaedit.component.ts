@@ -16,7 +16,7 @@ import {
   Toast,
   errorDialog,
 } from "src/app/helpers/Notificaciones";
-import { Console } from "console";
+
 
 @Component({
   selector: "app-personaedit",

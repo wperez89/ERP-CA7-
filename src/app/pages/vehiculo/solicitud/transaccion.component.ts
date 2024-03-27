@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import {
   aprobadoresSolVeh,
@@ -11,6 +11,7 @@ import { VehiculoService } from "src/app/services/vehiculo.service";
 import { Usuario } from "src/app/models/User/usuario.models";
 import { UsuarioService } from "src/app/services/usuario.service";
 import { SuccessDialog, Toast, errorDialog } from "src/app/helpers/Notificaciones";
+import { CryptoService } from "src/app/services/crypto.service";
 
 @Component({
   selector: "app-transaccion",
@@ -36,7 +37,9 @@ export class TransaccionComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     public modalService: NgbModal,
     private fb: FormBuilder,
-    private usuarioservice: UsuarioService
+    private usuarioservice: UsuarioService,
+    private cryptoService:CryptoService,
+    private router:Router
   ) {
     this.trscnSolVehForm = this.fb.group({
       ID_TRAN: [""],
@@ -55,7 +58,7 @@ export class TransaccionComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params) => {
       if (params["num_sol"] && params["estado"]) {
-        this.idSolicitud = params["num_sol"];
+        this.idSolicitud = this.cryptoService.decrypt(params["num_sol"]);
         this.estadoAct = params["estado"];
       }
     });
@@ -105,6 +108,7 @@ export class TransaccionComponent implements OnInit {
         this.cerrarModal(modal);
       }
       );
+      this.trscnSolVehForm.disable();
     this.modalService.open(modal, {
       backdrop: false,
       centered: true,
@@ -176,7 +180,8 @@ export class TransaccionComponent implements OnInit {
       USUARIO: this.usuario.ID_USUARIO,
       EDITADO: false,
     });
-    //console.log(this.trscnSolVehForm.value)
+    const estadoNuevo = this.trscnSolVehForm.get("ESTADO_ACT").value;
+    //console.log(estadoact)
     if (this.trscnSolVehForm.invalid) {
       Toast.fire({
         text: "Completar Información del Formulario",
@@ -196,10 +201,15 @@ export class TransaccionComponent implements OnInit {
           SuccessDialog.fire({
             text: resp.msg,
           });
-          this.trscnSolVehForm.reset();
           this.cerrarModal(modal);
           this.mostrarTransacciones();
           this.cargando = false;;
+          this.activatedRoute.params.subscribe((params) => {
+          this.router.navigate([
+            `//vehiculos/solicitud/transactions/${params["num_sol"]}/${estadoNuevo}/${params["id_solic"]}`,
+          ]);
+        })
+        this.trscnSolVehForm.reset();
         }
       },
       (error) => { // Si sucede un error

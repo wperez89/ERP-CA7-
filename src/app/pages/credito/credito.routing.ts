@@ -3,9 +3,10 @@ import { CreditoComponent } from './credito.component';
 import { CreditNewComponent } from './credit-new/credit-new.component';
 import { SolicitudListComponent } from './solicitud/solicitudList.component';
 import { SolicitudCredComponent } from './solicitud-cred/solicitud-cred.component';
+import { TransaccionesSolicComponent } from './transacciones-solic/transacciones-solic.component';
+import { DocumentoSolicitudComponent } from './documento-solicitud/documento-solicitud.component';
 
-
-
+const id = '1234';
 export const CreditoRoutes: Routes = [
 	{
 		path: '',
@@ -58,6 +59,30 @@ export const CreditoRoutes: Routes = [
 						{ title: 'Home', url: '/home' },
 						{ title: 'SolicitudesCred', url: '/credito/solicitudescred' },
 						{ title: 'Nueva Solicitud' },
+					]
+				}
+            },
+			{
+                path: 'transacciones/:cliente/:estado/:id/:tipo/:asignado',
+				component: TransaccionesSolicComponent,
+				data: {
+					title: 'Transacciones de Solicitud de Crédito',
+					urls: [
+						{ title: 'Home', url: `/home/` },
+						{ title: 'SolicitudesCred', url: '/credito/solicitudescred' },
+						{ title: 'Transacciones' },
+					]
+				}
+            },
+			{
+                path: 'documents/:tipo/:id/:estado/:cliente',
+				component: DocumentoSolicitudComponent,
+				data: {
+					title: 'Documentos de Solicitud de Crédito',
+					urls: [
+						{ title: 'Home', url: `/home/` },
+						{ title: 'SolicitudesCred', url: '/credito/solicitudescred' },
+						{ title: 'Documentos' },
 					]
 				}
             },

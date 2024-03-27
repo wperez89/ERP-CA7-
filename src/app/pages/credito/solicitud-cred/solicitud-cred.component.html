@@ -3,6 +3,20 @@
         <h3  *ngIf="!editado" class="card-title">Información Solicitud de Crédito</h3>
         <h3 *ngIf="editado" class="card-title">Información Solicitud de Crédito N° {{idSolicitud}}</h3>
     </div>
+    <div class="d-flex justify-content-end m-2">
+        <button type="button" class="btn btn-success btn-rounded m-t-8 m-1" 
+           (click)="AsignarSolicitud()" *ngIf="estado == '1'">
+          Asignar
+        </button>
+        <button type="button" (click)="navigateTransacciones()" class="btn btn-success btn-rounded m-t-8 m-1" data-bs-toggle="modal"
+           *ngIf="editado">
+          Transacciones
+        </button>
+        <button type="button" (click)="navigateDocuments()" class="btn btn-success btn-rounded m-t-8 m-1" data-bs-toggle="modal"
+           *ngIf="editado">
+          Documentos
+        </button>
+      </div>
     <div class="row animated fadeIn fast" *ngIf="cargando">
         <div class="col-12">
             <div class="alert alert-success text-center">
@@ -12,22 +26,27 @@
             </div>
         </div>
     </div>
-    <div class="card-body mt-2">
+    <div class="card-body mt-2" *ngIf="!cargando">
         <form [formGroup]="solicitudForm"
                 (submit)="guardarSolicitud()">
             <!--Identificar Cedula Cliente-->
-        <div class="mb-3 row">
+        <div class="mb-3 row" *ngIf="!editado">
             <label class="col-sm-3 text-end control-label col-form-label">Identificación</label>
             <div class="col-sm-6">
               <input type="text" class="form-control"  id="Identificacion" (blur)="cargarAPICedula()"
-              placeholder="Identificación" formControlName="IDENTIFICACION" 
-              [attr.disabled]="editado == true ? true : null">
+              placeholder="Identificación" formControlName="IDENTIFICACION">
+            </div>
+          </div>
+          <div class="mb-3 row" *ngIf="editado">
+            <label class="col-sm-3 text-end control-label col-form-label">Identificación</label>
+            <div class="col-sm-6">
+              <input type="text" class="form-control"  id="Identificacion" formControlName="IDENTIFICACION">
             </div>
           </div>
           <div class="mb-3 row" *ngIf="existe">
             <label class="col-sm-3 text-end control-label col-form-label">Cliente</label>
             <div class="col-sm-6">
-              <input type="text" class="form-control" formControlName="NOMBRE" [attr.disabled]=true>
+              <input type="text" class="form-control" formControlName="NOMBRE">
             </div>
           </div>
         <!--Segunda Parte del Formulario-->
@@ -53,16 +72,22 @@
                 </div>
             </div>
             <div class="row" *ngIf="editado">
-                <div class="col-sm-12 col-md-6">
+                <div class="col-sm-6 col-md-5">
                     <div class="mb-3">
                         <label for="dateopen" class="control-label col-form-label">Fecha Solicitud</label>
                         <input type="text" class="form-control" formControlName="FECHA" [attr.disabled]=true>
                     </div>
                 </div>
-                <div class="col-sm-12 col-md-6">
+                <div class="col-sm-4 col-md-3">
                     <div class="mb-3">
                         <label for="datefixe" class="control-label col-form-label">Estado Actual</label>
-                        <input type="text" class="form-control" formControlName="ESTADO_ACTUAL" [attr.disabled]=true>
+                        <input type="text" class="form-control" formControlName="ESTADO_ACTUAL" disabled>
+                    </div>
+                </div>
+                <div class="col-sm-4 col-md-3" *ngIf="estado !== '1'">
+                    <div class="mb-3">
+                        <label for="datefixe" class="control-label col-form-label">Asignado</label>
+                        <input type="text" class="form-control" formControlName="RESPONSABLE" [attr.disabled]=true>
                     </div>
                 </div>
             </div>
@@ -99,8 +124,8 @@
                 <div class="col-2">
                     <div class="mb-3">
                         <label class="control-label col-form-label">Monto Crédito</label>
-                        <input type="number" class="form-control" formControlName="MONTO"
-                        >
+                        <input type="text" class="form-control" formControlName="MONTO" currencyMask
+                        [options]="{ prefix: '₡ ', thousands: ',', decimal: '.' }">
                         <div class="help-block" *ngIf="requerido"><ul role="alert"><li>Requerido</li></ul></div>
                     </div>
                 </div>

@@ -11,6 +11,8 @@ import { VehiculoService } from 'src/app/services/vehiculo.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { Usuario } from 'src/app/models/User/usuario.models';
 import { Toast, errorDialog } from 'src/app/helpers/Notificaciones';
+import { CryptoService } from 'src/app/services/crypto.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-solicitud',
@@ -30,7 +32,7 @@ export class SolicitudComponent implements OnInit {
   public estado:string = 'PENDIENTE'
 
   constructor(private http: HttpClient, public sharedVeh:SharedVehService,private vehiculoService: VehiculoService,
-    private usuarioservice:UsuarioService,) {
+    private usuarioservice:UsuarioService, private cryptoService:CryptoService, private router:Router) {
       this.usuario = usuarioservice.usuario;
     }
 
@@ -51,11 +53,11 @@ export class SolicitudComponent implements OnInit {
     if(this.filtro)
       {
         var filter = new RegExp(this.filtro,'i');
-        this.solicitud = this.solicitudTemp.filter(x=>filter.test(x.SOLICITANTE)||filter.test(x.NUM_SOLICITUD))
+        this.sharedVeh.solicitud = this.sharedVeh.solicitudTemps.filter(x=>filter.test(x.SOLICITANTE)||filter.test(x.NUM_SOLICITUD))
       }
       else
       {
-        this.solicitud = this.solicitudTemp;
+        this.sharedVeh.solicitud  = this.sharedVeh.solicitudTemps;
       }
   }
   
@@ -79,5 +81,14 @@ export class SolicitudComponent implements OnInit {
           )
       }
     );
+  }
+
+  getLink(solicitud:string,estado:number, client:string )  {
+
+    const num_sol = this.cryptoService.encrypt(solicitud);
+    const id_solic = this.cryptoService.encrypt(client);
+
+    this.router.navigate([`//vehiculos/solicitud/edit/${num_sol}/${estado}/${id_solic}`])
+    
   }
 }
