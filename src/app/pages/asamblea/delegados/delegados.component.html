@@ -1,0 +1,79 @@
+
+<section class="intro">
+    <div class="row animated fadeIn fast" *ngIf="cargando">
+      <div class="col-12">
+          <div class="alert alert-success text-center">
+              <h4 class="alert-heading">Cargando</h4>
+              <i class="fa fa-spin fa-refresh fa-2x"></i>
+              <p class="mb-0">Por favor espere</p>
+          </div>
+      </div>
+    </div>
+      <div class="bg-image h-100" *ngIf="!cargando">
+        <div class="mask d-flex align-items-center h-100">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-12 col-lg-5">
+                <div class="mb-3 row">
+                  <label class="col-sm-2 text-end control-label col-form-label">Buscar</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" placeholder="Buscar"  name="filtro"
+                    (keyup.enter)="filtrar()" 
+                    [(ngModel)]="filtro">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row animated fadeIn fast" *ngIf="cargando">
+              <div class="col-12">
+                  <div class="alert alert-success text-center">
+                      <h4 class="alert-heading">Cargando</h4>
+                      <i class="fa fa-spin fa-refresh fa-2x"></i>
+                      <p class="mb-0">Por favor espere</p>
+                  </div>
+              </div>
+            </div>
+            <div class="row justify-content-center" *ngIf="!cargando">
+              <div *ngIf="delegados.length > 0" class="col-12">
+                <div class="card shadow-2-strong">
+                  <div class="card-body">
+                    <H2>Lista de Delegados Activos</H2>                    
+                    <div class="table-responsive">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">Id Propietario</th>
+                            <th scope="col">Propietario</th>
+                            <th scope="col">Id Suplente</th>
+                            <th scope="col">Suplente</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let x of delegados | slice: (pagina-1)*pagesize : (pagina-1) * pagesize + pagesize">
+                            <td>{{x.IDENTIFICACION_PROP}}</td>
+                            <td>{{x.NOMBRE_PROP}}</td>
+                            <td>{{x.IDENTIFICACION_SUPL}}</td>
+                            <td>{{x.NOMBRE_SUPL}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="delegados.length == 0" class="mt-4 centrado">
+                <h3>No existen Delegados Actvivos</h3>
+              </div>
+            </div>
+            <ngb-pagination *ngIf="delegados.length > 0" [collectionSize]="delegados.length" 
+                    [(page)]="pagina" 
+                    [pageSize]="pagesize"
+                    [maxSize]="5" 
+                    [rotate]="true"
+                    [boundaryLinks]="true">
+            </ngb-pagination>
+          </div>
+        </div>
+      </div>
+    </section>
+  

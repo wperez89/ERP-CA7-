@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 
 import { Confirmation, SuccessDialog, Toast, showConfirmationAlert } from 'src/app/helpers/Notificaciones';
 import { archivoDig_Lista } from 'src/app/models/archivoDigital/archivoDigital.models';
@@ -23,7 +23,11 @@ export class ArchivoDigitalComponent implements OnInit {
   public document: string = '';
   public areaSelected: number = 0;
 
-  constructor(private archivoService:ArchivoDigitalService, private avaluoService:AvaluoService) { }
+  //inject
+  private archivoService = inject(ArchivoDigitalService)
+  private avaluoService=inject(AvaluoService)
+
+  //constructor( ) { }
 
   ngOnInit(): void {
     this.getDocumentos();

@@ -33,7 +33,7 @@
         <div class="mb-3 row" *ngIf="!editado">
             <label class="col-sm-3 text-end control-label col-form-label">Identificación</label>
             <div class="col-sm-6">
-              <input type="text" class="form-control"  id="Identificacion" (blur)="cargarAPICedula()"
+              <input type="text" class="form-control"  id="Identificacion" (keydown.Tab)="cargarAPICedula()"
               placeholder="Identificación" formControlName="IDENTIFICACION">
             </div>
           </div>
@@ -81,7 +81,7 @@
                 <div class="col-sm-4 col-md-3">
                     <div class="mb-3">
                         <label for="datefixe" class="control-label col-form-label">Estado Actual</label>
-                        <input type="text" class="form-control" formControlName="ESTADO_ACTUAL" disabled>
+                        <input type="text" class="form-control" formControlName="ESTADO_ACTUAL" [attr.disabled]=true>
                     </div>
                 </div>
                 <div class="col-sm-4 col-md-3" *ngIf="estado !== '1'">

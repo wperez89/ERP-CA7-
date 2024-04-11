@@ -59,7 +59,7 @@ export class SolicitudCredComponent implements OnInit {
         USUARIO:[''],
         NOM_USER:[],
         ASIGNADO:[],
-        RESPONSABLE:[],
+        RESPONSABLE:[{value:'',disabled:true}],
         EDITADO:[false]
       }
     )

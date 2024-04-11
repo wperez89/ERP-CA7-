@@ -1,0 +1,128 @@
+<section class="intro">
+    <div class="row animated fadeIn fast" *ngIf="cargando">
+      <div class="col-12">
+          <div class="alert alert-success text-center">
+              <h4 class="alert-heading">Cargando</h4>
+              <i class="fa fa-spin fa-refresh fa-2x"></i>
+              <p class="mb-0">Por favor espere</p>
+          </div>
+      </div>
+    </div>
+      <div class="bg-image h-100" *ngIf="!cargando">
+        <div class="mask d-flex align-items-center h-100">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-12 col-lg-5">
+                <div class="mb-3 row">
+                  <label class="col-sm-2 text-end control-label col-form-label">Buscar</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" placeholder="Buscar"  name="filtro"
+                    (keyup.enter)="filtrar()" 
+                    [(ngModel)]="filtro">
+                  </div>
+                </div>
+              </div>
+              <div class="d-flex justify-content-end m-2" *ngIf="estadoAsamblea === 'A'">
+                <button type="button" class="btn btn-success btn-rounded m-t-10 mb-2" data-bs-toggle="modal"
+                  data-bs-target="#add-rol" (click)="abrirFormulario(modalEdit)" >
+                  Agregar
+                </button>
+              </div>
+              <div class="mb-3 row" >
+                <label for="lname" class="col-sm-1 text-end control-label col-form-label">Asambleas</label>
+                <div class="col-sm-6 mb-2">
+                  <select class="form-control form-select" [(ngModel)]="asambleaid">
+                    <option *ngFor="let x of asamblea" value={{x.ID_ASAMBLEA}}>{{x.DETALLE}}</option>
+                </select>
+                </div>
+              </div>
+            </div>
+            <div class="row animated fadeIn fast" *ngIf="cargando">
+              <div class="col-12">
+                  <div class="alert alert-success text-center">
+                      <h4 class="alert-heading">Cargando</h4>
+                      <i class="fa fa-spin fa-refresh fa-2x"></i>
+                      <p class="mb-0">Por favor espere</p>
+                  </div>
+              </div>
+            </div>
+            <div class="row justify-content-center" *ngIf="!cargando">
+              <div *ngIf="participacion.length > 0" class="col-12">
+                <div class="card shadow-2-strong">
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">Identificación</th>
+                            <th scope="col">Delegado</th>
+                            <th scope="col">Paleta</th>
+                            <th scope="col">Acción</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let x of participacion | slice: (pagina-1)*pagesize : (pagina-1) * pagesize + pagesize">
+                            <td>{{x.IDENTIFICACION}}</td>
+                            <td>{{x.NOMBRE_COMPLETO}}</td>
+                            <td>{{x.PALETA}}</td>
+                            <td>
+                              <button type="button" class="btn btn-success btn-sm px-3 mx-2" title="Completado" 
+                                      (click)="actualizarParticipacion(x.ID_PARTICIPACION,'C')">
+                                <i class="fas fa-check-circle"></i>
+                              </button>
+                              <button type="button" class="btn btn-danger btn-sm px-3 " title="Anular" 
+                                      (click)="actualizarParticipacion(x.ID_PARTICIPACION,'A')">
+                                <i class="fas fa-times-circle"></i>
+                              </button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="participacion.length == 0" class="mt-4 centrado">
+                <h3>No hay participaciones pendientes para esta Asamblea</h3>
+              </div>
+            </div>
+            <ngb-pagination *ngIf="participacion.length > 0" [collectionSize]="participacion.length" 
+                    [(page)]="pagina" 
+                    [pageSize]="pagesize"
+                    [maxSize]="5" 
+                    [rotate]="true"
+                    [boundaryLinks]="true">
+            </ngb-pagination>
+          </div>
+                <!--Modal-->
+      <ng-template #modalEdit let-modal>
+        <form autocomplete="off" [formGroup]="participacionForm" (submit)="createParticipacion(modalEdit)">
+          <div class="modal-header justify-content-center mt-2">
+              <span>
+                <h2>Agregar Participación</h2>
+              </span>
+          </div>
+          <div class="modal-body px-4">
+            <div class="">
+              <label>N° Paleta</label>
+              <input class="form-control" type="number" required formControlName="PALETA"
+                placeholder="Agregar N° de Paleta" (keydown.Tab)="cargarDelegadoPaleta()"/>
+            </div>
+          </div>
+          <div *ngIf="existe" class="modal-body px-4">
+            <div class="">
+              <label>DELEGADO</label>
+              <input class="form-control" type="text" required
+                formControlName="NOMBRE"/>
+            </div>
+          </div>
+          <div class="modal-footer justify-content-center" *ngIf="existe">
+            <button class="btn btn-light-info text-info font-medium" type="submit">
+              Guardar
+            </button>
+          </div>
+        </form>
+      </ng-template>
+        </div>
+      </div>
+    </section>

@@ -1,5 +1,11 @@
 <div class="row">
 <h3 class="mb-4 centrado">DOCUMENTOS DE SOLICITUD N° {{idSolicitud}}</h3>
+<div class="d-flex justify-content-end">
+  <button type="button" class="btn btn-success btn-rounded m-t-10 mb-4 mt-2" data-bs-toggle="modal"
+    data-bs-target="#add-rol" (click)="modalOpenBackdrop(modaldocumentSol)">
+    Nuevo Documento
+  </button>
+</div>
 <div class="row animated fadeIn low" *ngIf="cargando">
     <div class="col-12">
         <div class="alert alert-success text-center">
@@ -41,5 +47,71 @@
           </tbody>
         </table>
       </div>
-   </div> 
+   </div>
 </div>
+ <!--Modal-->
+ <ng-template #modaldocumentSol let-modal>
+  <form autocomplete="off" [formGroup]="documentSolicForm" (submit)="createDocument()"
+    (keydown)="evitarSubmit($event)">
+    <div class="card-body" *ngIf="!cargando">      
+      <div class="m-3 row" *ngIf="!editado && estadoSelected !== '6'">
+        <label class="centrado">Agregar Archivos</label>
+        <div>
+          <div class="m-3 row">
+            <label  class="col-sm-3 text-end control-label col-form-label">Tipo Documento</label>
+            <div class="col-sm-9">
+              <select class="form-select" formControlName="NOM_DOCUMENT" (change)="cargarNombreArchivos($event.target.value)">
+                <option *ngFor="let x of categoria" value={{x.ID_CATEGORIA_ARCH}}>{{x.CATEGORIA_ARCH}}</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="m-3 row">
+            <label  class="col-sm-3 text-end control-label col-form-label">Nombre Documento</label>
+            <div class="col-sm-9" >
+              <select class="form-select" formControlName="NOM_ARCHIVO" id="idArchivo">
+                <option value=""></option>
+                <option *ngFor="let x of tipoArch" value={{x.ID_ARCHIVO}}-{{x.NOMBRE_ARCH}}>{{x.NOMBRE_ARCH}}</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="m-3 row">
+            <div class="input-group">
+              <div class="custom-file col-sm-10">
+                <label for="documentos">Seleccionar documento:</label>
+                <input type="file" id="documentos" #fileInput (change)="agregarArchivo($event)">
+              </div>
+              
+            </div>
+          </div>
+          <div *ngFor="let documento of documentos.controls; let i=index">
+            {{ documento.get('NombreArch').value }}
+            <button type="button" (click)="eliminarArchivo(i)">Eliminar</button>
+          </div>
+       
+        </div>
+      </div>
+    </div>
+    <div class="p-3 border-top">
+      <div class="text-end">
+        <button type="submit" *ngIf="!editado" class="
+                  btn btn-info
+                  rounded-pill
+                  px-4
+                  waves-effect waves-light m-2
+                ">
+          Guardar
+        </button>
+        <button type="button" (click)="cerrarModal(modalEditDriver)" class="
+                  btn btn-dark
+                  rounded-pill
+                  px-4
+                  waves-effect waves-light m-2
+                ">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </form>
+</ng-template>

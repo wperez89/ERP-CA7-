@@ -75,6 +75,11 @@ export const routes: Routes = [
         loadChildren: () => import('./pages/archivo-digital/archivo-digital.module').then(m => m.ArchivoDigitalModule)
       },
       {
+        path: 'asamblea',
+        canActivate:[gerencialGuard],
+        loadChildren: () => import('./pages/asamblea/asamblea.module').then(m => m.AsambleaModule)
+      },
+      {
         path: 'cebs',
         canActivate:[AdminGuard],
         loadChildren: () => import('./pages/cebs/cebs.module').then(m => m.CebsModule)
@@ -83,6 +88,11 @@ export const routes: Routes = [
         path: 'vehiculos',
         canActivate:[AdminGuard],
         loadChildren: () => import('./pages/vehiculo/vehiculo.module').then(m => m.VehiculoModule)
+      },
+      {
+        path: 'componente',
+        canActivate:[AdminGuard],
+        loadChildren: () => import('./component/component.module').then(m => m.ComponentsModule)
       }
     ]
   },

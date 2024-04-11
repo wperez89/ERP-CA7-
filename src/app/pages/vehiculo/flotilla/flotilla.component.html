@@ -33,11 +33,9 @@
       <ng-template #modalEditUser let-modal>
         <form autocomplete="off" [formGroup]="vehiculoForm" (submit)="createVehiculo()">
           <div class="modal-header justify-content-center mt-2">
-            <a href="index.html">
               <span>
                 <h2>Agregar Vehículo</h2>
               </span>
-            </a>
           </div>
           <div class="modal-body px-4">
             <div class="">
@@ -116,9 +114,10 @@
             </td>
             <td style="text-align: center; ">
               <div>
-                <button class="like btn-rounded" title="Editar" data-toggle="modal">
+                <button class="like btn-rounded" title="Editar" data-toggle="modal" 
+                (click)="obtenerVehiculoID(modalEditUser,vehiculo.ID_VEHICULO)">
                   <i class="fas fa-edit" style="color:#016745;"
-                    (click)="obtenerVehiculoID(modalEditUser,vehiculo.ID_VEHICULO)"></i>
+                    ></i>
                 </button>
               </div>
             </td>

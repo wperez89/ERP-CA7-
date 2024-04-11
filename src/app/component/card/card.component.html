@@ -1585,9 +1585,12 @@
           <div class="progress mt-4">
             <div
               class="progress-bar bg-danger"
-              style="width: 85%; height: 6px"
+              [style.width.%]="porcAvance"
               role="progressbar"
             ></div>
+            <div class="progress-label" [style.left.%]="porcAvance">
+              {{ porcAvance }} Gb
+            </div>
           </div>
           <div class="d-flex align-items-center mt-2 font-medium">
             <span>4Gb</span>

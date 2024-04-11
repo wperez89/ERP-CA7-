@@ -112,41 +112,6 @@
             [attr.disabled]="editado">
           </div>
         </div>
-        <div class="m-3 row" *ngIf="!editado && estadoSelected !== '6'">
-          <label class="centrado">Agregar Archivos</label>
-          <div>
-            <div class="m-3 row">
-              <label  class="col-sm-3 text-end control-label col-form-label">Tipo Documento</label>
-              <div class="col-sm-9">
-                <select class="form-select" formControlName="NOM_DOCUMENT" (change)="cargarNombreArchivos($event.target.value)">
-                  <option *ngFor="let x of categoria" value={{x.ID_CATEGORIA_ARCH}}>{{x.CATEGORIA_ARCH}}</option>
-                </select>
-              </div>
-            </div>
-            <div class="m-3 row">
-              <label  class="col-sm-3 text-end control-label col-form-label">Nombre Documento</label>
-              <div class="col-sm-9" >
-                <select class="form-select" formControlName="NOM_ARCHIVO" id="idArchivo">
-                  <option value=""></option>
-                  <option *ngFor="let x of tipoArch" value={{x.ID_ARCHIVO}}-{{x.NOMBRE_ARCH}}>{{x.NOMBRE_ARCH}}</option>
-                </select>
-              </div>
-            </div>
-            <div class="m-3 row">
-              <div class="input-group">
-                <div class="custom-file col-sm-10">
-                  <label for="documentos">Seleccionar documento:</label>
-                  <input type="file" id="documentos" #fileInput (change)="agregarArchivo($event)">
-                </div>
-  
-              </div>
-            </div>
-            <div *ngFor="let documento of documentos.controls; let i=index">
-              {{ documento.get('NombreArch').value }}
-              <button type="button" (click)="eliminarArchivo(i)">Eliminar</button>
-            </div>
-          </div>
-        </div>
       </div>
       <div class="p-3 border-top">
         <div class="text-end">

@@ -1,0 +1,100 @@
+<div class="row animated fadeIn fast" *ngIf="cargando">
+  <div class="col-12">
+      <div class="alert alert-success text-center">
+          <h4 class="alert-heading">Cargando</h4>
+          <i class="fa fa-spin fa-refresh fa-2x"></i>
+          <p class="mb-0">Por favor espere</p>
+      </div>
+  </div>
+</div>
+<div *ngIf="!cargando">
+
+  <div>
+    <h1 class="centrado">Datos de {{asamblea}} Periodo {{periodo}}</h1>
+  </div>
+  <div class="row">
+    <!-- Column -->
+    <div class="col-md-6 col-lg-4 col-xlg-3">
+      <div class="card">
+        <div class="box p-2 rounded bg-info text-center">
+          <h1 class="fw-light text-white">{{totalDel}}</h1>
+          <h2 class="text-white">Total de Delegados</h2>
+        </div>
+      </div>
+    </div>
+    <!-- Column -->
+    <div class="col-md-6 col-lg-4 col-xlg-3">
+      <div class="card">
+        <div class="box p-2 rounded bg-primary text-center">
+          <h1 class="fw-light text-white">{{propietario}}</h1>
+          <h2 class="text-white">Propietarios Registrados</h2>
+        </div>
+      </div>
+    </div>
+    <!-- Column -->
+    <div class="col-md-6 col-lg-4 col-xlg-3">
+      <div class="card">
+        <div class="box p-2 rounded bg-success text-center">
+          <h1 class="fw-light text-white">{{suplente}}</h1>
+          <h2 class="text-white">Suplentes Registrados</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+<div>
+  <h1 class="m-4">Quorum de Asamblea</h1>
+</div>
+<div class="card w-100">
+  <div class="card-body">
+    <div class="d-flex align-items-center">
+        <h1 class="card-title mb-0">Primera Convocatoria</h1>
+        <div class="ms-auto" *ngIf="faltanPrimConv > 0 ">
+          <h3 class="text-danger"
+          >Faltan {{faltanPrimConv}} Delegados</h3
+          >
+        </div>
+      </div>
+      <div class="d-flex align-items-center my-3">
+        <div class="border-end pe-3">
+          <h2 class="text-muted fw-normal">Delegados Inicio</h2>
+          <b>{{primConv}}</b>
+        </div>
+        <div class="ms-3 border-end pe-3">
+          <h2 class="text-muted fw-normal">Delegados Presentes</h2>
+          <b>{{asisten}}</b>
+        </div>
+        <div class="ms-3">
+          <h2 class="text-muted fw-normal">¿Se puede Iniciar?</h2>
+          <b>{{empezarPrimConv}}</b>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="card w-100">
+    <div class="card-body">
+      <div class="d-flex align-items-center">
+        <h1 class="card-title mb-0">Segunda Convocatoria</h1>
+        <div class="ms-auto" *ngIf="faltaSegundaConv > 0 ">
+          <h3 class="text-danger"
+            >Faltan {{faltaSegundaConv}} Delegados</h3
+          >
+        </div>
+      </div>
+      <div class="d-flex align-items-center my-3">
+        <div class="border-end pe-3">
+          <h2 class="text-muted fw-normal">Delegados Inicio</h2>
+          <b>{{segundConv}}</b>
+        </div>
+        <div class="ms-3 border-end pe-3">
+          <h2 class="text-muted fw-normal">Delegados Presentes</h2>
+          <b>{{asisten}}</b>
+        </div>
+        <div class="ms-3">
+          <h2 class="text-muted fw-normal">¿Se puede Iniciar?</h2>
+          <b>{{empezarSegConv}}</b>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

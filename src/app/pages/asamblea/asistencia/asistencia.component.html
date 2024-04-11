@@ -1,0 +1,104 @@
+
+<section class="intro">
+  <div class="row animated fadeIn fast" *ngIf="cargando">
+    <div class="col-12">
+        <div class="alert alert-success text-center">
+            <h4 class="alert-heading">Cargando</h4>
+            <i class="fa fa-spin fa-refresh fa-2x"></i>
+            <p class="mb-0">Por favor espere</p>
+        </div>
+    </div>
+  </div>
+    <div class="bg-image h-100" *ngIf="!cargando">
+      <div class="mask d-flex align-items-center h-100">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-12 col-lg-5">
+              <div class="mb-3 row">
+                <label class="col-sm-2 text-end control-label col-form-label">Buscar</label>
+                <div class="col-sm-8">
+                  <input type="text" class="form-control" placeholder="Buscar"  name="filtro"
+                  (keyup.enter)="filtrar()" 
+                  [(ngModel)]="filtro">
+                </div>
+              </div>
+            </div>
+            <div class="d-flex justify-content-end m-2" *ngIf="estadoAsamblea === 'A'">
+              <button type="button" class="btn btn-success btn-rounded m-t-10 mb-2" data-bs-toggle="modal"
+                data-bs-target="#add-rol" routerLink="//asamblea/asistente" >
+                Agregar
+              </button>
+            </div>
+            <div class="mb-3 row" >
+              <label for="lname" class="col-sm-1 text-end control-label col-form-label">Asambleas</label>
+              <div class="col-sm-6 mb-2">
+                <select class="" (change)="obtenerValorEstado($event.target.value)"
+                                                class="form-control form-select" [(ngModel)]="asambleaid">
+                                                <option *ngFor="let x of asamblea" value={{x.ID_ASAMBLEA}}>{{x.DETALLE}}</option>
+                                            </select>
+              </div>
+            </div>
+          </div>
+          <div class="row animated fadeIn fast" *ngIf="cargando">
+            <div class="col-12">
+                <div class="alert alert-success text-center">
+                    <h4 class="alert-heading">Cargando</h4>
+                    <i class="fa fa-spin fa-refresh fa-2x"></i>
+                    <p class="mb-0">Por favor espere</p>
+                </div>
+            </div>
+          </div>
+          <div class="row justify-content-center" *ngIf="!cargando">
+            <div *ngIf="asistencia.length > 0" class="col-12">
+              <div class="card shadow-2-strong">
+                <div class="card-body">
+                  <H2 *ngIf="estadoAsamblea == 'A'">Lista de Asamblea Actual</H2>
+                  <H2 *ngIf="estadoAsamblea == 'I'">Lista de Asamblea Inactiva</H2>
+                  
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col">Identificación</th>
+                          <th scope="col">Delegado</th>
+                          <th scope="col">Paleta</th>
+                          <th scope="col">Fecha</th>
+                          <th scope="col">Condición</th>
+                          <th scope="col">Acción</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let x of asistencia | slice: (pagina-1)*pagesize : (pagina-1) * pagesize + pagesize">
+                          <td>{{x.IDENTIFICACION}}</td>
+                          <td>{{x.NOMBRE_COMPLETO}}</td>
+                          <td>{{x.PALETA}}</td>
+                          <td>{{x.FECHA | date:'dd/MM/YYYY hh:mm:ss'}}</td>
+                          <td>{{x.CONDICION}}</td>
+                          <td>
+                            <button type="button" class="btn btn-success btn-sm px-3" title="Descargar" 
+                                    (click)="verPDF(x.ARCHIVO)">
+                              <i class="fas fa-eye"></i>
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="asistencia.length == 0" class="mt-4 centrado">
+              <h3>No existen Registros para esta Asamblea</h3>
+            </div>
+          </div>
+          <ngb-pagination *ngIf="asistencia.length > 0" [collectionSize]="asistencia.length" 
+                  [(page)]="pagina" 
+                  [pageSize]="pagesize"
+                  [maxSize]="5" 
+                  [rotate]="true"
+                  [boundaryLinks]="true">
+          </ngb-pagination>
+        </div>
+      </div>
+    </div>
+  </section>

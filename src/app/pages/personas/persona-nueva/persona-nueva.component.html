@@ -17,7 +17,7 @@
                   data-placeholder="Seleccionar Tipo de Persona" 
                   id="Rol" 
                   formControlName="TIPO_PERSONA"
-                  (blur)="capturar()"
+                  (keydown.Tab)="capturar()"
                   required>
                     <option *ngFor="let x of tipoPersona" 
                       value={{x.COD_PERSONA}} [selected]="x === TipoSeleccionado">
@@ -29,7 +29,7 @@
           <div class="mb-3 row">
             <label for="fullname" class="col-sm-3 text-end control-label col-form-label">Identificación</label>
             <div class="col-sm-9">
-              <input type="text" class="form-control"  id="Identificacion" (blur)="cargarAPICedula()"
+              <input type="text" class="form-control"  id="Identificacion" (keydown.Tab)="cargarAPICedula()"
               placeholder="Identificación" formControlName="IDENTIFICACION">
             </div>
           </div>

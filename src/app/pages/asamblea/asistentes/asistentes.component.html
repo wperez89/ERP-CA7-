@@ -1,0 +1,114 @@
+<div class="container">
+    <div class="border-bottom title-part-padding">
+        <h3  *ngIf="!editado" class="card-title">Asistencia de Delegados a Asamblea</h3>
+        <h3 *ngIf="editado" class="card-title">Información Solicitud de Crédito N° {{idSolicitud}}</h3>
+    </div>
+
+    <div class="row animated fadeIn fast" *ngIf="cargando">
+        <div class="col-12">
+            <div class="alert alert-success text-center">
+                <h4 class="alert-heading">Cargando</h4>
+                <i class="fa fa-spin fa-refresh fa-2x"></i>
+                <p class="mb-0">Por favor espere</p>
+            </div>
+        </div>
+    </div>
+    <div class="card-body mt-2" *ngIf="!cargando">
+        <form [formGroup]="asistenteForm"
+                (submit)="guardarAsistente()">
+            <!--Identificar Cedula Cliente-->
+        <div class="mb-3 row" *ngIf="!editado">
+            <label class="col-sm-3 text-end control-label col-form-label">Identificación</label>
+            <div class="col-sm-6">
+              <input type="text" class="form-control"  id="Identificacion" (keydown.Tab)="cargarCedulaDelegado()"
+              placeholder="Identificación" formControlName="IDENTIFICACION">
+            </div>
+          </div>
+          <div class="mb-3 row" *ngIf="editado">
+            <label class="col-sm-3 text-end control-label col-form-label">Identificación</label>
+            <div class="col-sm-6">
+              <input type="text" class="form-control"  id="Identificacion" formControlName="IDENTIFICACION">
+            </div>
+          </div>
+          <div class="mb-3 row" *ngIf="existe">
+            <label class="col-sm-3 text-end control-label col-form-label">Delegado</label>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" formControlName="NOMBRE">
+            </div>
+          </div>
+        <!--Segunda Parte del Formulario-->
+        <div class="border-top mt-2" *ngIf="existe">
+            <div>
+                <label *ngIf="condicion === 'S'" class="textRojo centrado">Delegado Suplente</label>
+                <label *ngIf="condicion === 'P'" class="centrado textAzul" >Delegado Propietario</label>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-6">
+                    <div class="mb-3">
+                        <label class="control-label col-form-label">Asamblea</label>
+                    <select class="form-control form-select" formControlName="ID_ASAMBLEA" [(ngModel)]="asambleaid">
+                        <option *ngFor="let x of asamblea" value={{x.ID_ASAMBLEA}}>{{x.DETALLE}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-10 col-md-5">
+                    <div class="mb-3">
+                        <label for="dateopen" class="control-label col-form-label">Paleta</label>
+                        <input type="text" class="form-control" formControlName="PALETA" [attr.disabled]=true>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="editado" class="row">
+                <div class="col-6">
+                    <div class="mb-5">
+                        <label class="control-label col-form-label">Fecha</label>
+                        <input type="text" class="form-control" formControlName="FECHA" [attr.disabled]=true>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="mb-3">
+                        <label class="control-label col-form-label">Sector Laboral</label>
+                        <input type="text" class="form-control" formControlName="CONDICION" [attr.disabled]=true>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="mb-3">
+                        <label class="control-label col-form-label">Observación</label>
+                        <input type="text" class="form-control" formControlName="OBSERVACION">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="p-3 border-top">
+            <div class="text-end">
+              <button type="submit" class="
+                  btn btn-info
+                  rounded-pill
+                  px-4
+                  waves-effect waves-light m-2
+                " *ngIf="existe">
+                Guardar
+              </button>
+              <button type="button" class="
+                  btn btn-success
+                  rounded-pill
+                  px-4
+                  waves-effect waves-light
+                " (click)="limpiar()">
+                Resetear
+              </button>
+              <button type="button" class="
+                  btn btn-dark
+                  rounded-pill
+                  px-4
+                  waves-effect waves-light
+                " routerLink="//asamblea/listasistencia">
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </form>
+    </div>
+</div>
